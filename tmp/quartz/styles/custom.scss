@@ -1,0 +1,82 @@
+@use "./base.scss";
+
+// put your custom CSS here!
+@font-face {
+    font-family: "Alegreya";
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/static/fonts/Alegreya-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Alegreya";
+    font-style: italic;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/static/fonts/Alegreya-Italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Alegreya";
+    font-style: normal;
+    font-weight: bold;
+    font-display: swap;
+    src: url("/static/fonts/Alegreya-Bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Alegreya";
+    font-style: italic;
+    font-weight: bold;
+    font-display: swap;
+    src: url("/static/fonts/Alegreya-BoldItalic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Alegreya SC";
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/static/fonts/AlegreyaSC-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Alegreya SC";
+    font-style: italic;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/static/fonts/AlegreyaSC-Italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Alegreya SC";
+    font-style: normal;
+    font-weight: bold;
+    font-display: swap;
+    src: url("/static/fonts/AlegreyaSC-Bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Alegreya SC";
+    font-style: italic;
+    font-weight: bold;
+    font-display: swap;
+    src: url("/static/fonts/AlegreyaSC-BoldItalic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/static/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: italic;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/static/fonts/JetBrainsMono-Italic.woff2") format("woff2");
+}

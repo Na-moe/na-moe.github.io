@@ -26,6 +26,7 @@ jobs:
         run: |
           cp quartz.config.ts quartz.layout.ts quartz
           cp -rf content/* quartz/content/
+          cp -rf tmp/* quartz/
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

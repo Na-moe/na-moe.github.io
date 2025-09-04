@@ -17,6 +17,8 @@ const config: QuartzConfig = {
     ignorePatterns: ["private", "_templates", ".obsidian"],
     defaultDateType: "created",
     theme: {
+      fontOrigin: "local",
+      cdnCaching: false,
       typography: {
         header: "Alegreya SC",
         body: "Alegreya",
