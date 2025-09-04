@@ -10,7 +10,7 @@ I received my M.Phil and Bachelor's degrees from BUAA. During my master's, I was
 
 ## Publications
 
-**Infocom 2025**
+**INFOCOM 2025**
 
 ACBatch: Adaptive and Cooperative Batching for Edge Inference
 
@@ -22,6 +22,3 @@ ELIC: Efficient Learned Image Compression with Unevenly Grouped Spatial-Channel 
 
 Dailan He, *Ziming Yang*, Weikun Peng, Rui Ma, Hongwei Qin, Yan Wang
 
-```python
-print("hello world!") # for testing
-```
