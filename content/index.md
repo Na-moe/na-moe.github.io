@@ -1,7 +1,23 @@
 ---
-title: Welcome to Quartz 4
+title: Welcome to Namoe's Website
 ---
 
-Quartz is a fast, batteries-included static-site generator that transforms Markdown content into fully functional websites. Thousands of students, developers, and teachers publish personal notes, wikis, and [digital gardens](https://jzhao.xyz/posts/networked-thought) to the web.
+[GitHub](https://github.com/na-moe)  
 
-See the [official documentation](https://quartz.jzhao.xyz/) for more details.
+👋 Hi, I'm Namoe. I'm an AI researcher at <img src="https://favicon.im/ke.com" alt="ke.com favicon" style="height: 1em; vertical-align: middle;"/> Ke.com, passionate about powerful generative AI, efficient model inference, and intelligent compression. This blog is where I share my explorations and thoughts.
+
+I received my M.Phil and Bachelor's degrees from BUAA. During my master's, I was fortunate to be advised by Prof. Shan Zhang. I also spent a wonderful time as a research intern at <img src="https://favicon.im/www.sensetime.com" alt="https://www.sensetime.com favicon" style="height: 1em; vertical-align: middle;"/> Sensetime, working alongside Dailan He and Yan Wang.
+
+## Publications
+
+**Infocom 2025**
+
+ACBatch: Adaptive and Cooperative Batching for Edge Inference
+
+*Ziming Yang*, Zichuan Zheng, Liyou Deng, Shan Zhang, Zhiyuan Wang, Hongbin Luo.
+
+**CVPR 2022 Oral**
+
+ELIC: Efficient Learned Image Compression with Unevenly Grouped Spatial-Channel Contextual Adaptive Coding
+
+Dailan He, *Ziming Yang*, Weikun Peng, Rui Ma, Hongwei Qin, Yan Wang
