@@ -18,9 +18,9 @@ const config: QuartzConfig = {
     defaultDateType: "created",
     theme: {
       typography: {
-        header: "Schibsted Grotesk",
-        body: "Roboto",
-        code: "Fira Code",
+        header: "Alegreya SC",
+        body: "Alegreya",
+        code: "Jetbrains Mono",
       },
       colors: {
         lightMode: {
