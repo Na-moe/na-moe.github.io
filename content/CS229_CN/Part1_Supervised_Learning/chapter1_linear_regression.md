@@ -1,0 +1,223 @@
+---
+title: 第一章 线性回归
+---
+| [[CS229_CN/Part1_Supervised_Learning/index\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter2_classification_and_logistic_regression\|下一章]] |
+| :--------------------------------------------------: | :----------------------: | :---------------------------------------------------------: |
+
+为了让上面的示例更有趣，不妨考虑一个更为丰富的数据集。除了居住面积外，该数据集还包括了每栋房屋的卧室数量：
+
+| 居住面积 (平方英尺) |  卧室数  | 价格 (千美元) |
+| :-----------------: | :------: | :-----------: |
+|       $2104$        |   $3$    |     $400$     |
+|       $1600$        |   $3$    |     $330$     |
+|       $2400$        |   $3$    |     $369$     |
+|       $1416$        |   $2$    |     $232$     |
+|       $3000$        |   $4$    |     $540$     |
+|      $\vdots$       | $\vdots$ |   $\vdots$    |
+
+这里 $x$ 是 $\mathbb{R}^2$ 中的二维向量。举个例子，对于训练集中的第 $i$ 栋房屋，$x_1^{(i)}$ 是其居住面积，而 $x_2^{(i)}$ 是其卧室数量。 (学习问题的特征选择通常取决于具体需求。例如，在收集波特兰的房屋数据时，除了居住面积和卧室数量，还可以考虑纳入壁炉、浴室数量等其他特征。关于特征选择的深入讨论将在后续展开，目前我们先基于当前给定的两个特征进行分析。)
+
+在进行监督学习时，需要明确如何在计算机中表示假设函数 $h$。不妨先尝试用 $x$ 的线性函数来近似 $y$：
+
+$$
+h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2
+$$
+
+此处，$\theta_i$ 是该模型的 **参数 (parameter)**，也叫做 **权重 (weights)**。它们参数化了从特征空间 $\mathcal{X}$ 到目标空间 $\mathcal{Y}$ 的线性函数。在不引起混淆的前提下，可以省略 $h_\theta(x)$ 中的下标 $\theta$, 直接写作 $h(x)$. 为了进一步简化表示，我们引入约定：令 $x_0 = 1$。这个 $x_0$ 对应的系数 $\theta_0$ 通常被称为 **截距项 (intercept term)**。这样就有
+
+$$
+h(x) = \sum_{i=0}^d \theta_i x_i = \theta^T x,
+$$
+
+其中 $\theta$ 和 $x$ 视为向量，而 $d$ 则是输入变量的数量 ($x_0$ 不计入)。
+
+那么对于给定的训练集，我们应该如何选择或学习参数 $\theta$ 呢？一个合理且直观的方法是，让 $h(x)$ 在我们的训练样本上尽可能接近 $y$. 为了形式化地表述这个接近程度，我们定义一个函数，用于衡量对于任意给定的参数值 $\theta$，预测值 $h_\theta(x^{ (i)})$ 与实际值 $y^{(i)}$ 之间的差异。这个函数被称为 **代价函数 (cost function)**：
+
+$$
+J(\theta) = \frac{1}{2} \sum_{i=1}^n  (h_\theta(x^{(i)}) - y^{(i)})^2.
+$$
+
+了解线性回归的读者可能会发现，此处定义的函数即为 **普通最小二乘 (ordinary least squares)** 回归模型所使用的最小二乘代价函数。但本讲义不要求读者具备相关背景知识，后文将对此进行详细阐述，并最终指出这仅是更广泛算法族中的一个特例。
+
+## 1.1 最小均方算法
+
+我们的目标是找到能够最小化代价函数 $J (\theta)$ 的参数 $\theta$。为此，我们可以考虑一种搜索算法：从对 $\theta$ 的某个“初始猜测”开始，然后不断地调整 $\theta$ 的值，使其沿着使 $J(\theta)$ 减小的方向移动，直到最终收敛到最小化 $J(\theta)$ 的 $\theta$ 值。具体而言，我们考虑使用 **梯度下降 (gradient descent)** 算法。该算法从某个初始的 $\theta$ 值开始，并重复执行以下更新步骤：
+
+$$
+\theta_j := \theta_j - \alpha \frac{\partial}{\partial\theta_j} J(\theta).
+$$
+
+(上述更新操作同时应用于 $j = 0, \dots, d$ 的所有参数 $\theta_j$.) 这里的 $\alpha$ 被称为 **学习率 (learning rate)**。这是一种非常自然的算法，它每一步都沿着代价函数 $J$ 下降最快的方向进行更新。
+
+为了实现上述算法，需要计算公式右侧的偏导项。先考虑只有一个训练样本 $(x, y)$ 的情况，这样就可以暂时忽略代价函数 $J$ 定义中的求和操作。在这种情况下，偏导数计算如下：
+
+$$
+\begin{aligned}
+    \frac{\partial}{\partial\theta_j} J(\theta) &= \frac{\partial}{\partial\theta_j} \frac{1}{2} (h_\theta(x) - y)^2 \\
+    &= 2 \cdot \frac{1}{2} (h_\theta(x) - y) \cdot \frac{\partial}{\partial\theta_j} (h_\theta(x) - y) \\
+    &= (h_\theta(x) - y) \cdot \frac{\partial}{\partial\theta_j} \left( \sum_{i=0}^d \theta_i x_i - y \right) \\
+    &= (h_\theta(x) - y) x_j
+    \end{aligned}
+$$
+
+上式给出了针对单个训练样本的更新规则：[^1]
+
+$$
+\theta_j := \theta_j + \alpha\left(y^{(i)} - h_\theta(x^{(i)})\right) x_j^{(i)}.
+$$
+
+这个规则被称为 **最小均方 (Least mean squares, LMS)** 更新规则，也称为  **Widrow-Hoff** 学习规则。该规则具有一些自然且直观的特性。例如，更新的幅度与 **误差 (error)** 项 $(y^{(i)} - h_\theta(x^{(i)}))$ 成正比；因此，如果对于一个训练样本，其预测值几乎等于 $y^{(i)}$ 的实际值，那么参数就几乎不需要调整；反之，如果预测的 $h_\theta(x^{(i)})$ 有很大的误差 (即与 $y^{(i)}$ 相差甚远)，则需要对参数进行更大的调整。
+
+所推导的 LMS 规则是针对只有一个训练样本的情况。要将其应用于包含多个样本的训练集，有两种常见的方法。第一种方法是将算法修改为以下形式：
+
+$\qquad$重复直到收敛 { ^eqc1eq1
+
+$$
+\begin{equation}
+    \theta_j := \theta_j + \alpha \sum_{i=1}^n \left(y^{(i)} - h_\theta(x^{(i)})\right) x_j^{(i)}, \text{(对于每个 } j) \tag{1.1}
+\end{equation}
+$$
+
+$\qquad$}
+
+将逐位置的更新重写为 $\theta$ 的向量化更新，可以稍微简化 [[chapter1_linear_regression#^eqc1eq1|(1.1)]]：
+
+$$
+\theta := \theta + \alpha \sum_{i=1}^n \left(y^{(i)} - h_\theta(x^{(i)})\right) x^{(i)}
+$$
+
+读者不难验证，上述更新规则中求和项所表示的量，恰好对应于我们先前定义的成本函数 $J$ 的偏导数 $\partial J(\theta) / \partial \theta_j$. 因此，这个更新规则实际上就是在原始成本函数 $J$ 上进行梯度下降。这种方法在每一步都用了整个训练集的所有样本，因此被称为 **批量梯度下降 (batch gradient descent)**。值得注意的是，尽管在一般情况下梯度下降算法可能只收敛到局部最优解，但对于我们这里的线性回归问题，其优化目标函数 $J$ 具有良好的性质：它是一个凸二次函数。这意味着它只有一个全局最小值，没有其他局部最优解。因此，在合适的学习率 $\alpha$ 下，梯度下降算法能够保证收敛到全局最优解。下面是一个用梯度下降最小化一个二次函数的图例。
+
+
+上面的椭圆是二次函数的等高线。图中还显示了梯度下降的轨迹，其初始化参数是 (48,30)，而由直线连接的叉号 $\text{x}$ 则是梯度下降所经过的一系列 $\theta$ 的值。
+
+在之前的数据集上应用批量梯度下降算法来拟合参数 $\theta$, 以学习根据居住面积预测房价的函数，最终得到的参数值为 $\theta_0 = 71.27$ 和 $\theta_1 = 0.1345$. 将学习到的函数 $h_\theta(x)$ 作为输入变量 $x$（表示居住面积）的函数，与训练数据一同绘制，结果如下图所示：
+
+
+如果把卧室数量也当作输入特征，最终得到的参数值为 $\theta_0 = 89.60, \theta_1 = 0.1392, \theta_2 = -8.738$.
+
+上述结果是通过批量梯度下降算法得到的。除此之外，还有一种很好的替代算法：
+
+$\qquad$循环 {
+
+$\qquad\qquad$对于 $i = 1$ 到 $n$, { ^eqc1eq2
+
+$$
+\begin{equation}
+    \theta_j := \theta_j + \alpha \left(y^{(i)} - h_\theta(x^{(i)})\right) x_j^{(i)}, \text{(对于每个 } j) \tag{1.2}
+\end{equation} 
+$$
+
+$\qquad\qquad$}
+
+$\qquad$}
+   
+将逐位置的更新重写为 $\theta$ 的向量化更新，可以稍微简化 [[chapter1_linear_regression#^eqc1eq2|(1.2)]]：
+
+$$
+\theta := \theta + \alpha \left(y^{(i)} - h_\theta(x^{(i)})\right) x^{(i)}
+$$
+
+这种算法会重复遍历训练集，每次遇到一个训练样本时，仅针对该单个样本计算误差梯度并更新参数。这种方法被称为 **随机梯度下降 (stochastic gradient descent)**，有时也称为 **增量梯度下降 (incremental gradient descent)**。与批量梯度下降不同，批量梯度下降在执行单次更新前需要扫描整个训练集（当训练集规模 $n$ 很大时，这是一项昂贵的操作），而随机梯度下降可以立即开始，每看一个样本都可以取得进展。通常情况下，随机梯度下降能更快地使参数 $\theta$ “接近”最小值。（然而，需要注意的是，它可能不会完全“收敛”到最小值，参数 $\theta$ 可能会在目标函数 $J(\theta)$ 的最小值附近持续振荡。但在实际应用中，接近最小值的大多数值都足以作为真实最小值的良好近似。[^2]）因此，特别是在训练集很大时，通常更倾向于使用随机梯度下降而非批量梯度下降。
+
+## 1.2 正规方程
+
+梯度下降提供了一种最小化目标函数 $J$ 的迭代方法。接下来，我们将探讨另一种无需迭代的最小化 $J$ 的方法。其通过明确地计算 $J$ 关于每个参数 $\theta_j$ 的偏导数，并将这些导数置为零来求解最小值。为了避免繁琐的代数运算和大量的导数矩阵书写，我们在下文引入一些矩阵微积分的记号。
+
+### 矩阵导数
+
+对于一个将 $n \times d$ 矩阵映射到实数的函数 $f: \mathbb{R}^{n \times d} \mapsto \mathbb{R}$, 我们定义 $f$ 对 $A$ 的导数：
+
+$$
+\nabla_A f(A) = \begin{bmatrix} 
+        &\frac{\partial f}{\partial A_{11}} & \cdots & \frac{\partial f}{\partial A_{1d}} & \\ 
+        &\vdots & \ddots & \vdots & \\ 
+        &\frac{\partial f}{\partial A_{n1}} & \cdots & \frac{\partial f}{\partial A_{nd}} &
+    \end{bmatrix}
+$$
+
+因此，梯度 $\nabla_A f(A)$ 本身是一个 $n \times d$ 矩阵，其 $(i, j)$ 元素是 $\partial f / \partial A_{ij}$. 例如，假设 $A = \begin{bmatrix} & A_{11} & A_{12} & \\ & A_{21} & A_{22} & \end{bmatrix}$ 是一个 $2 \times 2$ 矩阵，并且函数 $f: \mathbb{R}^{2 \times 2} \mapsto \mathbb{R}$ 由下式给出
+
+$$
+f(A) = \frac{3}{2} A_{11} + 5 A_{12}^2 + A_{21} A_{22}.
+$$
+
+这里，$A_{ij}$ 表示矩阵 $A$ 在 $(i, j)$ 位置上的元素。则可以得到
+
+$$
+\nabla_A f(A) = \begin{bmatrix} & \frac{3}{2} & 10A_{12} & \\ & A_{22} & A_{21}& \end{bmatrix}.
+$$
+
+### 再探最小二乘法
+
+掌握了矩阵导数的工具后，我们现在可以着手求解使目标函数 $J(\theta)$ 最小化的 $\theta$ 的闭式解。首先，我们用矩阵向量符号重写 $J$.
+
+给定一个训练集，我们定义 **设计矩阵 (design matrix)** $X$. 这是一个 $n \times d$ 矩阵（如果包含截距项，则为 $n \times (d+1)$ 矩阵），其每一行对应一个训练样本的输入特征向量：
+
+$$
+X = \begin{bmatrix} &— (x^{(1)})^T —& \\ &— (x^{(2)})^T —& \\ &\vdots& \\ &— (x^{(n)})^T —& \end{bmatrix}.
+$$
+
+进一步地，我们定义向量 $\vec{y}$，它是一个 $n$ 维列向量，其分量依次为训练集中各个样本的目标值：
+
+$$
+\vec{y} = \begin{bmatrix} &y^{(1)}& \\ &y^{(2)}& \\ &\vdots& \\ &y^{(n)}& \end{bmatrix}.
+$$
+
+根据 $h_\theta(x^{(i)}) = (x^{(i)})^T \theta$，不难验证
+
+$$
+\begin{aligned}
+	X\theta - \vec{y} 
+	&= \begin{bmatrix} &(x^{(1)})^T \theta& \\ &\vdots& \\ &(x^{(n)})^T \theta& \end{bmatrix} - \begin{bmatrix} &y^{(1)}& \\ &\vdots& \\ &y^{(n)}& \end{bmatrix} \\
+	&= \begin{bmatrix} &h_\theta(x^{(1)}) - y^{(1)}& \\ &\vdots& \\ &h_\theta(x^{(n)}) - y^{(n)}& \end{bmatrix}.
+\end{aligned}
+$$
+
+利用向量 $z$ 满足 $z^T z = \sum_i z_i^2$ 这一性质，可以得到
+
+$$
+\begin{aligned}
+	\frac{1}{2}(X\theta - \vec{y})^T (X\theta - \vec{y}) 
+	&= \frac{1}{2} \sum_{i=1}^n (h_\theta (x^{(i)}) - y^{(i)})^2 \\
+	&= J(\theta)
+\end{aligned}
+$$
+
+最后，为了最小化 $J$，对其关于 $\theta$ 求导，得到：
+
+$$
+\begin{aligned}
+	\nabla_\theta J(\theta) 
+	&= \nabla_\theta \frac{1}{2} (X\theta - \vec{y})^T (X\theta - \vec{y}) \\
+	&= \frac{1}{2} \nabla_\theta \left((X\theta)^T X\theta - (X\theta)^T \vec{y} - \vec{y}^T (X\theta) + \vec{y}^T \vec{y}\right) \\
+	&= \frac{1}{2} \nabla_\theta \left(\theta^T X^T X\theta - \theta^T X^T \vec{y} - \vec{y}^T X\theta\right) \\
+	&= \frac{1}{2} \nabla_\theta \left(\theta^T X^T X\theta - 2(X^T \vec{y})^T \theta\right) \\
+	&= \frac{1}{2} (2 X^T X\theta - 2 X^T \vec{y}) \\
+	&= X^T X\theta - X^T \vec{y}
+\end{aligned}
+$$
+
+在上述推导中，第三步利用了向量内积的交换律 $a^T b = b^T a$; 第五步则利用了向量求导公式 $\nabla_x b^T x = b$ 以及对于对称矩阵 $A$, $\nabla_x x^T A x = 2Ax$（详细推导可参考第 4.3 节的“线性代数回顾与参考”）。为了最小化 $J$, 我们将上述导数设为零，从而得到 **正规方程 (normal equations)**：
+
+$$
+X^T X\theta = X^T \vec{y}
+$$
+
+因此，使 $J(\theta)$ 最小的 $\theta$ 的闭式解是[^3]
+
+$$
+    \theta = (X^T X)^{-1} X^T \vec{y}.
+$$
+
+## 1.3 概率解释
+
+## 1.4 局部加权线性回归 (选读)
+
+
+
+[^1]: 符号 “$a := b$” 用于表示(计算机程序中的)一个操作，其中变量 $a$ 的值被设置为 $b$. 换句话说，这个操作用 $b$ 的值覆盖了 $a$ 的值。反之，如果需要断言 $a$ 的值等于 $b$ 的值，会写作 “$a = b$”.
+
+[^2]: 通过在算法运行过程中缓慢地减小学习率 $\alpha$ 至零，可以确保参数收敛到全局最小值，而不仅仅是在最小值附近振荡。
+
+[^3]: 需要注意的是，此处的推导隐式假设了 $X^T X$ 是一个可逆矩阵。在计算其逆矩阵之前，应先进行可逆性检查。当线性独立样本的数量少于特征数量，或者特征之间存在线性相关性时，$X^T X$ 将是不可逆的。即使在这种情况下，也可以通过其他技术来“修复”，但为了保持简洁，此处省略。
