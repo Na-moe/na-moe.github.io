@@ -18,7 +18,7 @@ title: 第一部分 监督学习
 
 将这些数据绘制出来：
 
-
+![[CS229_CN/Part1_Supervised_Learning/figs/house_dataset.svg|500]]
 
 有了这些数据之后，该怎样根据波特兰其他房屋的居住面积来预测其价格呢？
 
