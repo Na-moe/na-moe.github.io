@@ -25,4 +25,8 @@ title: CS229 机器学习 课程讲义
  
  ├┬╴[[chapter2_classification_and_logistic_regression|第二章 分类与逻辑回归]]
  
+ │├─╴[[chapter2_classification_and_logistic_regression#2.1 逻辑回归|2.1 逻辑回归]]
+ 
+ │├─╴2.1 逻辑回归
+ 
  │├─╴2.1 逻辑回归

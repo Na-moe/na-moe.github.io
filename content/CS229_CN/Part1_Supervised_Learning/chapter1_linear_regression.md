@@ -53,11 +53,12 @@ $$
 
 $$
 \begin{aligned}
-    \frac{\partial}{\partial\theta_j} J(\theta) &= \frac{\partial}{\partial\theta_j} \frac{1}{2} (h_\theta(x) - y)^2 \\
-    &= 2 \cdot \frac{1}{2} (h_\theta(x) - y) \cdot \frac{\partial}{\partial\theta_j} (h_\theta(x) - y) \\
-    &= (h_\theta(x) - y) \cdot \frac{\partial}{\partial\theta_j} \left( \sum_{i=0}^d \theta_i x_i - y \right) \\
-    &= (h_\theta(x) - y) x_j
-    \end{aligned}
+    \frac{\partial}{\partial\theta_j} J(\theta) 
+	    &= \frac{\partial}{\partial\theta_j} \frac{1}{2} (h_\theta(x) - y)^2 \\
+	    &= 2 \cdot \frac{1}{2} (h_\theta(x) - y) \cdot \frac{\partial}{\partial\theta_j} (h_\theta(x) - y) \\
+	    &= (h_\theta(x) - y) \cdot \frac{\partial}{\partial\theta_j} \left( \sum_{i=0}^d \theta_i x_i - y \right) \\
+	    &= (h_\theta(x) - y) x_j
+\end{aligned}
 $$
 
 上式给出了针对单个训练样本的更新规则：[^1]
@@ -90,7 +91,7 @@ $$
 
 ![[CS229_CN/Part1_Supervised_Learning/figs/gradient_descent_trajectory.png|500]]
 
-上面的椭圆是二次函数的等高线。图中还显示了梯度下降的轨迹，其初始化参数是 (48,30)，而由直线连接的叉号 $\text{x}$ 则是梯度下降所经过的一系列 $\theta$ 的值。
+上面的椭圆是二次函数的等高线。图中还显示了梯度下降的轨迹，其初始化参数是 $(48,30)$, 而由直线连接的叉号 $\text{x}$ 则是梯度下降所经过的一系列 $\theta$ 的值。
 
 在之前的数据集上应用批量梯度下降算法来拟合参数 $\theta$, 以学习根据居住面积预测房价的函数，最终得到的参数值为 $\theta_0 = 71.27$ 和 $\theta_1 = 0.1345$. 将学习到的函数 $h_\theta(x)$ 作为输入变量 $x$（表示居住面积）的函数，与训练数据一同绘制，结果如下图所示：
 
@@ -171,8 +172,9 @@ $$
 $$
 \begin{aligned}
 	X\theta - \vec{y} 
-	&= \begin{bmatrix} &(x^{(1)})^T \theta& \\ &\vdots& \\ &(x^{(n)})^T \theta& \end{bmatrix} - \begin{bmatrix} &y^{(1)}& \\ &\vdots& \\ &y^{(n)}& \end{bmatrix} \\
-	&= \begin{bmatrix} &h_\theta(x^{(1)}) - y^{(1)}& \\ &\vdots& \\ &h_\theta(x^{(n)}) - y^{(n)}& \end{bmatrix}.
+		&= \begin{bmatrix} &(x^{(1)})^T \theta& \\ &\vdots& \\ &(x^{(n)})^T \theta& \end{bmatrix} - \begin{bmatrix} &y^{(1)}& \\ &\vdots& \\ &y^{(n)}& \end{bmatrix} \\
+		
+		&= \begin{bmatrix} &h_\theta(x^{(1)}) - y^{(1)}& \\ &\vdots& \\ &h_\theta(x^{(n)}) - y^{(n)}& \end{bmatrix}.
 \end{aligned}
 $$
 
@@ -181,8 +183,8 @@ $$
 $$
 \begin{aligned}
 	\frac{1}{2}(X\theta - \vec{y})^T (X\theta - \vec{y}) 
-	&= \frac{1}{2} \sum_{i=1}^n (h_\theta (x^{(i)}) - y^{(i)})^2 \\
-	&= J(\theta)
+		&= \frac{1}{2} \sum_{i=1}^n (h_\theta (x^{(i)}) - y^{(i)})^2 \\
+		&= J(\theta)
 \end{aligned}
 $$
 
@@ -191,12 +193,12 @@ $$
 $$
 \begin{aligned}
 	\nabla_\theta J(\theta) 
-	&= \nabla_\theta \frac{1}{2} (X\theta - \vec{y})^T (X\theta - \vec{y}) \\
-	&= \frac{1}{2} \nabla_\theta \left((X\theta)^T X\theta - (X\theta)^T \vec{y} - \vec{y}^T (X\theta) + \vec{y}^T \vec{y}\right) \\
-	&= \frac{1}{2} \nabla_\theta \left(\theta^T X^T X\theta - \theta^T X^T \vec{y} - \vec{y}^T X\theta\right) \\
-	&= \frac{1}{2} \nabla_\theta \left(\theta^T X^T X\theta - 2(X^T \vec{y})^T \theta\right) \\
-	&= \frac{1}{2} (2 X^T X\theta - 2 X^T \vec{y}) \\
-	&= X^T X\theta - X^T \vec{y}
+		&= \nabla_\theta \frac{1}{2} (X\theta - \vec{y})^T (X\theta - \vec{y}) \\
+		&= \frac{1}{2} \nabla_\theta \left((X\theta)^T X\theta - (X\theta)^T \vec{y} - \vec{y}^T (X\theta) + \vec{y}^T \vec{y}\right) \\
+		&= \frac{1}{2} \nabla_\theta \left(\theta^T X^T X\theta - \theta^T X^T \vec{y} - \vec{y}^T X\theta\right) \\
+		&= \frac{1}{2} \nabla_\theta \left(\theta^T X^T X\theta - 2(X^T \vec{y})^T \theta\right) \\
+		&= \frac{1}{2} (2 X^T X\theta - 2 X^T \vec{y}) \\
+		&= X^T X\theta - X^T \vec{y}
 \end{aligned}
 $$
 
@@ -246,12 +248,10 @@ $$
 
 $$
 \begin{aligned}
-
-        L(\theta) &= \prod_{i=1}^n p(y^{(i)} | x^{(i)}; \theta) \\
-
-        &= \prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(y^{(i)} - \theta^T x^{(i)})^2}{2\sigma^2}\right).
-
-    \end{aligned}
+	L(\theta) 
+		&= \prod_{i=1}^n p(y^{(i)} | x^{(i)}; \theta) \\
+		&= \prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(y^{(i)} - \theta^T x^{(i)})^2}{2\sigma^2}\right).
+\end{aligned}
 $$
 
 现在，给定这个描述 $y^{(i)}$ 和 $x^{(i)}$ 之间关系的概率模型，我们应该怎么得到最优的参数 $\theta$? **最大似然 (maximum likelihood)** 原理表明，应该选能使观测数据出现的概率尽可能高的参数 $\theta$. 换句话说，我们应该选择能够最大化似然函数 $L(\theta)$ 的 $\theta$ 值。
@@ -260,17 +260,12 @@ $$
 
 $$
 \begin{aligned}
-
-    \ell(\theta) &= \log L(\theta) \\
-
-    &= \log \prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(y^{(i)} - \theta^T x^{(i)})^2}{2\sigma^2}\right) \\
-
-    &= \sum_{i=1}^n \log \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(y^{(i)} - \theta^T x^{(i)})^2}{2\sigma^2}\right) \\
-
-    &= \sum_{i=1}^n \left(\log \frac{1}{\sqrt{2\pi}\sigma} - \frac{(y^{(i)} - \theta^T x^{(i)})^2}{2\sigma^2}\right) \\
-
-    &= n \log \frac{1}{\sqrt{2\pi}\sigma} - \frac{1}{2\sigma^2} \sum_{i=1}^n (y^{(i)} - \theta^T x^{(i)})^2.
-
+	\ell(\theta) 
+		&= \log L(\theta) \\
+		&= \log \prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(y^{(i)} - \theta^T x^{(i)})^2}{2\sigma^2}\right) \\
+		&= \sum_{i=1}^n \log \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(y^{(i)} - \theta^T x^{(i)})^2}{2\sigma^2}\right) \\
+		&= \sum_{i=1}^n \left(\log \frac{1}{\sqrt{2\pi}\sigma} - \frac{(y^{(i)} - \theta^T x^{(i)})^2}{2\sigma^2}\right) \\
+		&= n \log \frac{1}{\sqrt{2\pi}\sigma} - \frac{1}{2\sigma^2} \sum_{i=1}^n (y^{(i)} - \theta^T x^{(i)})^2.
 \end{aligned}
 $$
 
@@ -288,6 +283,35 @@ $$
 
 ## 1.4 局部加权线性回归 (选读)
 
+考虑从 $x \in \mathbb{R}$ 预测 $y$ 的问题。下图最左边的图显示了将 $y = \theta_0 + \theta_1x$ 拟合到数据集的结果。从图中可以看出，这些数据点并未完全落在一条直线上，因此拟合效果并不理想。
+
+![[CS229_CN/Part1_Supervised_Learning/figs/regression_plot.svg]]
+
+作为对比，如果我们添加一个额外的特征 $x^2$，然后拟合模型 $y = \theta_0 + \theta_1 x + \theta_2 x^2$，那么对数据的拟合效果可能会有所改善（参见中间图）。有人可能会简单地认为添加的特征越多越好。然而，过度添加特征也存在风险：最右边的图展示了拟合一个五阶多项式 $y = \sum_{j=0}^5 \theta_j x^j$ 的结果。尽管这条拟合曲线完美地穿过了所有数据点，我们也不能期望它能很好地预测不同居住区域 ($x$) 的房价 ($y$)。非正式地借用一下拟合的术语，可以说左边的图是 **欠拟合 (underfitting)** 的一个例子——模型未能捕捉到数据中明显的结构——而右边的图则是一个 **过拟合 (overfitting)** 的例子。（在课程后续的学习理论部分，我们将正式定义这些概念，并更严谨地探讨判断假设优劣的标准。）
+
+正如先前讨论的，特征的选择对于确保学习算法的良好性能至关重要。（在后续关于模型选择的讨论中，我们也会介绍一些能够自动选择合适特征的算法。）在本节中，我们将简要介绍局部加权线性回归 (locally weighted linear regression, LWR) 算法。该算法假设有足够的训练数据，使得特征的选择不那么关键。鉴于在作业中可以自行探索 LWR 算法的一些特性，本节的讲解将较为简略。
+
+在原始的线性回归算法中，为了使用输入 $x$ 进行预测（即计算 $h(x)$ 的值），通常需要执行以下步骤：
+
+1. 拟合 $\theta$ 以最小化 $\sum_i (y^{(i)} - \theta^T x^{(i)})^2$.
+2. 输出 $\theta^T x$.
+
+相比之下，局部加权线性回归算法执行以下步骤：
+
+1. 拟合 $\theta$ 以最小化 $\sum_i w^{(i)} (y^{(i)} - \theta^T x^{(i)})^2$.
+2. 输出 $\theta^T x$.
+
+这里，$w^{(i)}$ 是非负的\textbf{权重 (weights)}。直观上，对于特定的训练样本 $i$，如果 $w^{(i)}$ 较大，则在确定参数 $\theta$ 时，模型会更倾向于使 $(y^{(i)} - \theta^T x^{(i)})^2$ 误差项尽可能小。反之，如果 $w^{(i)}$ 较小，则该误差项在拟合过程中基本上会被忽略。
+
+一种常用的权重选择方法是[^4]
+
+$$
+w^{(i)} = \exp\left(-\frac{(x^{(i)} - x)^2}{2\tau^2}\right).
+$$
+
+需要注意的是，权重取决于要评估的特定点 $x$。此外，如果 $|x^{(i)} - x|$ 的值很小，则 $w^{(i)}$ 接近 1；如果 $|x^{(i)} - x|$ 的值很大，则 $w^{(i)}$ 会很小。因此，在选择 $\theta$ 时，靠近查询点 $x$ 的训练样本（即其误差项 $y^{(i)} - \theta^T x^{(i)}$）会被赋予更高的“权重”。（另外需要说明的是，尽管权重的表达式形式上类似于高斯分布的概率密度函数，但 $w^{(i)}$ 与高斯分布并没有直接联系，特别是 $w^{(i)}$ 并非随机变量，无论是正态分布还是其他分布。）参数 $\tau$ 控制着训练样本的权重随其与查询点 $x$ 距离衰减的速度；$\tau$ 被称为 **带宽 (bandwidth)** 参数，这也是在作业中需要进行实验的内容。
+
+局部加权线性回归是我们遇到的第一个 **非参数化 (non-parametric)** 算法示例。之前讨论的 (无权重) 线性回归算法被称为 **参数化 (parametric)** 学习算法，因为它通过固定数量的参数 ($\theta_i$) 来拟合数据。一旦这些参数 $\theta_i$ 被确定并存储下来，就不再需要保留训练数据来进行后续的预测。相比之下，为了使用局部加权线性回归进行预测，必须保留整个训练集。术语“非参数” (大致) 反映了这样一个事实：表示假设函数 $h$ 所需存储的数据量与训练集的大小呈线性关系。
 
 
 [^1]: 符号 “$a := b$” 用于表示(计算机程序中的)一个操作，其中变量 $a$ 的值被设置为 $b$. 换句话说，这个操作用 $b$ 的值覆盖了 $a$ 的值。反之，如果需要断言 $a$ 的值等于 $b$ 的值，会写作 “$a = b$”.
@@ -295,3 +319,5 @@ $$
 [^2]: 通过在算法运行过程中缓慢地减小学习率 $\alpha$ 至零，可以确保参数收敛到全局最小值，而不仅仅是在最小值附近振荡。
 
 [^3]: 需要注意的是，此处的推导隐式假设了 $X^T X$ 是一个可逆矩阵。在计算其逆矩阵之前，应先进行可逆性检查。当线性独立样本的数量少于特征数量，或者特征之间存在线性相关性时，$X^T X$ 将是不可逆的。即使在这种情况下，也可以通过其他技术来“修复”，但为了保持简洁，此处省略。
+
+[^4]: 如果 $x$ 是向量，则推广为 $w^{(i)} = \exp(-(x^{(i)} - x)^T (x^{(i)} - x) / (2\tau^2))$, 或者 $w^{(i)} = \exp(-(x^{(i)} - x)^T \Sigma^{-1} (x^{(i)} - x) / (2\tau^2))$, 其中 $\tau$ 和 $\Sigma$ 需要选择合适的值。
