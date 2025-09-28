@@ -27,6 +27,8 @@ title: CS229 机器学习 课程讲义
  
  │├─╴[[chapter2_classification_and_logistic_regression#2.1 逻辑回归|2.1 逻辑回归]]
  
- │├─╴2.1 逻辑回归
+ │├─╴[[chapter2_classification_and_logistic_regression#2.2 离题：感知机学习算法|2.2 离题：感知机学习算法]]
  
- │├─╴2.1 逻辑回归
+ │├─╴[[chapter2_classification_and_logistic_regression#2.3 多类别分类|2.3 多类别分类]]
+
+ │└─╴[[chapter2_classification_and_logistic_regression#2.4 最大化 $ ell( theta)$ 的另一种算法|#2.4 最大化 $ ell( theta)$ 的另一种算法]]

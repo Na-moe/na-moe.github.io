@@ -1,5 +1,5 @@
 ---
-title: 第一部分 监督学习
+title: Part Ⅰ 监督学习
 ---
 
 | [[CS229_CN/index\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter1_linear_regression\|下一章]] |
