@@ -220,7 +220,7 @@ $$
 \ell_{\text{ce}}((t_1, \dots, t_k), y) = -\log \left( \frac{\exp(t_y)}{\sum_{j=1}^k \exp(t_j)} \right). \tag{2.14}
 $$
 
-使用此记号，方程 [[chapter2_classification_and_logistic_regression^eqc2eq13|(2.13)]] 可以简写为：
+使用此记号，方程 [[chapter2_classification_and_logistic_regression#^eqc2eq13|(2.13)]] 可以简写为：
 
 $$
 \ell(\theta) = \sum_{i=1}^n \ell_{\text{ce}}((\theta_1^\top x^{(i)}, \dots, \theta_k^\top x^{(i)}), y^{(i)}). \tag{2.15}
@@ -295,4 +295,4 @@ $$
 | [[chapter1_linear_regression\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter2_classification_and_logistic_regression\|下一章]] |
 | :---------------------------------: | :--------------------: | :------------------------------------------------------: |
 
-[^1]: 这里命名存在一些歧义。有些人将交叉熵损失定义为将概率向量 (在本讲义中用 $\phi$ 表示) 和标签 $y$ 映射到实数的函数，并将本讲义中的交叉熵损失称为 softmax-交叉熵损失。本讲义选择当前的命名约定是因为它与大多数现代深度学习库 (如 PyTorch 和 Jax) 的命名一致。
+[^1]: 这里命名存在一些歧义。有些人将交叉熵损失定义为将概率向量 (在本讲义中用 $\phi$ 表示) 和标签 $y$ 映射到实数的函数，并将本讲义中的交叉熵损失称为 $\text{softmax}$-交叉熵损失。本讲义选择当前的命名约定是因为它与大多数现代深度学习库 (如 `PyTorch` 和 `Jax`) 的命名一致。
