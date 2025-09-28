@@ -13,7 +13,7 @@ const config: QuartzConfig = {
     enablePopovers: true,
     analytics: null,
     locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
+    baseUrl: "na-moe.github.io",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
@@ -25,27 +25,27 @@ const config: QuartzConfig = {
         code: "Jetbrains Mono",
       },
       colors: {
-        lightMode: {
-          light: "#fafafa",
-          lightgray: "#e4e5e7",
-          gray: "#9d9d9d",
-          darkgray: "#4e5260",
-          dark: "#383a42",
-          secondary: "#4078f2",
-          tertiary: "#56B6C2",
-          highlight: "rgba(64, 120, 242, 0.15)",
-          textHighlight: "#fff23688",
+        lightMode: {              // one half light
+          light: "#fafafa",     // background
+          lightgray: "#e3e2dd", // background - darkMode(black - background)
+          gray: "#d3d0c8",      // background - darkMode(light black - background)
+          darkgray: "#4f525d",  // black
+          dark: "#383a42",      // light black
+          secondary: "#0184bc", // blue
+          tertiary: "#50a14f",  // green
+          highlight: "#56b5c126",  // light cyan
+          textHighlight: "#e4c07a88", // light yellow
         },
-        darkMode: {
-          light: "#282c34",
-          lightgray: "#3e4451",
-          gray: "#5c6370",
-          darkgray: "#abb2bf",
-          dark: "#e6e6e6",
-          secondary: "#61afef",
-          tertiary: "#78e3bf",
-          highlight: "rgba(97, 175, 239, 0.15)",
-          textHighlight: "#b3aa0288",
+        darkMode: {               // one dark pro
+          light: "#282c34",     // background
+          lightgray: "#3f4451", // black
+          gray: "#4f5666",      // light black
+          darkgray: "#abb2bf",  // foreground
+          dark: "#e6e6e6",      // light white
+          secondary: "#61afef", // blue
+          tertiary: "#98c379",  // green
+          highlight: "#4cd1e026",  // light cyan
+          textHighlight: "#e5c07b88", // light yellow
         },
       },
     },
