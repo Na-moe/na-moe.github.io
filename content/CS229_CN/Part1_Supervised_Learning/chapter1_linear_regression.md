@@ -1,5 +1,5 @@
 ---
-title: Chap.1 线性回归
+title: 第 1 章 线性回归
 ---
 
 | [[CS229_CN/Part1_Supervised_Learning/index\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter2_classification_and_logistic_regression\|下一章]] |

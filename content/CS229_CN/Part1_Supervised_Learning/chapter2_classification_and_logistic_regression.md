@@ -1,5 +1,5 @@
 ---
-title: Chap.2 分类与逻辑回归
+title: 第 2 章 分类与逻辑回归
 ---
 
 | [[chapter1_linear_regression\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter3_generalized_linear_model\|下一章]] |
