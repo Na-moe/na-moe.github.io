@@ -83,7 +83,7 @@
     font-weight: normal;
     font-display: swap;
     src: url("/static/fonts/AlegreyaSC-Medium.woff2") format("woff2");
-    unicode-range: U+00-7F;
+    unicode-range: U+00-7F, U+2150-218F;
 }
 
 @font-face {
@@ -92,7 +92,7 @@
     font-weight: normal;
     font-display: swap;
     src: url("/static/fonts/AlegreyaSC-MediumItalic.woff2") format("woff2");
-    unicode-range: U+00-7F;
+    unicode-range: U+00-7F, U+2150-218F;
 }
 
 @font-face {
