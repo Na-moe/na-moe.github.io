@@ -10,12 +10,10 @@ title: 第 3 章 广义线性模型
 ## 3.1 指数族
 
 为了逐步了解广义线性模型，首先定义指数族分布。如果一类分布可以写成以下形式，则称其为指数族：
-
+ ^eq3-1
 $$
 p(y; \eta) = b(y) \exp(\eta^T T(y) - a(\eta)) \tag{3.1}
 $$
-
-^eq3-1
 
 这里，$\eta$ 称为 **自然参数 (natural parameter)** (也称为 **典范参数 (canonical parameter)**)；$T(y)$ 是 **充分统计量 (sufficient statistic)** (对于所考虑的分布，通常有 $T(y)=y$)；而 $a(\eta)$ 是 **对数配分函数 (log partition function)**。量 $e^{-a(\eta)}$ 实际上起着归一化常数的作用，确保分布 $p(y; \eta)$ 在 $y$ 上的和或积分等于 $1$.
 

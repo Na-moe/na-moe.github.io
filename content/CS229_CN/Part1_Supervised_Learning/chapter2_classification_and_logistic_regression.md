@@ -69,16 +69,16 @@ $$
 
 和之前一样，最大化对数似然会更容易推导：
 
+^eq2-1
 $$
 \begin{equation}
 	\ell(\theta) = \log L(\theta) = \sum_{i=1}^n y^{(i)} \log h(x^{(i)}) + (1 - y^{(i)}) \log(1 - h(x^{(i)})) \tag{2.1}
 \end{equation}
 $$
 
-^eq2-1
-
 那么，如何最大化这个似然函数呢呢？类似于线性回归的推导过程，我们可以采用梯度上升法。以向量形式表示，参数的更新规则为 $\theta := \theta + \alpha \nabla_\theta \ell(\theta)$. (注意更新公式中的正号，因为现在是在最大化函数，而不是最小化函数。) 接下来，我们将从一个训练样本 $(x, y)$ 出发，推导随机梯度上升规则的导数：
 
+^eq2-2
 $$
 \begin{align}
 	\frac{\partial}{\partial \theta_j} \ell(\theta) 
@@ -88,8 +88,6 @@ $$
 	    &= (y - g(\theta^T x)) x_j \tag{2.1}
 \end{align}
 $$
-
-^eq2-2
 
 上面的推导利用了 $g'(z) = g(z)(1-g(z))$ 这一点。这给出了随机梯度上升规则：
 
@@ -208,11 +206,10 @@ $$
 
 因此，损失函数，即训练数据的负对数似然，由下式给出：
 
+^eq2-13
 $$
 \ell(\theta) = \sum_{i=1}^n -\log\left(\frac{\exp(\theta_{y^{(i)}}^T x^{(i)})}{\sum_{j=1}^k \exp(\theta_j^T x^{(i)})}\right). \tag{2.13}
 $$
-
-^eq2-13
 
 定义交叉熵损失 $\ell_{\text{ce}}: \mathbb{R}^k \times \{1, \dots, k\} \to \mathbb{R}_{\ge 0}$ 可以很方便地将上述复杂的方程模块化为：[^1]
 
