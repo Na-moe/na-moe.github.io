@@ -63,7 +63,7 @@ $$
 	L(\theta) 
 		&= p(\vec{y} \mid X; \theta) \\
 		&= \prod_{i=1}^n p(y^{(i)} \mid x^{(i)}; \theta) \\
-		&= \prod_{i=1}^n (h_\theta(x^{(i)}))^{y^{(i)}} (1 - h_\theta(x^{(i)}))^{1-y^{(i)}}
+		&= \prod_{i=1}^n (h_\theta(x^{(i)}))^{y^{(i)}} \left(1 - h_\theta(x^{(i)})\right)^{1-y^{(i)}}
 \end{aligned}
 $$
 
@@ -84,7 +84,7 @@ $$
 	\frac{\partial}{\partial \theta_j} \ell(\theta) 
 		&= \left(y \frac{1}{g(\theta^T x)} - (1-y) \frac{1}{1-g(\theta^T x)}\right) \frac{\partial}{\partial \theta_j} g(\theta^T x) \\
 	    &= \left(y \frac{1}{g(\theta^T x)} - (1-y) \frac{1}{1-g(\theta^T x)}\right) g(\theta^T x)(1-g(\theta^T x)) \frac{\partial}{\partial \theta_j} \theta^T x \\
-	    &= (y(1-g(\theta^T x)) - (1-y)g(\theta^T x)) x_j \\
+	    &= \left(y(1-g(\theta^T x)) - (1-y)g(\theta^T x)\right) x_j \\
 	    &= (y - g(\theta^T x)) x_j \tag{2.1}
 \end{align}
 $$
@@ -94,7 +94,7 @@ $$
 上面的推导利用了 $g'(z) = g(z)(1-g(z))$ 这一点。这给出了随机梯度上升规则：
 
 $$
-\theta_j := \theta_j + \alpha (y^{(i)} - h_\theta(x^{(i)})) x_j^{(i)}
+\theta_j := \theta_j + \alpha \left(y^{(i)} - h_\theta(x^{(i)})\right) x_j^{(i)}
 $$
 
 如果将推导出的逻辑回归更新规则与最小均方更新规则进行比较，会发现它们在形式上是相同的；但这并不是同一个算法，因为这里的 $h_\theta(x^{(i)})$ 是 $\theta^T x^{(i)}$ 的非线性函数。尽管如此，对于一个截然不同的算法和学习问题，却得到了相同的更新规则，这确实有些令人惊讶。这仅仅是巧合吗？抑或是背后存在更深层的原因？我们将在讨论广义线性模型 (GLM) 时解答这个问题。
@@ -150,7 +150,7 @@ $$
 如果像之前一样令 $h_\theta(x) = g(\theta^T x)$, 但使用上述修改后的 $g$ 定义，并且使用更新规则
 
 $$
-\theta_j := \theta_j + \alpha (y^{(i)} - h_\theta(x^{(i)})) x_j^{(i)}.
+\theta_j := \theta_j + \alpha \left(y^{(i)} - h_\theta(x^{(i)})\right) x_j^{(i)}.
 $$
 
 那么就得到了 **感知机学习算法 (perceptron learning algorithm)**。
@@ -266,7 +266,7 @@ $$
 
 以下是牛顿法实际应用的图示：
 
-
+![[CS229_CN/Part1_Supervised_Learning/figs/newton_iteration.svg]]
 
 在最左边的图中，可以看到函数 $f$ 与直线 $y=0$. 尝试找到一个 $\theta$ 使得 $f(\theta)=0$; 这一点的 $\theta$ 值大约是 $1.3$. 假设初始化的算法的 $\theta$ 值为 $4.5$. 然后牛顿法拟合一条在 $\theta=4.5$ 处与 $f$ 相切的直线，并求解该直线等于 $0$ 的点（中间图）。这给出了 $\theta$ 的下一个猜测值，大约是 $2.8$. 最右边的图显示了再进行一次迭代的结果，更新后的 $\theta$ 大约是 $1.8$. 再经过几次迭代后，将迅速接近 $\theta = 1.3$. 
 
