@@ -29,6 +29,10 @@ async function mouseEnterHandler(
     popoverElement.classList.add("active-popover")
     setPosition(popoverElement as HTMLElement)
 
+    // ensures always operate on the live DOM element rather than a closed-over variable reference
+    const popoverInner = popoverElement.querySelector(".popover-inner") as HTMLElement | null
+    if (!popoverInner) return
+
     if (hash !== "") {
       const targetAnchor = `#popover-internal-${hash.slice(1)}`
       const heading = popoverInner.querySelector(targetAnchor) as HTMLElement | null
