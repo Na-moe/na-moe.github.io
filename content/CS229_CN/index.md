@@ -34,3 +34,11 @@ title: CS229 机器学习 课程讲义
  │└─╴[[chapter2_classification_and_logistic_regression#2.4 最大化 ℓ(θ) 的另一种算法|2.4 最大化ℓ(θ) 的另一种算法]]
  
  ├┬╴[[chapter3_generalized_linear_model|第 3 章 广义线性模型]]
+ 
+ │├─╴[[chapter3_generalized_linear_model#3.1 指数族|3.1 指数族]]
+ 
+ │└┬╴[[chapter3_generalized_linear_model#3.2 构造广义线性模型|3.2 构造广义线性模型]]
+
+ │   ├─╴[[chapter3_generalized_linear_model#3.2.1 普通最小二乘|3.2.1 普通最小二乘]]
+ 
+ │   └─╴[[chapter3_generalized_linear_model#3.2.2 逻辑回归|3.2.2 逻辑回归]]
