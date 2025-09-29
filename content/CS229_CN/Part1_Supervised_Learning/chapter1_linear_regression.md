@@ -72,7 +72,7 @@ $$
 
 所推导的 LMS 规则是针对只有一个训练样本的情况。要将其应用于包含多个样本的训练集，有两种常见的方法。第一种方法是将算法修改为以下形式：
 
-$\qquad$重复直到收敛 { ^eqc1eq1
+$\qquad$重复直到收敛 { ^eq1-1
 
 $$
 \begin{equation}
@@ -82,7 +82,7 @@ $$
 
 $\qquad$}
 
-将逐位置的更新重写为 $\theta$ 的向量化更新，可以稍微简化 [[chapter1_linear_regression#^eqc1eq1|(1.1)]]：
+将逐位置的更新重写为 $\theta$ 的向量化更新，可以稍微简化 [[chapter1_linear_regression#^eq1-1|(1.1)]]：
 
 $$
 \theta := \theta + \alpha \sum_{i=1}^n \left(y^{(i)} - h_\theta(x^{(i)})\right) x^{(i)}
@@ -104,7 +104,7 @@ $$
 
 $\qquad$循环 {
 
-$\qquad\qquad$对于 $i = 1$ 到 $n$, { ^eqc1eq2
+$\qquad\qquad$对于 $i = 1$ 到 $n$, { ^eq1-2
 
 $$
 \begin{equation}
@@ -116,7 +116,7 @@ $\qquad\qquad$}
 
 $\qquad$}
    
-将逐位置的更新重写为 $\theta$ 的向量化更新，可以稍微简化 [[chapter1_linear_regression#^eqc1eq2|(1.2)]]：
+将逐位置的更新重写为 $\theta$ 的向量化更新，可以稍微简化 [[chapter1_linear_regression#^eq1-2|(1.2)]]：
 
 $$
 \theta := \theta + \alpha \left(y^{(i)} - h_\theta(x^{(i)})\right) x^{(i)}

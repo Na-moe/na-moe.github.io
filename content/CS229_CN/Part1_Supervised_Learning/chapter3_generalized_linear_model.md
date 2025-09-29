@@ -15,13 +15,13 @@ $$
 p(y; \eta) = b(y) \exp(\eta^T T(y) - a(\eta)) \tag{3.1}
 $$
 
-^eqc3eq1
+^eq3-1
 
 这里，$\eta$ 称为 **自然参数 (natural parameter)** (也称为 **典范参数 (canonical parameter)**)；$T(y)$ 是 **充分统计量 (sufficient statistic)** (对于所考虑的分布，通常有 $T(y)=y$)；而 $a(\eta)$ 是 **对数配分函数 (log partition function)**。量 $e^{-a(\eta)}$ 实际上起着归一化常数的作用，确保分布 $p(y; \eta)$ 在 $y$ 上的和或积分等于 $1$.
 
 固定的 $T$, $a$ 和 $b$ 定义了一个由 $\eta$ 参数化的*族 (family)* (或分布集)；随着 $\eta$ 的变化，将得到该族中的不同分布。
 
-现在展示伯努利分布和高斯分布是指数族分布的示例。具有均值 $\phi$ 的伯努利分布，记为 $\text{Bernoulli}(\phi)$, 其给出了一个在 $y \in \{0, 1\}$ 上的分布，满足 $p(y=1; \phi) = \phi$; $p(y=0; \phi) = 1-\phi$. 随着 $\phi$ 的变化，可以得到具有不同均值的伯努利分布。我们接下来证明，改变 $\phi$ 所得到的这些伯努利分布均属于指数族；也就是说，存在一种 $T, a, b$ 的选择，使得公式 [[chapter3_generalized_linear_model#^eqc3eq1|(3.1)]] 恰好成为伯努利分布。
+现在展示伯努利分布和高斯分布是指数族分布的示例。具有均值 $\phi$ 的伯努利分布，记为 $\text{Bernoulli}(\phi)$, 其给出了一个在 $y \in \{0, 1\}$ 上的分布，满足 $p(y=1; \phi) = \phi$; $p(y=0; \phi) = 1-\phi$. 随着 $\phi$ 的变化，可以得到具有不同均值的伯努利分布。我们接下来证明，改变 $\phi$ 所得到的这些伯努利分布均属于指数族；也就是说，存在一种 $T, a, b$ 的选择，使得公式 [[chapter3_generalized_linear_model#^eq3-1|(3.1)]] 恰好成为伯努利分布。
 
 将伯努利分布写为：
 
@@ -45,7 +45,7 @@ $$
 \end{aligned}
 $$
 
-这表明伯努利分布可以通过选择适当的 $T, a, b$ 从而写成公式 [[chapter3_generalized_linear_model#^eqc3eq1|(3.1)]] 的形式。
+这表明伯努利分布可以通过选择适当的 $T, a, b$ 从而写成公式 [[chapter3_generalized_linear_model#^eq3-1|(3.1)]] 的形式。
 
 接下来考虑高斯分布。回想一下，在线性回归推导中，$\sigma^2$ 的值对最终选择的 $\theta$ 和 $h_\theta(x)$ 没有影响。因此，可以在不改变任何内容的情况下选择任意的 $\sigma^2$ 值。为了简化下面的推导，令 $\sigma^2 = 1$.[^2] 有：
 

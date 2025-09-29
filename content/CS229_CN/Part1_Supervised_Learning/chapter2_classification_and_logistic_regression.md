@@ -75,7 +75,7 @@ $$
 \end{equation}
 $$
 
-^eqc2eq1
+^eq2-1
 
 那么，如何最大化这个似然函数呢呢？类似于线性回归的推导过程，我们可以采用梯度上升法。以向量形式表示，参数的更新规则为 $\theta := \theta + \alpha \nabla_\theta \ell(\theta)$. (注意更新公式中的正号，因为现在是在最大化函数，而不是最小化函数。) 接下来，我们将从一个训练样本 $(x, y)$ 出发，推导随机梯度上升规则的导数：
 
@@ -89,7 +89,7 @@ $$
 \end{align}
 $$
 
-^eqc2eq2
+^eq2-2
 
 上面的推导利用了 $g'(z) = g(z)(1-g(z))$ 这一点。这给出了随机梯度上升规则：
 
@@ -107,7 +107,7 @@ $$
 \ell_{\text{logistic}}(t, y) \triangleq y \log(1 + \exp(-t)) + (1 - y) \log(1 + \exp(t)). \tag{2.3}
 $$
 
-通过代入 $h_\theta(x) = 1/(1 + e^{-\theta^T x})$，可以验证负对数似然 (方程 [[chapter2_classification_and_logistic_regression#^eqc2eq1|(2.1)]] 中 $\ell(\theta)$ 的负值) 可以改写为
+通过代入 $h_\theta(x) = 1/(1 + e^{-\theta^T x})$，可以验证负对数似然 (方程 [[chapter2_classification_and_logistic_regression#^eq2-1|(2.1)]] 中 $\ell(\theta)$ 的负值) 可以改写为
 
 $$
 -\ell(\theta) = \ell_{\text{logistic}}(\theta^T x, y).
@@ -133,7 +133,7 @@ $$
 \end{align}
 $$
 
-这与方程 [[chapter2_classification_and_logistic_regression#^eqc2eq2|(2.2)]] 的推导是一致的。在第 7.1 节中，会看到这种观点可以扩展到非线性模型。
+这与方程 [[chapter2_classification_and_logistic_regression#^eq2-2|(2.2)]] 的推导是一致的。在第 7.1 节中，会看到这种观点可以扩展到非线性模型。
 
 ## 2.2 离题：感知机学习算法
 
@@ -212,7 +212,7 @@ $$
 \ell(\theta) = \sum_{i=1}^n -\log\left(\frac{\exp(\theta_{y^{(i)}}^T x^{(i)})}{\sum_{j=1}^k \exp(\theta_j^T x^{(i)})}\right). \tag{2.13}
 $$
 
-^eqc2eq13
+^eq2-13
 
 定义交叉熵损失 $\ell_{\text{ce}}: \mathbb{R}^k \times \{1, \dots, k\} \to \mathbb{R}_{\ge 0}$ 可以很方便地将上述复杂的方程模块化为：[^1]
 
@@ -220,7 +220,7 @@ $$
 \ell_{\text{ce}}((t_1, \dots, t_k), y) = -\log \left( \frac{\exp(t_y)}{\sum_{j=1}^k \exp(t_j)} \right). \tag{2.14}
 $$
 
-使用此记号，方程 [[chapter2_classification_and_logistic_regression#^eqc2eq13|(2.13)]] 可以简写为：
+使用此记号，方程 [[chapter2_classification_and_logistic_regression#^eq2-13|(2.13)]] 可以简写为：
 
 $$
 \ell(\theta) = \sum_{i=1}^n \ell_{\text{ce}}((\theta_1^\top x^{(i)}, \dots, \theta_k^\top x^{(i)}), y^{(i)}). \tag{2.15}
