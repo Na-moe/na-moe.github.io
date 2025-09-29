@@ -21,7 +21,6 @@ async function mouseEnterHandler(
     })
     Object.assign(popoverElement.style, {
       transform: `translate(${x.toFixed()}px, ${y.toFixed()}px)`,
-      height: `auto`,
     })
   }
 
