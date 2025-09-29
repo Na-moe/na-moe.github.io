@@ -7,9 +7,9 @@ title: CS229 机器学习 课程讲义
 
 ## 目录
 
-[[CS229_CN/Part1_Supervised_Learning/index|第一部分 监督学习]]
+[[CS229_CN/Part1_Supervised_Learning/index|第 I 部分 监督学习]]
 
- ├┬╴ [[chapter1_linear_regression|第一章 线性回归]]
+ ├┬╴ [[chapter1_linear_regression|第 1 章 线性回归]]
  
  │├─╴[[chapter1_linear_regression#1.1 最小均方算法|1.1 最小均方算法]]
  
@@ -23,7 +23,7 @@ title: CS229 机器学习 课程讲义
  
  │└─╴[[chapter1_linear_regression#1.4 局部加权线性回归 (选读)|1.4 局部加权线性回归 (选读)]]
  
- ├┬╴[[chapter2_classification_and_logistic_regression|第二章 分类与逻辑回归]]
+ ├┬╴[[chapter2_classification_and_logistic_regression|第 2 章 分类与逻辑回归]]
  
  │├─╴[[chapter2_classification_and_logistic_regression#2.1 逻辑回归|2.1 逻辑回归]]
  
@@ -32,3 +32,5 @@ title: CS229 机器学习 课程讲义
  │├─╴[[chapter2_classification_and_logistic_regression#2.3 多类别分类|2.3 多类别分类]]
 
  │└─╴[[chapter2_classification_and_logistic_regression#2.4 最大化 ℓ(θ) 的另一种算法|2.4 最大化ℓ(θ) 的另一种算法]]
+ 
+ ├┬╴[[chapter3_generalized_linear_model|第 3 章 广义线性模型]]
