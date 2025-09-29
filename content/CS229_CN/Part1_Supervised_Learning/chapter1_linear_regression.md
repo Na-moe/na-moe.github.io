@@ -134,13 +134,13 @@ $$
 
 $$
 \nabla_A f(A) = \begin{bmatrix} 
-        &\frac{\partial f}{\partial A_{11}} & \cdots & \frac{\partial f}{\partial A_{1d}} & \\ 
-        &\vdots & \ddots & \vdots & \\ 
-        &\frac{\partial f}{\partial A_{n1}} & \cdots & \frac{\partial f}{\partial A_{nd}} &
+        \ \frac{\partial f}{\partial A_{11}} & \cdots & \frac{\partial f}{\partial A_{1d}} \ \\ 
+        \ \vdots & \ddots & \vdots \ \\ 
+        \ \frac{\partial f}{\partial A_{n1}} & \cdots & \frac{\partial f}{\partial A_{nd}} \
     \end{bmatrix}
 $$
 
-因此，梯度 $\nabla_A f(A)$ 本身是一个 $n \times d$ 矩阵，其 $(i, j)$ 元素是 $\partial f / \partial A_{ij}$. 例如，假设 $A = \begin{bmatrix} & A_{11} & A_{12} & \\ & A_{21} & A_{22} & \end{bmatrix}$ 是一个 $2 \times 2$ 矩阵，并且函数 $f: \mathbb{R}^{2 \times 2} \mapsto \mathbb{R}$ 由下式给出
+因此，梯度 $\nabla_A f(A)$ 本身是一个 $n \times d$ 矩阵，其 $(i, j)$ 元素是 $\partial f / \partial A_{ij}$. 例如，假设 $A = \begin{bmatrix} \ A_{11} & A_{12} \ \\ \ A_{21} & A_{22} \ \end{bmatrix}$ 是一个 $2 \times 2$ 矩阵，并且函数 $f: \mathbb{R}^{2 \times 2} \mapsto \mathbb{R}$ 由下式给出
 
 $$
 f(A) = \frac{3}{2} A_{11} + 5 A_{12}^2 + A_{21} A_{22}.
@@ -149,7 +149,11 @@ $$
 这里，$A_{ij}$ 表示矩阵 $A$ 在 $(i, j)$ 位置上的元素。则可以得到
 
 $$
-\nabla_A f(A) = \begin{bmatrix} & \frac{3}{2} & 10A_{12} & \\ & A_{22} & A_{21}& \end{bmatrix}.
+\nabla_A f(A) = 
+\begin{bmatrix} 
+	\ \frac{3}{2} & 10A_{12} \ \\
+	\ A_{22} & A_{21} \ 
+\end{bmatrix}.
 $$
 
 ### 再探最小二乘法
@@ -159,13 +163,25 @@ $$
 给定一个训练集，我们定义 **设计矩阵 (design matrix)** $X$. 这是一个 $n \times d$ 矩阵（如果包含截距项，则为 $n \times (d+1)$ 矩阵），其每一行对应一个训练样本的输入特征向量：
 
 $$
-X = \begin{bmatrix} &— (x^{(1)})^T —& \\ &— (x^{(2)})^T —& \\ &\vdots& \\ &— (x^{(n)})^T —& \end{bmatrix}.
+X = 
+\begin{bmatrix} 
+	\ —\ (x^{(1)})^T\ — \ \\
+	\ —\ (x^{(2)})^T\ — \ \\
+	\ \vdots \ \\
+	\ —\ (x^{(n)})^T\ — \ 
+\end{bmatrix}.
 $$
 
 进一步地，我们定义向量 $\vec{y}$，它是一个 $n$ 维列向量，其分量依次为训练集中各个样本的目标值：
 
 $$
-\vec{y} = \begin{bmatrix} &y^{(1)}& \\ &y^{(2)}& \\ &\vdots& \\ &y^{(n)}& \end{bmatrix}.
+\vec{y} = 
+\begin{bmatrix} 
+	\ y^{(1)} \ \\
+	\ y^{(2)} \ \\
+	\ \vdots \ \\
+	\ y^{(n)} \ 
+\end{bmatrix}.
 $$
 
 根据 $h_\theta(x^{(i)}) = (x^{(i)})^T \theta$, 不难验证
@@ -173,9 +189,22 @@ $$
 $$
 \begin{aligned}
 	X\theta - \vec{y} 
-		&= \begin{bmatrix} &(x^{(1)})^T \theta& \\ &\vdots& \\ &(x^{(n)})^T \theta& \end{bmatrix} - \begin{bmatrix} &y^{(1)}& \\ &\vdots& \\ &y^{(n)}& \end{bmatrix} \\
-		
-		&= \begin{bmatrix} &h_\theta(x^{(1)}) - y^{(1)}& \\ &\vdots& \\ &h_\theta(x^{(n)}) - y^{(n)}& \end{bmatrix}.
+		&= \begin{bmatrix} 
+				\ (x^{(1)})^T \theta \ \\
+				\ \vdots \ \\
+				\ (x^{(n)})^T \theta \ 
+			\end{bmatrix} 
+			-
+			\begin{bmatrix} 
+				\ y^{(1)} \ \\
+				\ \vdots \ \\
+				\ y^{(n)} \
+			\end{bmatrix} \\
+		&= \begin{bmatrix} 
+			\ h_\theta(x^{(1)}) - y^{(1)} \ \\
+			\ \vdots \ \\
+			\ h_\theta(x^{(n)}) - y^{(n)} \ 
+		\end{bmatrix}.
 \end{aligned}
 $$
 

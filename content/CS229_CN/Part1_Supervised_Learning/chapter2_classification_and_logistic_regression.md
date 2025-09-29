@@ -168,9 +168,9 @@ $$
 $$
 \text{softmax}(t_1, \dots, t_k) = 
 \begin{bmatrix} 
-	\frac{\exp(t_1)}{\sum_{j=1}^k \exp(t_j)} \\
-	\vdots \\
-	\frac{\exp(t_k)}{\sum_{j=1}^k \exp(t_j)}
+	\ \frac{\exp(t_1)}{\sum_{j=1}^k \exp(t_j)} \ \\
+	\ \vdots \ \\
+	\ \frac{\exp(t_k)}{\sum_{j=1}^k \exp(t_j)}\
 \end{bmatrix}. \tag{2.9}
 $$
 
@@ -180,15 +180,15 @@ $\text{softmax}$ 函数的输入，即这里的向量 $t$, 通常被称为 *logi
 
 $$
 \begin{bmatrix} 
-	P(y = 1 \mid x; \theta) \\
-	\vdots& \\
-	P(y = k \mid x; \theta)
+	\ P(y = 1 \mid x; \theta) \ \\
+	\ \vdots \ \\
+	\ P(y = k \mid x; \theta) \
 \end{bmatrix} =
 \text{softmax}(t_1, \dots, t_k) = 
 \begin{bmatrix} 
-&\frac{\exp(\theta_1^T x)}{\sum_{j=1}^k \exp(\theta_j^T x)}& \\
-&\vdots& \\
-&\frac{\exp(\theta_k^T x)}{\sum_{j=1}^k \exp(\theta_j^T x)}&
+	\ \frac{\exp(\theta_1^T x)}{\sum_{j=1}^k \exp(\theta_j^T x)} \ \\
+	\ \vdots \ \\
+	\ \frac{\exp(\theta_k^T x)}{\sum_{j=1}^k \exp(\theta_j^T x)} \
 \end{bmatrix}. \tag{2.10}
 $$
 
