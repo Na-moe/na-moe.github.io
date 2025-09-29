@@ -82,10 +82,10 @@ $$
 $$
 \begin{align}
 	\frac{\partial}{\partial \theta_j} \ell(\theta) 
-		&= \left(y \frac{1}{g(\theta^T x)} - (1-y) \frac{1}{1-g(\theta^T x)}\right) \frac{\partial}{\partial \theta_j} g(\theta^T x) \\
-	    &= \left(y \frac{1}{g(\theta^T x)} - (1-y) \frac{1}{1-g(\theta^T x)}\right) g(\theta^T x)(1-g(\theta^T x)) \frac{\partial}{\partial \theta_j} \theta^T x \\
-	    &= \left(y(1-g(\theta^T x)) - (1-y)g(\theta^T x)\right) x_j \\
-	    &= (y - g(\theta^T x)) x_j \tag{2.1}
+		&= \left(y \frac{1}{g(\theta^T x)} - (1-y) \frac{1}{1-g(\theta^T x)}\right) \frac{\partial}{\partial \theta_j} g(\theta^T x) \notag\\
+	    &= \left(y \frac{1}{g(\theta^T x)} - (1-y) \frac{1}{1-g(\theta^T x)}\right) g(\theta^T x)(1-g(\theta^T x)) \frac{\partial}{\partial \theta_j} \theta^T x \notag\\
+	    &= \left(y(1-g(\theta^T x)) - (1-y)g(\theta^T x)\right) x_j \notag\\
+	    &= (y - g(\theta^T x)) x_j \tag{2.2}
 \end{align}
 $$
 
