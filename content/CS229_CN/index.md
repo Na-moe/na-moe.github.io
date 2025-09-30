@@ -41,6 +41,14 @@ title: CS229 机器学习 课程讲义
 > > ║ ╚ [[chapter4_generative_learning_algorithms#4.2 朴素贝叶斯 (选读)|4.2 朴素贝叶斯 (选读)]]  
 > > ║  &emsp;&nbsp;╠ [[chapter4_generative_learning_algorithms#4.2.1 拉普拉斯平滑|4.2.1 拉普拉斯平滑]]  
 > > ║  &emsp;&nbsp;╚ [[chapter4_generative_learning_algorithms#4.2.2 文本分类的事件模型|4.2.2 文本分类的事件模型]]  
+>   
+> > [!example]-  [[chapter5_kernel_methods|第 5 章 核方法]]  
+> > 
+> > ║ ╠ [[chapter5_kernel_methods#5.1 特征映射|5.1 特征映射]]  
+> > ║ ╠ [[chapter5_kernel_methods#5.2 特征的最小均方|5.2 特征的最小均方]]  
+> > ║ ╠ [[chapter5_kernel_methods#5.3 使用核技巧的最小均方|5.3 使用核技巧的最小均方]]  
+> > ║ ╚ [[chapter5_kernel_methods#5.4 核的性质|5.4 核的性质]]  
+> > 
 
 
 
