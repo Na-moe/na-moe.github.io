@@ -2,15 +2,15 @@
 
 // put your custom CSS here!
 @font-face {
-    font-family: "Alegreya";
+    font-family: "Iowan-old-style";
     font-style: normal;
     font-weight: normal;
     font-display: swap;
-    src: url("/static/fonts/LXGWWenKaiGBLite-Regular.woff2") format("woff2");
+    src: url("/static/fonts/LXGWWenKaiGBLite-Medium.woff2") format("woff2");
 }
 
 @font-face {
-    font-family: "Alegreya";
+    font-family: "Iowan-old-style";
     font-style: normal;
     font-weight: bold;
     font-display: swap;
@@ -22,7 +22,7 @@
     font-style: normal;
     font-weight: normal;
     font-display: swap;
-    src: url("/static/fonts/LXGWWenKaiGBLite-Regular.woff2") format("woff2");
+    src: url("/static/fonts/LXGWWenKaiGBLite-Meidum.woff2") format("woff2");
 }
 
 @font-face {
@@ -38,42 +38,33 @@
     font-style: normal;
     font-weight: normal;
     font-display: swap;
-    src: url("/static/fonts/LXGWWenKaiMonoGBLite-Regular.woff2") format("woff2");
+    src: url("/static/fonts/LXGWWenKaiMonoGBLite-Medium.woff2") format("woff2");
 }
 
 @font-face {
-    font-family: "Alegreya";
+    font-family: "Iowan-old-style";
     font-style: normal;
     font-weight: normal;
     font-display: swap;
-    src: url("/static/fonts/Alegreya-Regular.woff2") format("woff2");
+    src: url("/static/fonts/iowan-old-style_regular.woff2") format("woff2");
     unicode-range: U+0000-2EFF;
 }
 
 @font-face {
-    font-family: "Alegreya";
+    font-family: "Iowan-old-style";
     font-style: italic;
     font-weight: normal;
     font-display: swap;
-    src: url("/static/fonts/Alegreya-Italic.woff2") format("woff2");
+    src: url("/static/fonts/iowan-old-style_italic.woff2") format("woff2");
     unicode-range: U+0000-2EFF;
 }
 
 @font-face {
-    font-family: "Alegreya";
+    font-family: "Iowan-old-style";
     font-style: normal;
     font-weight: bold;
     font-display: swap;
-    src: url("/static/fonts/Alegreya-Bold.woff2") format("woff2");
-    unicode-range: U+0000-2EFF;
-}
-
-@font-face {
-    font-family: "Alegreya";
-    font-style: italic;
-    font-weight: bold;
-    font-display: swap;
-    src: url("/static/fonts/Alegreya-BoldItalic.woff2") format("woff2");
+    src: url("/static/fonts/iowan-old-style_bold.woff2") format("woff2");
     unicode-range: U+0000-2EFF;
 }
 
@@ -101,15 +92,6 @@
     font-weight: bold;
     font-display: swap;
     src: url("/static/fonts/AlegreyaSC-Bold.woff2") format("woff2");
-    unicode-range: U+0000-2EFF;
-}
-
-@font-face {
-    font-family: "Alegreya SC";
-    font-style: italic;
-    font-weight: bold;
-    font-display: swap;
-    src: url("/static/fonts/AlegreyaSC-BoldItalic.woff2") format("woff2");
     unicode-range: U+0000-2EFF;
 }
 

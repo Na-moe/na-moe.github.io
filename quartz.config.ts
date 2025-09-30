@@ -21,7 +21,7 @@ const config: QuartzConfig = {
       cdnCaching: false,
       typography: {
         header: "Alegreya SC",
-        body: "Alegreya",
+        body: "Iowan-old-style",
         code: "Jetbrains Mono",
       },
       colors: {
