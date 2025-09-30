@@ -11,7 +11,23 @@
 
 @font-face {
     font-family: "Iowan-old-style";
+    font-style: italic;
+    font-weight: normal;
+    font-display: swap;
+    src: url("/static/fonts/LXGWWenKaiGBLite-Medium.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Iowan-old-style";
     font-style: normal;
+    font-weight: bold;
+    font-display: swap;
+    src: url("/static/fonts/LXGWZhenKaiGB-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Iowan-old-style";
+    font-style: italic;
     font-weight: bold;
     font-display: swap;
     src: url("/static/fonts/LXGWZhenKaiGB-Regular.woff2") format("woff2");
