@@ -48,5 +48,17 @@ title: CS229 机器学习 课程讲义
 > > ║ ╠ [[chapter5_kernel_methods#5.2 特征的最小均方|5.2 特征的最小均方]]  
 > > ║ ╠ [[chapter5_kernel_methods#5.3 使用核技巧的最小均方|5.3 使用核技巧的最小均方]]  
 > > ║ ╚ [[chapter5_kernel_methods#5.4 核的性质|5.4 核的性质]]  
+>   
+> > [!example]-  [[chapter6_support_vector_machines|第 6 章 支持向量机]]  
 > > 
+> > &emsp; ╠ [[chapter6_support_vector_machines#6.1 间隔：直觉|6.1 间隔：直觉]]  
+> > &emsp;&emsp; ╠ [[chapter6_support_vector_machines#6.2 符号 (选读)|6.2 符号 (选读)]]  
+> > &emsp;&emsp; ╠ [[chapter6_support_vector_machines#6.3 函数间隔与几何间隔 (选读)|6.3 函数间隔与几何间隔 (选读)]]  
+> > &emsp;&emsp; ╠ [[chapter6_support_vector_machines#6.4 最优间隔分类器 (选读)|6.4 最优间隔分类器 (选读)]]  
+> > &emsp;&emsp; ╠ [[chapter6_support_vector_machines#6.5 拉格朗日对偶 (选读)|6.5 拉格朗日对偶 (选读)]]  
+> > &emsp;&emsp; ╠ [[chapter6_support_vector_machines#6.6 最优间隔分类器：对偶形式 (选读)|6.6 最优间隔分类器：对偶形式 (选读)]]  
+> > &emsp;&emsp; ╠ [[chapter6_support_vector_machines#6.7 正则化与非线性可分情况 (选读)|6.7 正则化与非线性可分情况 (选读)]]  
+> > &emsp;&emsp; ╚ [[chapter6_support_vector_machines#6.8 SMO 算法 (选读)|6.8 SMO 算法 (选读)]]  
 
+> [!example]- [[CS229_CN/Part1_Supervised_Learning/index|第 II 部分 深度学习]]  
+>   
