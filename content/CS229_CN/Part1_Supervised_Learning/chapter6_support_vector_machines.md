@@ -267,7 +267,7 @@ $$
 
 <font color='blue'>注：</font> *优化问题 [[chapter6_support_vector_machines#^eq6-8|(6.8)]] 与优化问题 [[chapter6_support_vector_machines#^eq6-12|(6.12)]] 的等价性，以及方程 [[chapter6_support_vector_machines#^eq6-10|(6.10)]] 中原始变量和对偶变量之间的关系是本节最重要的收获。*
 
-前面，提出了以下寻找最优间隔分类器的问题 (原始) 优化问题：
+前面提出了寻找最优间隔分类器的问题 (原始) 优化问题，形式如下：
 
 ^eq6-8
 $$
@@ -283,7 +283,7 @@ $$
 g_i(w) = -y^{(i)}(w^T x^{(i)} + b) + 1 \le 0.
 $$
 
-每个训练样本都有一个这样的约束。注意，根据 KKT 对偶互补性条件，只有当训练样本的功能间隔恰好等于 $1$ 时 (即，对应于满足等式 $g_i(w) = 0$ 的约束)，$\alpha_i$ 才大于 $0$. 考虑下图中，其中实线表示最大间隔分离超平面。
+每个训练样本都有一个这样的约束。注意，根据 KKT 对偶互补性条件，只有当训练样本的功能间隔恰好等于 $1$ 时 (即，对应于满足等式 $g_i(w) = 0$ 的约束)，$\alpha_i$ 才大于 $0$. 可以考虑下图中的情形，其中实线表示最大间隔分离超平面。
 
 \begin{figure}[H]
     \centering
@@ -346,8 +346,9 @@ $$
 \end{align}
 $$
 
-还应该能够验证 $p^* = d^*$ 所需的条件以及 KKT 条件 (式 [[chapter6_support_vector_machines#^eq6-5|(6.5)]]-[[chapter6_support_vector_machines#^eq6-5|(6.5)]]) 在我们的优化问题里确实满足。因此，可以通过求解对偶问题来求解原问题。具体而言，在上述对偶问题中，这是一个最大化问题，其中的参数是 $\alpha_i$. 稍后将讨论用于求解对偶问题的具体算法，但如果确实能够求解它 (即找到使 $W(\alpha)$ 最大化且满足约束的 $\alpha$ )，那么就可以使用式 [[chapter6_support_vector_machines#^eq6-10|(6.10)]] 回过头来找到最优的 $w$ 作为 $\alpha$ 的函数。找到 $w^*$ 后，通过考虑原问题，也很容易找到截距项 $b$ 的最优值，如下所示：
+还应该能够验证 $p^* = d^*$ 所需的条件以及 KKT 条件 (式 [[chapter6_support_vector_machines#^eq6-5|(6.3)]]-[[chapter6_support_vector_machines#^eq6-5|(6.7)]]) 在我们的优化问题里确实满足。因此，可以通过求解对偶问题来求解原问题。具体而言，在上述对偶问题中，这是一个最大化问题，其中的参数是 $\alpha_i$. 稍后将讨论用于求解对偶问题的具体算法，但如果确实能够求解它 (即找到使 $W(\alpha)$ 最大化且满足约束的 $\alpha$ )，那么就可以使用式 [[chapter6_support_vector_machines#^eq6-10|(6.10)]] 回过头来找到最优的 $w$ 作为 $\alpha$ 的函数。找到 $w^*$ 后，通过考虑原问题，也很容易找到截距项 $b$ 的最优值，如下所示：
 
+^eq6-13
 $$
 b^* = - \frac{\max_{i:y^{(i)}=-1} w^{*T} x^{(i)} + \min_{i:y^{(i)}=1} w^{*T} x^{(i)}}{2}. \tag{6.13}
 $$
@@ -370,19 +371,186 @@ $$
 
 ## 6.7 正则化与非线性可分情况 (选读)
 
-lorem
+目前为止介绍的支持向量机推导假设数据是线性可分的。虽然通过 $\phi$ 将数据映射到高维特征空间通常会增加数据可分的可能性，但不能保证总是如此。此外，在某些情况下，找到一个分离超平面并非完全符合期望，因为它可能对离群点敏感。例如，下面左图显示了一个最优间隔分类器，当在左上方区域 (右图) 添加一个离群点时，决策边界会发生剧烈变化，并且得到的分类器的间隔会小得多。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.93\linewidth]{figs/svm_regularization.png}
+\end{figure}
+
+为了使算法也适用于非线性可分数据集并降低对离群点的敏感度，我们重新构建了优化问题(使用 $\ell_1$ **正则化 (regularization)**)，如下所示：
+
+$$
+\begin{aligned}
+    \min_{\gamma,w,b} \quad& \frac{1}{2}\|w\|^2 + C \sum_{i=1}^n \xi_i \\
+    \text{s.t.} \quad& y^{(i)}(w^T x^{(i)} + b) \ge 1 - \xi_i, \quad i=1,\dots,n \\
+    &\xi_i \ge 0, \quad i=1,\dots,n.
+\end{aligned}
+$$
+
+因此，现在允许存在（函数）间隔小于 1 的样本，如果一个样本的函数间隔为 $1-\xi_i$ (其中 $\xi_i > 0$ ), 那么目标函数会增加 $C\xi_i$ 的代价。参数 $C$ 控制了两个目标之间的相对权重：使 $\|w\|^2$ 变小 (如前面所述，这会使间隔变大) 以及确保大多数样本的函数间隔至少为 $1$.
+
+与之前一样，可以构建拉格朗日函数：
+
+$$
+\mathcal{L}(w, b, \xi, \alpha, r) = \frac{1}{2} w^T w + C \sum_{i=1}^n \xi_i - \sum_{i=1}^n \alpha_i [y^{(i)}(w^T x^{(i)} + b) - 1 + \xi_i] - \sum_{i=1}^n r_i \xi_i.
+$$
+
+这里，$\alpha_i$ 和 $r_i$ 是拉格朗日乘子 (约束为 $\ge 0$ )。将不再详细推导对偶问题，但在像之前一样将关于 $w$ 和 $b$ 的导数设为零，然后代入并简化后，得到问题的对偶形式：
+
+$$
+\begin{aligned}
+    \max{\alpha} \quad& W(a)=\sum_{i=1}^{n}a_i - \frac12 \sum_{i,j=1}^n y^{(i)}y^{(j)}\alpha_i\alpha_j\langle x^{(i)}x^{(j)} \rangle \\
+    \text{s.t.} \quad& 0\le \alpha_i\le C, \quad i=1,\dots,n \\
+    &\sum_{i=1}^{n}\alpha_i y^{(i)}=0.
+\end{aligned}
+$$
+
+与之前一样，同样有 $w$ 可以表示为 $\alpha_i$ 的函数，如式 [[chapter6_support_vector_machines#^eq6-10|(6.10)]] 所示，因此在求解对偶问题后，可以继续使用式 [[chapter6_support_vector_machines#^eq6-15|(6.15)]] 进行预测。注意，令人惊讶的是，在添加 $\ell_1$ 正则化后，对偶问题唯一的改变是原先的约束 $0 \le \alpha_i$ 现在变成了 $0 \le \alpha_i \le C$. 对 $b^*$ 的计算也必须进行修改 (式 [[chapter6_support_vector_machines#^eq6-13|(6.13)]] 不再有效)；请参阅下一节中的注释或 Platt 的论文。
+
+此外，KKT 对偶互补条件（在下一节中将用于测试 SMO 算法的收敛性）为：
+
+^eq6-16
+$$
+\begin{align}
+    \alpha_i = 0 &\Rightarrow y^{(i)}(w^T x^{(i)} + b) \ge 1 \tag{6.16} \\
+    \alpha_i = C &\Rightarrow y^{(i)}(w^T x^{(i)} + b) \le 1 \tag{6.17} \\
+    0 < \alpha_i < C &\Rightarrow y^{(i)}(w^T x^{(i)} + b) = 1. \tag{6.18}
+\end{align}
+$$
+
+现在，剩下的就是给出一个实际求解对偶问题的算法，这将在下一节中进行。
 
 ## 6.8 SMO 算法 (选读)
 
-lorem
+序列最小化 (sequential minimal optimization, SMO) 算法，由 John Platt 提出，提供了一种有效求解由 SVM 推导得到的对偶问题的方法。部分是为了引出 SMO 算法，部分是因为它本身很有趣，让我们先再进行一次岔开讨论，谈谈坐标上升算法。
 
 ### 6.8.1 坐标上升
 
-lorem
+考虑尝试求解无约束优化问题
+
+$$
+\max_\alpha W(\alpha_1, \alpha_2, \dots, \alpha_n).
+$$
+
+这里，将 $W$ 视为参数 $\alpha_i$ 的某个函数，暂时忽略这个问题与支持向量机之间的任何关系。之前已经见过两种优化算法：梯度上升和牛顿法。这里要考虑的新算法称为 **坐标上升 (coordinate ascent)**：
+
+$\qquad$循环直到收敛: \{
+
+$\qquad\qquad$对于 $i=1,\dots,n,$ \{
+        
+$$
+\alpha_i := \arg\max_{\hat a_i} W(\alpha_1,\dots,\alpha_{i-1},\hat{\alpha_i},\alpha_{i+1},\dots,\alpha_n).
+$$
+        
+ $\qquad\qquad$}
+
+$\qquad$\}
+
+因此，在该算法的最内层循环中，将固定除某个 $\alpha_i$ 之外的所有变量，并仅针对参数 $\alpha_i$ 重新优化 $W$. 然后内层循环按 $\alpha_1, \alpha_2, \dots, \alpha_n, \alpha_1, \alpha_2, \dots$ 的顺序重新优化变量。(更复杂的版本可以选择其他顺序；例如，可以根据期望哪个变量能使 $W(\alpha)$ 增加最大来选择下一个要更新的变量。)
+
+当函数 $W$ 的形式恰好使得内层循环中的 “arg max” 可以高效执行时，坐标上升可以是一个相当高效的算法。这里是坐标上升算法的一个图例：
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figs/svm_coordinate_ascent.png}
+\end{figure}
+
+
+图中的椭圆是我们想要优化的二次函数的等高线。坐标上升从 $(2, -2)$ 初始化，图中绘制了它通往全局最大值的路径。注意到在每一步，坐标上升都沿着与一个坐标轴平行的方向前进，因为每次只优化一个变量。
 
 ### 6.8.2 SMO
 
-lorem
+下面通过概述 SMO 算法的推导来结束对支持向量机的讨论。
+
+这是我们想要解决的（对偶）优化问题：
+
+^eq6-20
+$$
+\begin{align}
+    \max_\alpha \quad &W(\alpha) = \sum_{i=1}^n \alpha_i - \frac{1}{2} \sum_{i,j=1}^n y^{(i)} y^{(j)} \alpha_i \alpha_j \langle x^{(i)}, x^{(j)} \rangle \notag \\
+    \text{s.t.} \quad &0 \le \alpha_i \le C, \quad i=1,\dots,n \tag{6.20}\\
+    &\sum_{i=1}^n \alpha_i y^{(i)} = 0. \tag{6.21}
+\end{align}
+$$
+
+假设我们有一组满足约束 [[chapter6_support_vector_machines#^eq6-20|(6.20-6.21)]] 的 $\alpha_i$. 现在，假设固定 $\alpha_2, \dots, \alpha_n$, 并进行坐标上升步骤，关于 $\alpha_1$ 重新优化目标函数。这样能取得进展吗？答案是否定的，因为约束 [[chapter6_support_vector_machines#^eq6-20|(6.21)]] 确保
+
+$$
+\alpha_1 y^{(1)} = - \sum_{i=2}^n \alpha_i y^{(i)}.
+$$
+
+或者，通过将两边乘以 $y^{(1)}$, 我们等价地得到
+
+$$
+\alpha_1 = -y^{(1)} \sum_{i=2}^n \alpha_i y^{(i)}.
+$$
+
+(这一步使用了 $y^{(1)} \in \{-1, 1\}$ 的事实，因此 $(y^{(1)})^2 = 1$.) 因此，$\alpha_1$ 完全由其他 $\alpha_i$ 确定，如果固定 $\alpha_2, \dots, \alpha_n$, 那么在不违反优化问题中的约束 [[chapter6_support_vector_machines#^eq6-20|(6.21)]] 的情况下，无法对 $\alpha_1$ 进行任何改变。
+
+因此，如果想要更新一些 $\alpha_i$, 必须同时更新至少两个，以便保持约束得到满足。这促使了 SMO 算法，其简单来说就是以下步骤：
+
+
+$\qquad$重复直到收敛 \{
+
+$\qquad\quad$ 1. 选择一对 $a_i$ 和 $\alpha_j$ 进行下一次更新 (使用启发式方法来选择能够最大程度接近全局最大值的两个变量);
+
+$\qquad\quad$ 2. 在保持所有其他 $\alpha_k$ ($k \ne i, j$) 固定的情况下，关于 $\alpha_i$ 和 $\alpha_j$ 重新优化 $W(\alpha)$ .
+
+$\qquad$\}
+
+为了测试该算法的收敛性，可以检查 KKT 条件 (式 [[chapter6_support_vector_machines#^eq6-16|(6.16-6.18)]]) 是否在某个 $\textit{容差 (tol)}$ 内得到满足。这里，容差是收敛容差参数，通常设置为 $0.01$ 到 $0.001$. (详细信息请参阅论文和伪代码。)
+
+SMO 算法高效的关键原因在于 $\alpha_i, \alpha_j$ 的更新可以非常高效地计算。现在简要概述推导高效更新的主要思路。
+
+假设当前有一组满足约束 ([[chapter6_support_vector_machines#^eq6-20|(6.20-6.21)]]) 的 $\alpha_i$, 并且固定 $\alpha_3, \dots, \alpha_n$, 然后在约束限制下关于 $a_1$ 和 $a_2$ 重新优化 $W(\alpha_1, \alpha_2, \dots, \alpha_n)$. 根据 [[chapter6_support_vector_machines#^eq6-20|(6.21)]], 我们要求
+
+$$
+\alpha_1 y^{(1)} + \alpha_2 y^{(2)} = - \sum_{i=3}^n \alpha_i y^{(i)}.
+$$
+
+由于右侧是固定的 (因为已经固定了 $\alpha_3, \dots, \alpha_n$ )，可以将其记为某个常数 $\zeta$:
+
+^eq6-22
+$$
+\alpha_1 y^{(1)} + \alpha_2 y^{(2)} = \zeta. \tag{6.22}
+$$
+
+因此，可以将 $\alpha_1$ 和 $\alpha_2$ 的约束可视化如下：
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figs/svm_smo_constraint.png}
+\end{figure}
+
+从约束 [[chapter6_support_vector_machines#^eq6-20|(6.20)]] 中，我们知道 $\alpha_1$ 和 $\alpha_2$ 必须位于所示的盒子 $[0, C] \times [0, C]$ 内。还绘制了直线 $\alpha_1 y^{(1)} + \alpha_2 y^{(2)} = \zeta$, 我们知道 $\alpha_1$ 和 $\alpha_2$ 必须位于该直线上。另外注意，从这些约束中可以推出 $L \le \alpha_2 \le H$; 否则，$(\alpha_1, \alpha_2)$ 无法同时满足盒子约束和直线约束。在此示例中，$L=0$. 但这取决于直线 $\alpha_1 y^{(1)} + \alpha_2 y^{(2)} = \zeta$ 的样子，情况并非总是如此；更普遍地，对于 $\alpha_2$ 的允许值，会有一个下界 $L$ 和一个上界 $H$, 以确保 $\alpha_1, \alpha_2$ 位于盒子 $[0, C] \times [0, C]$ 内。
+
+使用方程[[chapter6_support_vector_machines#^eq6-22|(6.22)]]，我们还可以将 $\alpha_1$ 写成 $\alpha_2$ 的函数：
+
+$$
+\alpha_1 = (\zeta - \alpha_2 y^{(2)}) y^{(1)}.
+$$
+
+(请自行验证此推导；我们再次使用了 $y^{(1)} \in \{-1, 1\}$ 的事实，因此 $(y^{(1)})^2 = 1$.) 因此，目标函数 $W(\alpha)$ 可以写成
+
+$$
+W(\alpha_1, \alpha_2, \dots, \alpha_n) = W((\zeta - \alpha_2 y^{(2)}) y^{(1)}, \alpha_2, \dots, \alpha_n).
+$$
+
+将 $\alpha_3, \dots, \alpha_n$ 视为常数，应该能够验证这是关于 $\alpha_2$ 的二次函数。也就是说，这也可以表示为 $a\alpha_2^2 + b\alpha_2 + c$ 的形式，其中 $a, b, c$ 是适当的常数。如果忽略“盒子”约束 [[chapter6_support_vector_machines#^eq6-20|(6.20)]] (或等价地，忽略 $L \le \alpha_2 \le H$ ), 那么我们可以通过将其导数设为零并求解来轻松最大化此二次函数。我们将令 $\alpha_2^{\text{new,unclipped}}$ 表示由此产生的 $\alpha_2$ 值。还应该能够证明，如果改为在受盒子约束限制条件下最大化关于 $\alpha_2$ 的 $W$, 那么可以通过简单地取 $\alpha_2^{\text{new,unclipped}}$ 并将其“剪裁”到 $[L, H]$ 区间内，得到
+
+$$
+\alpha_2^{\text{new}} = 
+	\begin{cases}
+        H & \text{若}\  \alpha_2^{\text{new,unclipped}} > H \\
+        \alpha_2^{\text{new,unclipped}} & \text{若}\  L \le \alpha_2^{\text{new,unclipped}} \le H \\
+        L & \text{若}\  \alpha_2^{\text{new,unclipped}} < L
+    \end{cases}
+$$
+
+最后，找到 $\alpha_2^{\text{new}}$ 后，可以使用方程 [[chapter6_support_vector_machines#^eq6-22|(6.22)]] 返回并找到 $\alpha_1^{\text{new}}$ 的最优值。
+
+还有一些细节非常简单，但我们将留给您自己在 Platt 的论文中阅读：一个是用于选择下一个要更新的 $\alpha_i, \alpha_j$ 的启发式方法的选择；另一个是 SMO 算法运行时如何更新 $b$.
 
 | [[chapter5_kernel_methods\|上一章]] | [[CS229_CN/index\|目录]] | 下一章 |
 | :------------------------------: | :--------------------: | :-: |
