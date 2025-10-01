@@ -1,8 +1,8 @@
 ---
 title: 第 5 章 核方法
 ---
-| [[chapter4_generative_learning_algorithms\|上一章]] | [[CS229_CN/index\|目录]] | 下一章 |
-| :----------------------------------------------: | :--------------------: | :-: |
+| [[chapter4_generative_learning_algorithms\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter6_support_vector_machines\|下一章]] |
+| :----------------------------------------------: | :--------------------: | :---------------------------------------: |
 
 ## 5.1 特征映射
 
@@ -61,6 +61,7 @@ $$
 
 当特征 $\phi(x)$ 是高维向量时，上面的梯度下降或随机梯度下降更新在计算上变得昂贵。举例来说，考虑将方程 [[chapter5_kernel_methods#^eq5-1|(5.1)]] 中的特征映射直接扩展到高维输入 $x$: 假设 $x \in \mathbb{R}^d$, 令 $\phi(x)$ 是包含所有 $x$ 的次数 $\le 3$ 的项的向量
 
+^eq5-5
 $$
 \phi(x) = 
 	\begin{bmatrix} 
@@ -118,7 +119,7 @@ $$
 通常将 $\phi(x^{(j)})^T \phi(x^{(i)})$ 重写为 $\langle \phi(x^{(j)}), \phi(x^{(i)}) \rangle$ 以强调它是两个特征向量的内积。通过将 $\beta_i$ 视为 $\theta$ 的新表示，已经成功地将批梯度下降算法转化为一个迭代更新 $\beta$ 值的新算法。它可能看起来在每次迭代时，仍然需要计算所有 $i, j$ 对的 $\langle \phi(x^{(j)}), \phi(x^{(i)}) \rangle$ 的值，其中每个计算可能需要大约 $O(p)$ 的操作。然而，有两个重要的特性可以解决这个问题：
 
 1. 在循环开始之前，可以预先计算所有 $i, j$ 对的成对内积 $\langle \phi(x^{(j)}), \phi(x^{(i)}) \rangle$.
-2. 对于定义在 \eqref{eq:5.5} 中的特征映射 $\phi$（或许多其他有趣的特征映射），计算 $\langle \phi(x^{(j)}), \phi(x^{(i)}) \rangle$ 可以是高效的并且不必需显式计算 $\phi(x^{(i)})$。这是因为：
+2. 对于定义在 [[chapter5_kernel_methods#^eq5-5|(5.5)]] 中的特征映射 $\phi$ (或许多其他有趣的特征映射)，计算 $\langle \phi(x^{(j)}), \phi(x^{(i)}) \rangle$ 可以是高效的并且不必需显式计算 $\phi(x^{(i)})$. 这是因为：
 
 ^eq5-9
 $$
@@ -129,7 +130,7 @@ $$
 		&= 1 + \langle x, z \rangle + \langle x, z \rangle^2 + \langle x, z \rangle^3 \tag{5.9}
 \end{align}
 $$
-- 因此，要计算 $\langle \phi(x), \phi(z) \rangle$，可以首先用 $O(d)$ 的时间计算 $\langle x, z \rangle$，然后进行一些常数次操作来计算 $1 + \langle x, z \rangle + \langle x, z \rangle^2 + \langle x, z \rangle^3$。
+- 因此，要计算 $\langle \phi(x), \phi(z) \rangle$, 可以首先用 $O(d)$ 的时间计算 $\langle x, z \rangle$, 然后进行一些常数次操作来计算 $1 + \langle x, z \rangle + \langle x, z \rangle^2 + \langle x, z \rangle^3$.
 
 正如将看到的，特征 $\phi(x), \phi(z)$ 之间的内积在这里至关重要。将与特征映射 $\phi$ 对应的 **核 (Kernel)** 定义为一个 $\mathcal{X} \times \mathcal{X} \to \mathbb{R}$ 的函数，满足：[^2]
 
@@ -148,7 +149,7 @@ $$
 \forall i \in \{1, \dots, n\}, \beta_i := \beta_i + \alpha \left( y^{(i)} - \sum_{j=1}^n \beta_j K(x^{(i)}, x^{(j)}) \right).
         \tag{5.11}
 $$
-* 或者用向量表示法，令  是一个 $n \times n$ 矩阵，其中 $K_{ij} = K(x^{(i)}, x^{(j)})$, 有
+* 或者用向量表示法，令 $K$ 是一个 $n \times n$ 矩阵，其中 $K_{ij} = K(x^{(i)}, x^{(j)})$, 有
 
 $$
 \beta := \beta + \alpha (\vec{y} - K \beta)
@@ -292,8 +293,8 @@ $$
 
 我们已经看到了核方法在线性回归中的应用。在下一部分，将介绍支持向量机，核方法可以直接应用于其中。这里不再赘述。实际上，核方法的思想比线性回归和 SVM 具有更广泛的适用性。具体来说，如果有一个学习算法，可以完全用输入属性向量之间的内积 $\langle x, z \rangle$ 来表达，那么通过将其替换为核 $K(x, z)$ (其中 $K$ 是一个核)，就可以“神奇地”让算法在对应于 $K$ 的高维特征空间中高效工作。例如，这个核技巧可以应用于感知机，推导出核感知机算法。本课程后面将看到的许多算法也将适用于这种方法，这种方法被称为“核技巧”。
 
-| [[chapter4_generative_learning_algorithms\|上一章]] | [[CS229_CN/index\|目录]] | 下一章 |
-| :----------------------------------------------: | :--------------------: | :-: |
+| [[chapter4_generative_learning_algorithms\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter6_support_vector_machines\|下一章]] |
+| :----------------------------------------------: | :--------------------: | :---------------------------------------: |
 
 [^1]: 此处，为简单起见，包含所有重复的单项式 (因此，$x_1 x_2 x_3$ 和 $x_2 x_3 x_1$ 都出现在 $\phi(x)$ 中)。所以，$\phi(x)$ 中共有 $1 + d + d^2 + d^3$ 个元素。
 
