@@ -60,5 +60,5 @@ title: CS229 机器学习 课程讲义
 > >   &emsp;╠ [[chapter6_support_vector_machines#6.7 正则化与非线性可分情况 (选读)|6.7 正则化与非线性可分情况 (选读)]]  
 > >   &emsp;╚ [[chapter6_support_vector_machines#6.8 SMO 算法 (选读)|6.8 SMO 算法 (选读)]]  
 
-> [!example]- [[CS229_CN/Part1_Supervised_Learning/index|第 II 部分 深度学习]]  
+> [!example]- [[CS229_CN/Part2_Deep_Learning/index|第 II 部分 深度学习]]  
 >   
