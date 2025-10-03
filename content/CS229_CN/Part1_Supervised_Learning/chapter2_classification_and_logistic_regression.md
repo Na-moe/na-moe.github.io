@@ -230,8 +230,9 @@ $$
 \frac{\partial \ell_{\text{ce}}(t, y)}{\partial t_i} = \phi_i - {1}\{y=i\}, \tag{2.16}
 $$
 
-其中 ${1}\{\cdot\}$ 是指示函数，即当 $y=i$ 时 ${1}\{y=i\} = 1$, 当 $y \ne i$ 时 $\{y=i\} = 0$. 向量化形式如下，这对于第 7 章将很有用：
+其中 ${1}\{\cdot\}$ 是指示函数，即当 $y=i$ 时 ${1}\{y=i\} = 1$, 当 $y \ne i$ 时 $\{y=i\} = 0$. 向量化形式如下，这对于第 [[chapter7_deep_learning|7]] 章将很有用：
 
+^eq2-17
 $$
 \frac{\partial \ell_{\text{ce}}(t, y)}{\partial t} = \phi - e_y, \tag{2.17}
 $$

@@ -681,9 +681,9 @@ $$
 \end{align}
 $$
 
-反向传播由两个过程组成：前向传播和反向传播。在前向传播中，算法根据定义 [[chapter7_deep_learning#^eqF|(F)]] 按顺序计算 $u^{[1]}, \dots, u^{[k]}$，并将所有中间变量 $u^{[i]}$ 保存在内存中。
+反向传播由两个过程组成：前向传递和反向传递。在前向传递中，算法根据定义 [[chapter7_deep_learning#^eqF|(F)]] 按顺序计算 $u^{[1]}, \dots, u^{[k]}$，并 **将所有中间变量 $u^{[i]}$ 保存在内存中**。
 
-在反向传播中，首先按反向顺序计算 $J$ 对中间变量的导数，即 $\frac{\partial J}{\partial u^{[k]}}, \dots, \frac{\partial J}{\partial u^{[1]}}$, 然后从 $\frac{\partial J}{\partial u^{[i]}}$ 和 $u^{[i-1]}$ 计算参数 $\theta^{[i]}$ 的导数 $\frac{\partial J}{\partial \theta^{[i]}}$. 这两类计算可以相互交织，因为 $\frac{\partial J}{\partial \theta^{[i]}}$ 仅依赖于 $\frac{\partial J}{\partial u^{[i]}}$ 和 $u^{[i-1]}$, 而不依赖于任何 $k < i$ 的 $\frac{\partial J}{\partial u^{[k]}}$.
+在 **反向传递 (backward pass)** 中，首先按反向顺序计算 $J$ 对中间变量的导数，即 $\frac{\partial J}{\partial u^{[k]}}, \dots, \frac{\partial J}{\partial u^{[1]}}$, 然后从 $\frac{\partial J}{\partial u^{[i]}}$ 和 $u^{[i-1]}$ 计算参数 $\theta^{[i]}$ 的导数 $\frac{\partial J}{\partial \theta^{[i]}}$. 这两类计算可以相互交织，因为 $\frac{\partial J}{\partial \theta^{[i]}}$ 仅依赖于 $\frac{\partial J}{\partial u^{[i]}}$ 和 $u^{[i-1]}$, 而不依赖于任何 $k < i$ 的 $\frac{\partial J}{\partial u^{[k]}}$.
 
 首先通过引用第 [[chapter7_deep_learning#7.4.1 偏导数初步|7.4.1]] 节关于链式法则的讨论来理解为什么 $\frac{\partial J}{\partial u^{[i-1]}}$ 可以从 $\frac{\partial J}{\partial u^{[i]}}$ 和 $u^{[i-1]}$ 有效计算。通过设置 $u = u^{[i]}$ 和 $z = u^{[i-1]}$, 以及 $f(u) = M_k(M_{k-1}(\cdots M_{i+1}(u)))$, 以及 $g(\cdot) = M_i(\cdot)$, 来实例化讨论。注意，$f$ 非常复杂，但不需要关于 $f$ 的任何具体信息。那么，结论性公式 [[chapter7_deep_learning#^eq7-56|(7.56)]] 对应于
 
