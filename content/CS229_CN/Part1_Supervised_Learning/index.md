@@ -2,8 +2,24 @@
 title: 第 I 部分 监督学习
 ---
 
-| [[CS229_CN/index\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter1_linear_regression\|下一章]] |
+| [[CS229_CN/index\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter1_linear_regression\|下一章]] |
 | :------------------------: | :----------------------: | :------------------------------------: |
+
+<div style="
+        height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.0);
+        color: white;
+    ">
+        <div style="
+            font-size: 36px;
+            text-align: center;
+        ">
+            第 I 部分<br>监督学习
+        </div>
+</div>
 
 不妨先从几个监督学习的例子谈起。假设有一个数据集，记录有俄勒冈州波特兰市的 $47$ 套房屋的居住面积和价格。
 
@@ -30,5 +46,5 @@ title: 第 I 部分 监督学习
 
 当预测的目标是连续值时 (例如预测房价)，称这类学习问题为 **回归 (regression)** 问题。当 $y$ 只能取有限个离散值时 (例如根据居住面积预测住宅是房屋还是公寓)，则称为 **分类 (classification)** 问题。
 
-| [[CS229_CN/index\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter1_linear_regression\|下一章]] |
+| [[CS229_CN/index\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter1_linear_regression\|下一章]] |
 | :------------------------: | :----------------------: | :------------------------------------: |

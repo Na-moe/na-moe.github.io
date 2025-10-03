@@ -2,7 +2,7 @@
 title: 第 4 章 生成式学习算法
 ---
 
-| [[chapter3_generalized_linear_model\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter5_kernel_methods\|下一章]] |
+| [[chapter3_generalized_linear_model\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter5_kernel_methods\|下一章]] |
 | :----------------------------------------: | :--------------------: | :------------------------------: |
 
 到目前为止，我们讨论的主要是学习这样的一类算法，其建模给定 $x$ 的情况下 $y$ 的条件分布 $p(y|x; \theta)$. 例如，逻辑回归将 $p(y|x; \theta)$ 建模为 $h_\theta(x) = g(\theta^T x)$, 其中 $g$ 是 $\text{sigmoid}$ 函数。在本章中，将讨论一种不同类型的学习算法。
@@ -358,7 +358,7 @@ $$
 
 虽然朴素贝叶斯分类器不一定是最好的分类算法，但它通常效果出奇地好。考虑到其简单性和易于实现性，它通常也是一个非常好的“第一步”尝试。
 
-| [[chapter3_generalized_linear_model\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter5_kernel_methods\|下一章]] |
+| [[chapter3_generalized_linear_model\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter5_kernel_methods\|下一章]] |
 | :----------------------------------------: | :--------------------: | :------------------------------: |
 
 [^1]: 这里采用了重新定义右侧 $x^{(i)}$ 为 $(d+1)$ 维向量的约定，即添加额外的坐标 $x_0^{(i)} = 1$; 参见习题集 1。

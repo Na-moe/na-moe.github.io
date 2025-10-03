@@ -2,7 +2,7 @@
 title: 第 3 章 广义线性模型
 ---
 
-| [[chapter2_classification_and_logistic_regression\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter4_generative_learning_algorithms\|下一章]] |
+| [[chapter2_classification_and_logistic_regression\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter4_generative_learning_algorithms\|下一章]] |
 | :------------------------------------------------------: | :--------------------: | :----------------------------------------------: |
 
 到目前我们已经讨论了一个回归的例子和一个分类的例子。在回归示例中，有 $y|x; \theta \sim \mathcal{N}(\mu, \sigma^2)$, 在分类示例中，有 $y|x; \theta \sim \text{Bernoulli}(\phi)$, 其中 $\mu$ 和 $\phi$ 是 $x$ 和 $\theta$ 的函数。本章将揭示这两种方法都是更广泛的模型族——称为广义线性模型 (GLMs) ——的特例。[^1] 我们还将展示广义线性模型族中的其他模型如何推导并应用于其他分类和回归问题。
@@ -117,7 +117,7 @@ $$
 
 这里引入一些额外的术语，将自然参数映射到分布均值的函数 $g$ ($g(\eta) = E[T(y); \eta]$), 称为**典范响应函数 (canonical response function)**。其逆函数 $g^{-1}$ 称为 **典范连接函数 (canonical link function)**。因此，高斯族分布的典范响应函数就是恒等函数；伯努利分布的典范响应函数是逻辑函数。[^3]
 
-| [[chapter2_classification_and_logistic_regression\|上一章]] | [[CS229_CN/index\|目录]] | [[chapter4_generative_learning_algorithms\|下一章]] |
+| [[chapter2_classification_and_logistic_regression\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter4_generative_learning_algorithms\|下一章]] |
 | :------------------------------------------------------: | :--------------------: | :----------------------------------------------: |
 
 [^1]: 本章材料受到 Michael I. Jordan 的 *Learning in graphical models* (未出版的书稿) 以及 McCullagh 和 Nelder 的 *Generalized Linear Models (2nd ed.)* 的启发。
