@@ -86,13 +86,10 @@ $$
 \theta := \theta - \alpha \nabla_\theta J(\theta) \tag{7.8}
 $$
 
-其中 $\alpha > 0$ 通常称为学习率或步长。 接下来，介绍一个新的 SGD (算法[[chapter7_deep_learning#^algo1|1]])，它与前面所讲的略有不同。
+其中 $\alpha > 0$ 通常称为学习率或步长。 接下来，介绍一个新的 SGD (算法 [[chapter7_deep_learning#^algo1|1]])，它与前面所讲的略有不同。
 
----
-
-**算法 1** 随机梯度下降 ^algo1
-
----
+^algo1
+<div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 1</b> 随机梯度下降</div>
 
 1: 超参数: 学习率 $\alpha$, 总迭代次数 $n_\text{iter}$.
 
@@ -105,16 +102,15 @@ $$
 $$
 \theta := \theta - \alpha \nabla_\theta J^{(j)}(\theta) \tag{7.9}
 $$
-
----
+<hr style="
+    border: 0;
+    border-top: 1px solid;
+">
 
 通常，因为硬件并行化，同时计算 $B$ 个样本关于参数 $\theta$ 的梯度比单独计算 $B$ 个梯度要快。 因此，深度学习中更常用的是小批量随机梯度下降，如算法 [[chapter7_deep_learning#^algo2|2]] 所示。还有一些 SGD 或小批量 SGD 的变体，它们使用略微不同的采样方案。
 
----
-
-**算法 2** 小批量随机梯度下降 ^algo2
-
----
+^algo2
+<div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 2</b> 小批量随机梯度下降</div>
 
 1: 超参数: 学习率 $\alpha$, 批量大小 $B$, 迭代次数 $n_\text{iter}$.
 
@@ -127,8 +123,10 @@ $$
 $$
 \theta := \theta - \frac{\alpha}{B} \sum_{k=1}^B \nabla_\theta J^{(j_k)}(\theta) \tag{7.10}
 $$
-
----
+<hr style="
+    border: 0;
+    border-top: 1px solid;
+">
 
 使用这些通用算法，典型的深度学习模型通过以下步骤进行学习。 1. 定义神经网络参数化 $h_\theta(x)$，将在第 [[chapter7_deep_learning#7.2 神经网络|7.2]] 节中介绍，2. 编写反向传播算法以有效计算损失函数 $J^{(j)}(\theta)$ 的梯度，这将在第 [[chapter7_deep_learning#7.4 反向传播|7.4]] 节中介绍，以及 3. 使用损失函数 $J(\theta)$ 运行 SGD 或小批量 SGD (或其他基于梯度的优化器)。
 
