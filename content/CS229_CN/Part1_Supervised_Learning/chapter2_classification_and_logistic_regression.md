@@ -113,6 +113,7 @@ $$
 
 通常 $\theta^T x$ 或 $t$ 称为 *logit*. 稍作运算可得
 
+^eq2-6
 $$
 \begin{align}
 	\frac{\partial \ell_{\text{logistic}}(t, y)}{\partial t} 

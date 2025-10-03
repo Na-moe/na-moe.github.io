@@ -97,7 +97,7 @@ $$
 
 2: 随机初始化 $\theta$.
 
-3: **for** $i=1$ 到 $n_\text{iter}$
+3: **for** $i=1$ 到 $n_\text{iter}$ 执行
 
 4: $\qquad$从 $\{1, ..., n\}$ 中均匀采样 $j$, 使用下式更新 $\theta$
 
@@ -118,7 +118,7 @@ $$
 
 2: 随机初始化 $\theta$.
 
-3: **for** $i=1$ 到 $n_\text{iter}$
+3: **for** $i=1$ 到 $n_\text{iter}$ 执行
 
 4: $\qquad$从 $\{1, ..., n\}$ 中不放回地均匀采样 $B$ 个样本 $j_1, \dots, j_B$, 使用下式更新 $\theta$
 
@@ -628,7 +628,7 @@ $$
 
 此外，此公式仅涉及关于 $g$ 的知识 (更准确地说，是 $\frac{\partial g_j}{\partial z_i}$ )。将反复利用这一点来处理 $g$ 是复杂网络 $f$ 的构建模块的情况。
 
-根据经验，可以将公式 [[chapter7_deep_learning#^eq7-53|(7.53)]] 或 [[chapter7_deep_learning#^eq7-54|(7.54)]] 中的映射模块视为一个黑盒，并且定义一个数学符号也便于后续讨论。[^7] 使用 $\mathcal{B}[g, z]$ 定义将 $\frac{\partial J}{\partial u}$ 映射到 $\frac{\partial J}{\partial z}$ 的函数，并记作
+根据经验，可以将公式 [[chapter7_deep_learning#^eq7-53|(7.53)]] 或 [[chapter7_deep_learning#^eq7-54|(7.54)]] 中的映射模块视为一个黑盒，并且定义一个数学符号也便于后续讨论。[^6] 使用 $\mathcal{B}[g, z]$ 定义将 $\frac{\partial J}{\partial u}$ 映射到 $\frac{\partial J}{\partial z}$ 的函数，并记作
 
 ^eq7-57
 $$
@@ -637,12 +637,14 @@ $$
 
 称 $\mathcal{B}[g, z]$ 为模块 $g$ 的 **反向函数 (backward function)**。注意，当 $z$ 固定时，$\mathcal{B}[g, z]$ 仅是从 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的线性映射。使用公式 [[chapter7_deep_learning#^eq7-53|(7.53)]]，有
 
+^eq7-58
 $$
 (\mathcal{B}[g, z](v))_i = \sum_{j=1}^m \frac{\partial g_j}{\partial z_i} \cdot v_j. \tag{7.58}
 $$
 
-或者采用向量化符号，使用公式 \eqref{eq:7.54}，有
+或者采用向量化符号，使用公式 [[chapter7_deep_learning#^eq7-54|(7.54)]]，有
 
+^eq7-59
 $$
 \mathcal{B}[g, z](v) = \begin{bmatrix}
     \ \frac{\partial g_1}{\partial z_1}&  &\cdots&  &\frac{\partial g_n}{\partial z_1} \ \\
@@ -655,14 +657,14 @@ $$
 
 ### 7.4.2 反向传播的通用策略
 
-本节讨论自动微分的通用策略，以建立高层次的理解。然后，将把这种方法实例化到具体的神经网络中。采用的观点是，神经网络是由小的构建块组成的复杂组合，例如第 [[chapter7_deep_learning#7.3 现代神经网络的模块|7.3]] 节中定义的 $\text{MM}$、$\sigma$、$\text{Conv2D}$、$\text{LN}$ 等。注意，损失函数 (例如，均方误差损失或交叉熵损失) 也可以抽象地视为附加模块。因此，可以将损失函数 $J$ (针对单个样本 $(x, y)$) 抽象地写成许多模块的组合：[^8]
+本节讨论自动微分的通用策略，以建立高层次的理解。然后，将把这种方法实例化到具体的神经网络中。采用的观点是，神经网络是由小的构建块组成的复杂组合，例如第 [[chapter7_deep_learning#7.3 现代神经网络的模块|7.3]] 节中定义的 $\text{MM}$、$\sigma$、$\text{Conv2D}$、$\text{LN}$ 等。注意，损失函数 (例如，均方误差损失或交叉熵损失) 也可以抽象地视为附加模块。因此，可以将损失函数 $J$ (针对单个样本 $(x, y)$) 抽象地写成许多模块的组合：[^7]
 
 ^eq7-60
 $$
 J = M_k(M_{k-1}(\cdots M_1(x))). \tag{7.60}
 $$
 
-例如，对于具有 MLP $\bar{h}_\theta(x)$（在公式 [[chapter7_deep_learning#^eq7-36|(7.36)]] 和 [[chapter7_deep_learning#^eq7-37|(7.37)]] 中定义）的二分类问题，损失函数可以写成公式 [[chapter7_deep_learning#^eq7-60|(7.60)]] 的形式，其中 $M_1 = \text{MM}_{W^{[1]}, b^{[1]}}, M_2 = \sigma, M_3 = \text{MM}_{W^{[2]}, b^{[2]}}, \dots$, 以及 $M_{k-1} = \text{MM}_{W^{[r]}, b^{[r]}}$, $M_k = \ell_{\text{logistic}}$.
+例如，对于具有 MLP $\bar{h}_\theta(x)$（在公式 [[chapter7_deep_learning#^eq7-36|(7.36)]] 和 [[chapter7_deep_learning#^eq7-37|(7.37)]] 中定义）的二分类问题，损失函数可以写成公式 [[chapter7_deep_learning#^eq7-60|(7.60)]] 的形式，其中 $M_1 = \text{MM}_{W^{[1]}, b^{[1]}}, M_2 = \sigma, M_3 = \text{MM}_{W^{[2]}, b^{[2]}}, \dots$, 以及 $M_{k-1} = \text{MM}_{W^{[r]}, b^{[r]}}, M_k = \ell_{\text{logistic}}$.
 
 从这个例子可以看出，有些模块涉及参数，而有些模块可能只涉及固定的操作集。为了通用性，假设每个 $M_i$ 都涉及一组参数 $\theta^{[i]}$, 尽管当 $M_i$ 是像非线性激活这样的固定操作时，$\theta^{[i]}$ 可能是一个空集。之后将更详细地讨论模块化的粒度，但目前假设所有模块 $M_i$ 都足够简单。
 
@@ -719,11 +721,187 @@ $$
 
 ### 7.4.3 基本模块的反向函数
 
-lorem
+利用第 [[chapter7_deep_learning#7.4.2 反向传播的通用策略|7.4.2]] 节的通用策略，只需计算网络中使用的所有模块 $M_i$ 的后向函数即可。本节计算基本模块 $\text{MM}$、激活函数 $\sigma$ 和损失函数的后向函数。
+
+*$\text{MM}$ 的后向函数:* 假设 $\text{MM}_{W,b}(z) = Wz + b$ 是一个矩阵乘法模块，其中 $z \in \mathbb{R}^m$ 且 $W \in \mathbb{R}^{n \times m}$. 那么，对于 $v \in \mathbb{R}^n$, 使用公式 [[chapter7_deep_learning#^eq7-59|(7.59)]]，有
+
+$$
+\mathcal{B}[\text{MM}, z](v) = \begin{bmatrix}
+	&\frac{\partial (Wz+b)_1}{\partial z_1}& \cdots& \frac{\partial (Wz+b)_n}{\partial z_1}& \\
+	&\vdots& \ddots& \vdots& \\
+	&\frac{\partial (Wz+b)_1}{\partial z_m}& \cdots& \frac{\partial (Wz+b)_n}{\partial z_m}&
+\end{bmatrix} v. \tag{7.62}
+$$
+
+由于 $\forall i \in [m], j \in [n],\ \frac{\partial (Wz+b)_j}{\partial z_i} = \frac{\partial b_j + \sum_{k=1}^m W_{jk} z_k}{\partial z_i} = W_{ji}$, 因此有
+
+^eq7-63
+$$
+\mathcal{B}[\text{MM}, z](v) = W^\top v \in \mathbb{R}^m. \tag{7.63}
+$$
+
+在上述推导中，将 $\text{MM}$ 视为 $z$ 的函数。如果将 $\text{MM}$ 视为 $W$ 和 $b$ 的函数，那么也可以计算参数变量 $W$ 和 $b$ 的后向函数。使用公式 [[chapter7_deep_learning#^eq7-59|(7.59)]] 不太方便，因为变量 $W$ 是一个矩阵，而公式 [[chapter7_deep_learning#^eq7-59|(7.59)]] 中的矩阵将是一个四阶张量，有书写难度。因此，使用 [[chapter7_deep_learning#^eq7-58|(7.58)]]：
+
+$$
+(\mathcal{B}[\text{MM}, W](v))_{ij} = \sum_{k=1}^m \frac{\partial (Wz+b)_k}{\partial W_{ij}} \cdot v_k = \sum_{k=1}^m \frac{\partial \sum_{s=1}^m W_{ks} z_s}{\partial W_{ij}} \cdot v_k = v_i z_j. \tag{7.64}
+$$
+
+在向量化表示中，有
+
+^eq7-65
+$$
+\mathcal{B}[\text{MM}, W](v) = v z^\top \in \mathbb{R}^{n \times m}. \tag{7.65}
+$$
+
+对于变量 $b$，使用公式 [[chapter7_deep_learning#^eq7-59|(7.59)]]，有
+
+^eq7-66
+$$
+\mathcal{B}[\text{MM}, b](v) = 
+	\begin{bmatrix}
+		\ \frac{\partial (Wz+b)_1}{\partial b_1}& \cdots& \frac{\partial (Wz+b)_n}{\partial b_1} \ \\
+		\ \vdots& \ddots& \vdots \ \\
+		\ \frac{\partial (Wz+b)_1}{\partial b_n}& \cdots& \frac{\partial (Wz+b)_n}{\partial b_n} \
+	\end{bmatrix} v = v. \tag{7.66}
+$$
+
+这里利用了当 $i \neq j$ 时 $\frac{\partial (Wz+b)_i}{\partial b_j} = 0$, 当 $i = j$ 时 $\frac{\partial (Wz+b)_j}{\partial b_i} = 1$.
+
+计算后向函数的计算效率是 $O(mn)$, 与计算矩阵乘法结果的效率相同（相差一个常数因子）。
+
+*激活函数的后向函数:* 假设 $M(z) = \sigma(z)$, 其中 $\sigma$ 是一个逐元素的激活函数，且 $z \in \mathbb{R}^m$. 那么，使用公式 [[chapter7_deep_learning#^eq7-59|(7.59)]]，有
+
+^eq7-69
+$$
+\begin{align}
+    \mathcal{B}[\sigma, z](v) &= \begin{bmatrix}
+        &\frac{\partial \sigma(z_1)}{\partial z_1}& \cdots& \frac{\partial \sigma(z_m)}{\partial z_1}& \\
+        &\vdots& \ddots& \vdots& \\
+        &\frac{\partial \sigma(z_1)}{\partial z_m}& \cdots& \frac{\partial \sigma(z_m)}{\partial z_m}&
+    \end{bmatrix} v \tag{7.67} \\
+    &= \text{diag}(\sigma'(z_1), \dots, \sigma'(z_m))v \tag{7.68} \\
+    &= \sigma'(z) \odot v \in \mathbb{R}^m. \tag{7.69}
+\end{align}
+$$
+
+这里利用了当 $j \neq i$ 时 $\frac{\partial \sigma(z_j)}{\partial z_i} = 0$, $\text{diag}(\lambda_1, \dots, \lambda_m)$ 表示对角线上为 $\lambda_1, \dots, \lambda_m$ 的对角矩阵，$\odot$ 表示两个同维度向量的逐元素乘积，$\sigma'(\cdot)$ 是激活函数 $\sigma$ 的导数 (对向量逐元素应用)。关于计算效率，注意到乍一看，公式 [[chapter7_deep_learning#^eq7-69|(7.67)]] 似乎表明后向函数需要 $O(m^2)$ 的时间，但公式 [[chapter7_deep_learning#^eq7-69|(7.69)]] 表明它可以在 $O(m)$ 的时间内实现 (这与评估函数的时间相同)。如果使用更小的模块，即把向量到向量的非线性激活视为 $m$ 个标量到标量的非线性激活，那么公式 [[chapter7_deep_learning#^eq7-69|(7.67)]] 到 [[chapter7_deep_learning#^eq7-69|(7.69)]] 的简化可能性不应感到惊讶，这时后向传播应该具有与前向传播相似的时间。
+
+*损失函数的后向函数:* 当模块 $M$ 接受一个向量 $z$ 并输出一个标量时，根据公式 [[chapter7_deep_learning#^eq7-69|(7.69)]]，后向函数接受一个标量 $v$ 并输出一个向量，其分量为 $(\mathcal{B}[M, z](v))_i = \frac{\partial M}{\partial z_i} v$. 因此，在向量化表示中，$\mathcal{B}[M, z](v) = \frac{\partial M}{\partial z} \cdot v$.
+
+回想一下，平方损失 $\ell_{\text{MSE}}(z, y) = \frac{1}{2}(z-y)^2$. 因此，$\mathcal{B}[\ell_{\text{MSE}}, z](v) = \frac{\partial \frac{1}{2}(z-y)^2}{\partial z} \cdot v = (z-y) \cdot v$.
+
+对于逻辑损失，根据公式 [[chapter2_classification_and_logistic_regression#^eq2-6|(2.6)]]，有
+
+$$
+\mathcal{B}[\ell_{\text{logistic}}, t](v) = \frac{\partial \ell_{\text{logistic}}(t, y)}{\partial t} \cdot v = (1/(1 + \exp(-t)) - y) \cdot v. \tag{7.70}
+$$
+
+对于交叉熵损失，根据公式 [[chapter2_classification_and_logistic_regression#^eq2-17|(2.17)]]，有
+
+$$
+\mathcal{B}[\ell_{\text{ce}}, t](v) = \frac{\partial \ell_{\text{ce}}(t, y)}{\partial t} \cdot v = (\phi - e_y) \cdot v, \tag{7.71}
+$$
+
+其中 $\phi = \text{softmax}(t)$.
 
 ### 7.4.4 MLP 的反向传播
 
-lorem
+给定评估 MLP 损失所需的每个模块的后向函数，根据第 [[chapter7_deep_learning#7.4.2 反向传播的通用策略|7.4.2]] 节的策略计算损失相对于隐藏激活和参数的梯度。
+考虑一个具有逻辑损失的 $r$ 层 MLP。损失函数可以通过一系列操作计算 (即前向传播)，
+
+^eq7-72
+$$
+\begin{align}
+    z^{[1]} &= \text{MM}_{W^{[1]}, b^{[1]}}(x), \notag \\
+    a^{[1]} &= \sigma(z^{[1]}), \notag \\
+    z^{[2]} &= \text{MM}_{W^{[2]}, b^{[2]}}(a^{[1]}), \notag \\
+    a^{[2]} &= \sigma(z^{[2]}), \notag \\
+    &\vdots \notag \\
+    z^{[r]} &= \text{MM}_{W^{[r]}, b^{[r]}}(a^{[r-1]}), \notag \\
+    J &= \ell_{\text{logistic}}(z^{[r]}, y). \tag{7.72}
+\end{align}
+$$
+
+按后向顺序依次应用后向函数。首先，有
+
+$$
+\frac{\partial J}{\partial z^{[r]}} = \mathcal{B}[\ell_{\text{logistic}}, z^{[r]}]\left(\frac{\partial J}{\partial J}\right) = \mathcal{B}[\ell_{\text{logistic}}, z^{[r]}](1). \tag{7.73}
+$$
+
+然后，通过重复调用链式法则 (公式 [[chapter7_deep_learning#^eq7-58|(7.58)]])，迭代计算 $\frac{\partial J}{\partial a^{[i]}}$ 和 $\frac{\partial J}{\partial z^{[i]}}$：
+
+^eq7-74
+$$
+\begin{align}
+    \frac{\partial J}{\partial a^{[r-1]}} &= \mathcal{B}[\text{MM}, a^{[r-1]}]\left(\frac{\partial J}{\partial z^{[r]}}\right) \notag \\
+    \frac{\partial J}{\partial z^{[r-1]}} &= \mathcal{B}[\sigma, z^{[r-1]}]\left(\frac{\partial J}{\partial a^{[r-1]}}\right) \notag \\
+    &\vdots \notag \\
+    \frac{\partial J}{\partial z^{[1]}} &= \mathcal{B}[\sigma, z^{[1]}]\left(\frac{\partial J}{\partial a^{[1]}}\right). \tag{7.74}
+\end{align}
+$$
+
+数值上，通过重复调用公式 [[chapter7_deep_learning#^eq7-69|(7.69)]] 和 [[chapter7_deep_learning#^eq7-63|(7.63)]]，并选择不同的变量，计算这些量。
+注意到中间值 $a^{[i]}$ 和 $z^{[i]}$ 在反向传播 (公式 [[chapter7_deep_learning#^eq7-74|(7.74)]]) 中使用，因此这些值需要在前向传播后存储在内存中。
+
+接下来，通过调用公式 [[chapter7_deep_learning#^eq7-65|(7.65)]] 和 [[chapter7_deep_learning#^eq7-66|(7.66)]]，计算参数的梯度：
+
+^eq7-75
+$$
+\begin{align}
+	\frac{\partial J}{\partial W^{[r]}} &= \mathcal{B}[\text{MM}, W^{[r]}]\left(\frac{\partial J}{\partial z^{[r]}}\right) \notag \\
+	\frac{\partial J}{\partial b^{[r]}} &= \mathcal{B}[\text{MM}, b^{[r]}]\left(\frac{\partial J}{\partial z^{[r]}}\right) \notag \\
+	&\vdots \notag \\
+	\frac{\partial J}{\partial W^{[1]}} &= \mathcal{B}[\text{MM}, W^{[1]}]\left(\frac{\partial J}{\partial z^{[1]}}\right) \notag \\
+	\frac{\partial J}{\partial b^{[1]}} &= \mathcal{B}[\text{MM}, b^{[1]}]\left(\frac{\partial J}{\partial z^{[1]}}\right). \tag{7.75}
+\end{align} 
+$$
+
+还注意到，公式 [[chapter7_deep_learning#^eq7-75|(7.75)]] 中的计算块可以与公式 [[chapter7_deep_learning#^eq7-74|(7.74)]] 中的计算块交织进行，因为一旦计算出 $\frac{\partial J}{\partial z^{[i]}}$, 就可以计算出 $\frac{\partial J}{\partial W^{[i]}}$ 和 $\frac{\partial J}{\partial b^{[i]}}$.
+
+将所有这些放在一起，并调用公式 [[chapter7_deep_learning#^eq7-72|(7.72)]]、[[chapter7_deep_learning#^eq7-74|(7.74)]] 和 [[chapter7_deep_learning#^eq7-75|(7.75)]]，得到以下算法 (算法 [[chapter7_deep_learning#^algo3|3]])：
+
+^algo3
+<div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 3</b> 多层神经网络的反向传播算法</div>
+
+1: **前向过程:** 使用公式 [[chapter7_deep_learning#^eq7-72|(7.72)]] 计算出 $a^{[k]}$, $z^{[k]}$, and $J$ 的值并存储下来。
+
+2: **反向过程:** 计算 $J$ 相对于 $z^{[r]}$ 的梯度：
+
+$$
+\frac{\partial J}{\partial z^{[r]}} = \mathcal{B}[\ell_{\text{logistic}}, z^{[r]}] (1) = (1/(1 + \exp(-z^{[r]})) - y).\tag{7.76}
+$$
+
+3: **for** $k = r-1$ 到 $0$ 执行
+
+4: $\qquad$计算相对于参数 $W^{[k+1]}$ 和 $b^{[k+1]}$ 的梯度：
+
+$$
+\begin{align}
+	\frac{\partial J}{\partial W^{[k+1]}} 
+		&= \mathcal{B}[\text{MM}, W^{[k+1]}] \left( \frac{\partial J}{\partial z^{[k+1]}} \right) \notag \\
+		&= \frac{\partial J}{\partial z^{[k+1]}} a^{[k]\top}. \tag{7.77}\\
+	\frac{\partial J}{\partial b^{[k+1]}} 
+		&= \mathcal{B}[\text{MM}, b^{[k+1]}] \left( \frac{\partial J}{\partial z^{[k+1]}} \right) \notag \\
+		&= \frac{\partial J}{\partial z^{[k+1]}}. \tag{7.78}
+\end{align}\\
+$$
+
+5: $\qquad$若 $k \ge 1$, 计算相对于 $z^{[k]}$ 和 $a^{[k]}$ 的梯度：
+
+$$
+\begin{align}
+	\frac{\partial J}{\partial a^{[k]}} 
+		&= \mathcal{B}[\sigma, a^{[k]}] \left( \frac{\partial J}{\partial z^{[k+1]}} \right) \notag\\
+		&= W^{[k+1]\top} \frac{\partial J}{\partial z^{[k+1]}} . \tag{7.79} \\
+	\frac{\partial J}{\partial z^{[k]}} 
+		&= \mathcal{B}[\sigma, z^{[k]}] \left( \frac{\partial J}{\partial a^{[k]}} \right) \notag\\
+		&= \sigma'(z^{[k]}) \odot \frac{\partial J}{\partial a^{[k]}} . \tag{7.80}
+\end{align}
+$$
+<hr style="
+    border: 0;
+    border-top: 1px solid;
+">
 
 ## 7.5 训练样本的向量化
 
@@ -778,7 +956,7 @@ $$
 
 ### 实现中的复杂性/细微之处
 
-所有深度学习软件包或实现都将数据点放在数据矩阵的行中。(如果数据点本身是矩阵或张量，则将数据沿着第 $0$ 维堆叠。) 然而，大多数深度学习论文使用与本讲义类似的表示法，其中数据点被视为列向量。[^6] 有一个简单的转换来处理这种不匹配：在实现中，所有列向量变成行向量，行向量变成列向量，所有矩阵都被转置，并且矩阵乘法的顺序被颠倒。在上面的例子中，使用行优先约定，数据矩阵是 $X \in \mathbb{R}^{3 \times d}$, 第一层权重矩阵的维度是 $d \times m$ (而不是两层神经网络部分中的 $m \times d$ ), 偏置向量 $b^{[1]} \in \mathbb{R}^{1 \times m}$. 隐藏层激活的计算变为
+所有深度学习软件包或实现都将数据点放在数据矩阵的行中。(如果数据点本身是矩阵或张量，则将数据沿着第 $0$ 维堆叠。) 然而，大多数深度学习论文使用与本讲义类似的表示法，其中数据点被视为列向量。[^8] 有一个简单的转换来处理这种不匹配：在实现中，所有列向量变成行向量，行向量变成列向量，所有矩阵都被转置，并且矩阵乘法的顺序被颠倒。在上面的例子中，使用行优先约定，数据矩阵是 $X \in \mathbb{R}^{3 \times d}$, 第一层权重矩阵的维度是 $d \times m$ (而不是两层神经网络部分中的 $m \times d$ ), 偏置向量 $b^{[1]} \in \mathbb{R}^{1 \times m}$. 隐藏层激活的计算变为
 
 $$
 Z^{[1]} = XW^{[1]} + b^{[1]} \in \mathbb{R}^{3 \times m} \tag{7.84}
@@ -798,8 +976,8 @@ $$
 
 [^5]: 注意到，如果函数 $f$ 的输出不依赖于某些输入的分量，则默认将关于这些分量的梯度设为零。在本节的计算方案中，将梯度设为零不计入总运行时间。因此，当 $N \le \ell$ 时，可以在 $O(N)$ 时间内计算梯度，这可能甚至小于 $\ell$.
 
-[^6]: 笔者猜测这主要是因为，在数学中习惯对向量左乘矩阵。
+[^6]: 该函数也是 `pytorch` 中模块的 `.backward()` 方法。
 
-[^7]: 该函数也是 `pytorch` 中模块的 `.backward()` 方法。
+[^7]: 严格来说，应该写成 $J = M_k(M_{k-1}(\cdots M_1(x)), y)$. 然而，为了计算相对于参数的导数，将 $y$ 视为常数，因此为了符号的简洁性，可以将其视为 $M_k$ 的一部分。
 
-[^8]: 严格来说，应该写成 $J = M_k(M_{k-1}(\cdots M_1(x)), y)$. 然而，为了计算相对于参数的导数，将 $y$ 视为常数，因此为了符号的简洁性，可以将其视为 $M_k$ 的一部分。
+[^8]: 笔者猜测这主要是因为，在数学中习惯对向量左乘矩阵。
