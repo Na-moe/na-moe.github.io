@@ -160,7 +160,7 @@ $$
 \bar{h}_\theta(x) = \text{ReLU}(w^\top x + b),\ \text{其中}\  w \in \mathbb{R}^d, b \in \mathbb{R}, \text{且}\  \theta = (w, b) \tag{7.12}
 $$
 
-![[house_dataset_relu.svg|图 7.1 带拐点的房价拟合|500]]*图 7.1 带拐点的房价拟合*
+![[house_dataset_relu.svg|500]]<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.1 带拐点的房价拟合</p>
 ^fig7-1
 
 项 $b$ 通常被称为“偏置”，向量 $w$ 被称为权重向量。这样的神经网络称之为 $1$ 层。(后续将定义多层的含义。)
@@ -173,7 +173,7 @@ $$
 
 给定这些特征 (大小、卧室数量、邮政编码和财富)，可能会决定房屋价格取决于其可容纳的最大家庭人数。假设家庭人数是房屋大小和卧室数量的函数 (参见图 [[chapter7_deep_learning#^fig7-2|7.2]])。邮政编码可以提供额外信息，例如社区的步行便利程度 (即，是否可以步行到杂货店或需要开车)。结合邮政编码和社区财富可以预测当地小学的质量。可以认为，房屋价格最终取决于这三个特征。
 
-![[diagram_nn.svg|图 7.2 预测房屋价格的小型神经网络示意图|500]]*图 7.2 预测房屋价格的小型神经网络示意图*
+![[diagram_nn.svg|500]]<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.2 预测房屋价格的小型神经网络示意图</p>
 ^fig7-2
 
 形式上，神经网络的输入是一组输入特征 $x_1, x_2, x_3, x_4$. 将“家庭人数”、“步行便利程度”和“学校质量”的中间变量记为 $a_1, a_2, a_3$ (这些 $a_i$ 通常被称为“隐藏单元”或“隐藏神经元”)。将每个 $a_i$ 表示为以 $x_1, \dots, x_4$ 的子集为输入的单神经元神经网络。然后，如在图 [[chapter7_deep_learning#^fig7-1|7.1]] 中，将有以下参数化：
@@ -354,7 +354,7 @@ $$
 \end{align}
 $$
 
-![[activations.svg|图 7.3 深度学习中的激活函数|500]]*图 7.3 深度学习中的激活函数*
+![[activations.svg|500]]<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.3 深度学习中的激活函数</p>
 ^fig7-3
 
 激活函数在图 [[chapter7_deep_learning#^fig7-3|7.3]] 中绘制。$\text{Sigmoid}$ 和 $\text{tanh}$ 现在使用得越来越少，部分原因是它们在两侧都有界，并且当 $z$ 趋于正负无穷时，它们的梯度会消失 (而所有其他激活函数在输入趋于正无穷时仍然有梯度)。$\text{Softplus}$ 可以看作是 $\text{ReLU}$ 的平滑版本，它具有适当的二阶导数，不过在实践中也不常用。$\text{GELU}$ 和 $\text{leaky ReLU}$ 都是 $\text{ReLU}$ 的变体，但即使输入为负，它们也具有非零梯度。$\text{GELU}$ (或其变体) 用于 NLP 模型，例如 BERT 和 GPT (这将在第 14 章讨论)。
