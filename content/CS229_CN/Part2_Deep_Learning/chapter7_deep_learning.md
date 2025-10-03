@@ -142,6 +142,9 @@ $$
 
 回顾之前的房价预测问题：给定房屋大小，预测价格。 将在本小节中以此为例进行说明。
 
+![[house_dataset_relu.svg|500]] ^fig7-1
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.1 带拐点的房价拟合</p>
+
 之前，将直线拟合到房屋大小与房价的关系图上。现在，不拟合直线，希望通过将绝对最低价格设置为零来防止负房价。 这在图 [[chapter7_deep_learning#^fig7-1|7.1]] 中产生一个“拐点”。如何用具有单个拐点且参数未知的 $\bar{h}_\theta(x)$ 来表示这样的函数？ (完成此操作后，可以调用第 [[chapter7_deep_learning#7.1 使用非线性模型的监督学习|7.1]] 节中的机制。)
 
 定义一个参数化的函数 $\bar{h}_\theta(x)$，以 $x$ 为输入，由 $\theta$ 参数化，输出房屋价格 $y$. 形式上，$\bar{h}_\theta: x \to y$. 最简单的参数化也许是
@@ -160,9 +163,6 @@ $$
 \bar{h}_\theta(x) = \text{ReLU}(w^\top x + b),\ \text{其中}\  w \in \mathbb{R}^d, b \in \mathbb{R}, \text{且}\  \theta = (w, b) \tag{7.12}
 $$
 
-![[house_dataset_relu.svg|500]]<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.1 带拐点的房价拟合</p>
-^fig7-1
-
 项 $b$ 通常被称为“偏置”，向量 $w$ 被称为权重向量。这样的神经网络称之为 $1$ 层。(后续将定义多层的含义。)
 
 ### 堆叠神经元
@@ -171,10 +171,10 @@ $$
 
 现在来深化房价预测的例子。除了房屋大小，假设还知道卧室数量、邮政编码和社区财富。构建神经网络类似于乐高积木：将单个积木堆叠在一起以构建复杂的结构。 这同样适用于神经网络：将单个神经元堆叠在一起以创建复杂的神经网络。
 
-给定这些特征 (大小、卧室数量、邮政编码和财富)，可能会决定房屋价格取决于其可容纳的最大家庭人数。假设家庭人数是房屋大小和卧室数量的函数 (参见图 [[chapter7_deep_learning#^fig7-2|7.2]])。邮政编码可以提供额外信息，例如社区的步行便利程度 (即，是否可以步行到杂货店或需要开车)。结合邮政编码和社区财富可以预测当地小学的质量。可以认为，房屋价格最终取决于这三个特征。
+![[diagram_nn.svg|500]]  ^fig7-2
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.2 预测房屋价格的小型神经网络示意图</p>
 
-![[diagram_nn.svg|500]]<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.2 预测房屋价格的小型神经网络示意图</p>
-^fig7-2
+给定这些特征 (大小、卧室数量、邮政编码和财富)，可能会决定房屋价格取决于其可容纳的最大家庭人数。假设家庭人数是房屋大小和卧室数量的函数 (参见图 [[chapter7_deep_learning#^fig7-2|7.2]])。邮政编码可以提供额外信息，例如社区的步行便利程度 (即，是否可以步行到杂货店或需要开车)。结合邮政编码和社区财富可以预测当地小学的质量。可以认为，房屋价格最终取决于这三个特征。
 
 形式上，神经网络的输入是一组输入特征 $x_1, x_2, x_3, x_4$. 将“家庭人数”、“步行便利程度”和“学校质量”的中间变量记为 $a_1, a_2, a_3$ (这些 $a_i$ 通常被称为“隐藏单元”或“隐藏神经元”)。将每个 $a_i$ 表示为以 $x_1, \dots, x_4$ 的子集为输入的单神经元神经网络。然后，如在图 [[chapter7_deep_learning#^fig7-1|7.1]] 中，将有以下参数化：
 
@@ -354,8 +354,8 @@ $$
 \end{align}
 $$
 
-![[activations.svg|500]]<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.3 深度学习中的激活函数</p>
-^fig7-3
+![[activations.svg|500]] ^fig7-3
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.3 深度学习中的激活函数</p>
 
 激活函数在图 [[chapter7_deep_learning#^fig7-3|7.3]] 中绘制。$\text{Sigmoid}$ 和 $\text{tanh}$ 现在使用得越来越少，部分原因是它们在两侧都有界，并且当 $z$ 趋于正负无穷时，它们的梯度会消失 (而所有其他激活函数在输入趋于正无穷时仍然有梯度)。$\text{Softplus}$ 可以看作是 $\text{ReLU}$ 的平滑版本，它具有适当的二阶导数，不过在实践中也不常用。$\text{GELU}$ 和 $\text{leaky ReLU}$ 都是 $\text{ReLU}$ 的变体，但即使输入为负，它们也具有非零梯度。$\text{GELU}$ (或其变体) 用于 NLP 模型，例如 BERT 和 GPT (这将在第 14 章讨论)。
 
@@ -395,6 +395,10 @@ $$
 ## 7.3 现代神经网络的模块
 
 第 [[chapter7_deep_learning#7.2 神经网络|7.2]] 节公式 [[chapter7_deep_learning#^eq7-22|(7.22)]] 中介绍的多层神经网络现在通常被称为多层感知机 (MLP)。现代神经网络在实践中通常更复杂，由多个构建块或多层构建块组成。在本节中，将介绍一些其他的构建块并讨论可能的组合方式。
+
+```todo
+fig4 here
+```
 
 首先，每个矩阵乘法可以看作是一个构建块。考虑一个带有参数 $(W, b)$ 的矩阵乘法运算，其中 $W$ 是权重矩阵，$b$ 是偏置向量，作用于输入 $z$，
 
@@ -509,7 +513,7 @@ $$
 
 卷积神经网络是由卷积层 (以及许多其他模块) 组成的神经网络，特别适用于计算机视觉应用。为了简化说明，本文重点介绍 1-D 卷积，并在本小节末尾非正式地简要提及 2-D 卷积。(2-D 卷积更适合于具有两个维度的图像。1-D 卷积也用于自然语言处理。)
 
-首先介绍一个简化版本的 1-D 卷积层，记为 $\text{Conv1D-S}(\cdot)$，它是一种具有特殊结构的矩阵乘法层。$\text{Conv1D-S}$ 的参数是一个滤波器向量 $w \in \mathbb{R}^k$，其中 $k$ 称为滤波器大小（通常 $k \ll m$），以及一个标量偏置 $b$。滤波器有时也称为核（但与核方法中的核无关）。为简单起见，假设 $k = 2\ell + 1$ 是一个奇数。首先在输入向量 $z$ 的两端填充零，即 $z_{1-\ell} = z_{1-\ell+1} = \cdots = z_0 = 0$ 和 $z_{m+1} = z_{m+2} = \cdots = z_{m+\ell} = 0$，并将 $z$ 看作一个 $(m+2\ell)$ 维向量。$\text{Conv1D-S}$ 输出一个维度为 $\mathbb{R}^m$ 的向量，其中每个输出维度是 $z$ 中子集元素的线性组合，系数来自 $w$,
+首先介绍一个简化版本的 1-D 卷积层，记为 $\text{Conv1D-S}(\cdot)$, 它是一种具有特殊结构的矩阵乘法层。$\text{Conv1D-S}$ 的参数是一个滤波器向量 $w \in \mathbb{R}^k$, 其中 $k$ 称为滤波器大小 (通常 $k \ll m$)，以及一个标量偏置 $b$. 滤波器有时也称为核 (但与核方法中的核无关)。为简单起见，假设 $k = 2\ell + 1$ 是一个奇数。首先在输入向量 $z$ 的两端填充零，即 $z_{1-\ell} = z_{1-\ell+1} = \cdots = z_0 = 0$ 和 $z_{m+1} = z_{m+2} = \cdots = z_{m+\ell} = 0$，并将 $z$ 看作一个 $(m+2\ell)$ 维向量。$\text{Conv1D-S}$ 输出一个维度为 $\mathbb{R}^m$ 的向量，其中每个输出维度是 $z$ 中子集元素的线性组合，系数来自 $w$,
 
 $$
 \text{Conv1D-S}(z)_i = w_1 z_{i-\ell} + w_2 z_{i-\ell+1} + \cdots + w_{2\ell+1} z_{i+\ell} = \sum_{j=1}^{2\ell+1} w_j z_{i-\ell+(j-1)}. \tag{7.48}
@@ -532,7 +536,7 @@ $$
 
 还注意到，在实践中存在许多卷积层的变体，与这里定义的有所不同，例如，填充零的方式或有时卷积层输出的维度可能与输入的维度不同。为了简化，这里省略了一些这些细节。
 
-实践中使用的卷积层也有许多“通道”，上面的简化版本对应于 $1$ 通道版本。形式上，$\text{Conv1D}$ 接受 $C$ 个向量 $z_1, \ldots, z_C \in \mathbb{R}^m$ 作为输入，其中 $C$ 称为通道数。换句话说，更一般的版本 $\text{Conv1D}$ 接受一个矩阵作为输入，它是 $z_1, \ldots, z_C$ 的拼接，维度为 $m \times C$。它可以输出 $C'$ 个维度为 $m$ 的向量，记为 $\text{Conv1D}(z)_1, \ldots, \text{Conv1D}(z)_{C'}$，其中 $C'$ 称为输出通道，或等效地一个维度为 $m \times C'$ 的矩阵。每个输出是应用于不同通道的简化卷积之和。
+实践中使用的卷积层也有许多“通道”，上面的简化版本对应于 $1$ 通道版本。形式上，$\text{Conv1D}$ 接受 $C$ 个向量 $z_1, \ldots, z_C \in \mathbb{R}^m$ 作为输入，其中 $C$ 称为通道数。换句话说，更一般的版本 $\text{Conv1D}$ 接受一个矩阵作为输入，它是 $z_1, \ldots, z_C$ 的拼接，维度为 $m \times C$. 它可以输出 $C'$ 个维度为 $m$ 的向量，记为 $\text{Conv1D}(z)_1, \ldots, \text{Conv1D}(z)_{C'}$, 其中 $C'$ 称为输出通道，或等效地一个维度为 $m \times C'$ 的矩阵。每个输出是应用于不同通道的简化卷积之和。
 
 $$
 \forall i \in [C'], \text{Conv1D}(z)_i = \sum_{j=1}^C \text{Conv1D-S}_{i,j}(z_j). \tag{7.50}
@@ -540,7 +544,7 @@ $$
 
 注意，每个 $\text{Conv1D-S}_{i,j}$ 都是具有不同参数的模块，因此总参数数量是 $k \times C \times C'$ ($\text{Conv1D-S}$ 的参数数量 $\times$ $\text{Conv1D-S}_{i,j}$ 的数量) $= kCC'$. 相比之下，从 $\mathbb{R}^{m \times C}$ 到 $\mathbb{R}^{m \times C'}$ 的一般线性映射具有 $m^2CC'$ 个参数。卷积的参数也可以表示为维度为 $k \times C \times C'$ 的三维张量。
 
-*2-D 卷积 (简述)：* 单通道的 2-D 卷积，记为 $\text{Conv2D-S}$，类似于  $\text{Conv1D-S}$，但接受一个 $2$ 维输入 $z \in \mathbb{R}^{m \times m}$ 并应用一个 $k \times k$ 大小的滤波器，输出 $\text{Conv2D-S}(z) \in \mathbb{R}^{m \times m}$。完整的 2-D 卷积层，记为  $\text{Conv2D}$，接受一系列矩阵 $z_1, \ldots, z_C \in \mathbb{R}^{m \times m}$ 作为输入，或者等效地一个 3-D 张量 $z = (z_1, \ldots, z_C) \in \mathbb{R}^{m \times m \times C}$，并输出一系列矩阵 $\text{Conv2D}(z)_1, \ldots, \text{Conv2D}(z)_{C'} \in \mathbb{R}^{m \times m}$，也可以看作一个维度为 $\mathbb{R}^{m \times m \times C'}$ 的 3D 张量。每个输出通道是应用于所有输入通道的  $\text{Conv2D-S}$ 层结果的总和。
+*2-D 卷积 (简述)：* 单通道的 2-D 卷积，记为 $\text{Conv2D-S}$，类似于  $\text{Conv1D-S}$，但接受一个 $2$ 维输入 $z \in \mathbb{R}^{m \times m}$ 并应用一个 $k \times k$ 大小的滤波器，输出 $\text{Conv2D-S}(z) \in \mathbb{R}^{m \times m}$. 完整的 2-D 卷积层，记为  $\text{Conv2D}$, 接受一系列矩阵 $z_1, \ldots, z_C \in \mathbb{R}^{m \times m}$ 作为输入，或者等效地一个 3-D 张量 $z = (z_1, \ldots, z_C) \in \mathbb{R}^{m \times m \times C}$, 并输出一系列矩阵 $\text{Conv2D}(z)_1, \ldots, \text{Conv2D}(z)_{C'} \in \mathbb{R}^{m \times m}$, 也可以看作一个维度为 $\mathbb{R}^{m \times m \times C'}$ 的 3D 张量。每个输出通道是应用于所有输入通道的  $\text{Conv2D-S}$ 层结果的总和。
 
 $$
 \forall i \in [C'], \text{Conv2D}(z)_i = \sum_{j=1}^C \text{Conv2D-S}_{i,j}(z_j). \tag{7.51}
