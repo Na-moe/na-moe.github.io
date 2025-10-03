@@ -68,5 +68,9 @@ title: CS229 机器学习 课程讲义
 > >   &emsp;╠ [[chapter7_deep_learning#7.2 神经网络| 7.2 神经网络]]  
 > >   &emsp;╠ [[chapter7_deep_learning#7.3 现代神经网络的模块|7.3 现代神经网络的模块]]  
 > >   &emsp;╠ [[chapter7_deep_learning#7.4 反向传播|7.4 反向传播]]  
+> >   &emsp;║ ╠ [[chapter7_deep_learning#7.4.1 偏导数初步|7.4.1 偏导数初步]]  
+> >   &emsp;║ ╠ [[chapter7_deep_learning#7.4.2 反向传播的通用策略|7.4.2 反向传播的通用策略]]  
+> >   &emsp;║ ╠ [[chapter7_deep_learning#7.4.3 基本模块的反向函数|7.4.3 基本模块的反向函数]]  
+> >   &emsp;║ ╚ [[chapter7_deep_learning#7.4.4 MLP 的反向传播|7.4.4 MLP的反向传播]]  
 > >   &emsp;╚ [[chapter7_deep_learning#7.5 训练样本的向量化|7.5 训练样本的向量化]]  
 
