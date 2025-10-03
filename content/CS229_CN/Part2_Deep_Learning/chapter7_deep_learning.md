@@ -406,16 +406,18 @@ $$
 \text{MM}_{W,b}(z) = W z + b. \tag{7.35}
 $$
 
-注意，这里隐含地假设所有维度都兼容。当在上下文中清晰或对讨论不重要时，也会省略 MM 的下标用以简化。
+注意，这里隐含地假设所有维度都兼容。当在上下文中清晰或对讨论不重要时，也会省略 $\text{MM}$ 的下标用以简化。
 
 然后，MLP 可以写成多个矩阵乘法模块和非线性激活模块（也可以看作是构建块）的组合：
 
+^eq7-36
 $$
 \text{MLP}(x) = \text{MM}_{W^{[r]}, b^{[r]}} (\sigma(\text{MM}_{W^{[r-1]}, b^{[r-1]}} (\sigma(\cdots \text{MM}_{W^{[1]}, b^{[1]}}(x))))). \tag{7.36}
 $$
 
 或者，当省略表示参数的下标时，可以写成
 
+^eq7-37
 $$
 \text{MLP}(x) = \text{MM}(\sigma(\text{MM}(\sigma(\cdots \text{MM}(x))))). \tag{7.37}
 $$
@@ -457,7 +459,7 @@ $$
     \end{bmatrix}, \tag{7.40}
 $$
 
-其中 $\hat{\mu} = \frac{\sum_{i=1}^m z_i}{m}$ 是向量 $z$ 的实际均值，$\hat{\sigma} = \sqrt{\frac{\sum_{i=1}^m (z_i - \hat{\mu})^2}{m}}$ 是 $z$ 中元素的实际标准差。[^6] 直观上看，$\text{LN-S}$ 是一个经过归一化处理的向量，其实际均值为零，实际标准差为 $1$.
+其中 $\hat{\mu} = \frac{\sum_{i=1}^m z_i}{m}$ 是向量 $z$ 的实际均值，$\hat{\sigma} = \sqrt{\frac{\sum_{i=1}^m (z_i - \hat{\mu})^2}{m}}$ 是 $z$ 中元素的实际标准差。[^4] 直观上看，$\text{LN-S}$ 是一个经过归一化处理的向量，其实际均值为零，实际标准差为 $1$.
 
 通常零均值和标准差 $1$ 并非最理想的归一化方案，因此层归一化引入了可学习的标量参数 $\beta$ 和 $\gamma$ 作为期望的均值和标准差，并使用仿射变换将 LN-S$(z)$ 的输出转换为均值为 $\beta$、标准差为 $\gamma$ 的向量。
 
@@ -559,8 +561,9 @@ $$
 
 由于通用定理的严格性并非本节的主要重点，将使用非正式定义来介绍术语。可微电路或可微网络是指一系列可微算术运算 (加法、减法、乘法、除法等) 和基本可微函数 ($\text{ReLU}$、$\exp$、$\log$、$\sin$、$\cos$ 等) 的组合。电路的大小定义为这些运算和基本函数的总数。假设每个运算和函数及其导数或偏导数都可以在 $O(1)$ 时间内计算。
 
+^theorem7-4-1
 **定理 7.4.1** *\[反向传播，或称自动微分的非正式表述\]*
-*假设有一个大小为 $N$ 的可微电路计算一个实值函数 $f: \mathbb{R}^\ell \to \mathbb{R}$. 那么，梯度 $\nabla f$ 可以通过一个大小为 $O(N)$ 的电路在 $O(N)$ 的时间内计算。[^4]*
+*假设有一个大小为 $N$ 的可微电路计算一个实值函数 $f: \mathbb{R}^\ell \to \mathbb{R}$. 那么，梯度 $\nabla f$ 可以通过一个大小为 $O(N)$ 的电路在 $O(N)$ 的时间内计算。[^5]*
 
 注意到，对于第 $j$ 个样本的损失函数 $J^{(j)}(\theta)$ 可以通过包含加法、减法、乘法和非线性激活等运算和函数的序列计算。因此，定理表明，应该能够在与计算 $J^{(j)}(\theta)$ 本身相似的时间内计算 $\nabla J^{(j)}(\theta)$. 这不仅适用于第 [[chapter7_deep_learning#7.2 神经网络|7.2]] 节介绍的全连接神经网络，也适用于许多其他使用更高级模块的神经网络。
 
@@ -570,11 +573,147 @@ $$
 
 ### 7.4.1 偏导数初步
 
-lorem
+假设标量变量 $J$ 依赖于某些变量 $z$ (可以是标量、矩阵或高阶张量)，记 $\frac{\partial J}{\partial z}$ 为 $J$ 关于变量 $z$ 的偏导数。这里的惯例是 $\frac{\partial J}{\partial z}$ 与 $z$ 本身具有完全相同的维度。例如，如果 $z \in \mathbb{R}^{m \times n}$，则 $\frac{\partial J}{\partial z} \in \mathbb{R}^{m \times n}$，并且 $\frac{\partial J}{\partial z}$ 的 $(i, j)$ 元素等于 $\frac{\partial J}{\partial z_{ij}}$。
+
+**备注 7.4.2:** 当 $J$ 和 $z$ 都不是标量时，$J$ 关于 $z$ 的偏导数变成矩阵或张量，并且符号变得有些棘手。除了处理数学或符号上的挑战之外，这些多元函数的偏导数不仅计算和存储成本高昂，而且实际上也很少显式构造这些偏导数。笔者的经验表明，只考虑标量函数对向量、矩阵或张量的导数通常更有效。故在本讲义中，不会讨论多元函数的导数。
+
+#### 链式法则
+
+下面回顾微积分中的链式法则，但我们的视角和符号更侧重于自动微分。
+
+考虑一个标量变量 $J$，它由函数 $f$ 和 $g$ 在某个变量 $z$ 上的复合得到，
+
+^eq7-52
+$$
+\begin{align}
+    z &\in \mathbb{R}^m \notag\\
+    u &= g(z) \in \mathbb{R}^n \notag\\
+    J &= f(u) \in \mathbb{R}. \tag{7.52}
+\end{align}
+$$
+
+下面的推导可以很容易地扩展到 $z$ 和 $u$ 是矩阵或张量的情况；但需要强调的是，最终变量 $J$ 是一个标量（参见备注 \ref{remark:7.4.1}）。令 $u = (u_1, \dots, u_n)$，并令 $g(z) = \left(g_1(z), \dots, g_n(z)\right)$。那么，根据标准的链式法则，有
+
+^eq7-53
+$$
+\forall i \in \{1, \dots, m\}, \quad \frac{\partial J}{\partial z_i} = \sum_{j=1}^n \frac{\partial J}{\partial u_j} \cdot \frac{\partial g_j}{\partial z_i}. \tag{7.53}
+$$
+
+或者，当 $z$ 和 $u$ 都是向量时，采用向量化符号：
+
+^eq7-54
+$$
+\frac{\partial J}{\partial z} = \begin{bmatrix}
+	\ \frac{\partial g_1}{\partial z_1}&  &\cdots&  &\frac{\partial g_n}{\partial z_1}\  \\
+	\ \vdots&  &\ddots&  &\vdots\  \\
+	\ \frac{\partial g_1}{\partial z_m}&  &\cdots&  &\frac{\partial g_n}{\partial z_m}\ 
+\end{bmatrix} \cdot \frac{\partial J}{\partial u}. \tag{7.54}
+$$
+
+换句话说，反向函数总是从 $\frac{\partial J}{\partial u}$ 到 $\frac{\partial J}{\partial z}$ 的线性映射，但请注意，映射本身可以以复杂的方式依赖于 $z$. 公式 [[chapter7_deep_learning#^eq7-54|(7.54)]] 右侧的矩阵实际上是函数 $g$ 的雅可比矩阵的转置。然而，不会深入讨论雅可比矩阵的应用，以避免复杂性。部分原因在于，当 $z$ 是矩阵（或张量）时，要写出类似公式 [[chapter7_deep_learning#^eq7-54|(7.54)]] 的形式，需要将 $z$ 展平为向量或引入张量-矩阵乘法的额外符号。从这个意义上说，公式 [[chapter7_deep_learning#^eq7-53|(7.53)]] 在所有情况下都更方便有效。例如，当 $z \in \mathbb{R}^{r \times s}$ 是一个矩阵时，可以很容易地重写公式 [[chapter7_deep_learning#^eq7-53|(7.53)]] 得到
+
+$$
+\forall i, k, \ \frac{\partial J}{\partial z_{ik}} = \sum_{j=1}^n \frac{\partial J}{\partial u_j} \cdot \frac{\partial g_j}{\partial z_{ik}}, \tag{7.55}
+$$
+
+这将在第 [[chapter7_deep_learning#7.4.3 基本模块的反向函数|7.4.3]] 节的一些推导中用到。
+
+*链式法则的关键解释:* 可以将上面的公式（公式 [[chapter7_deep_learning#^eq7-53|(7.53)]] 或 [[chapter7_deep_learning#^eq7-54|(7.54)]]）看作是从 $\frac{\partial J}{\partial u}$ 计算 $\frac{\partial J}{\partial z}$ 的一种方法。考虑以下抽象问题：假设 $J$ 通过公式 [[chapter7_deep_learning#^eq7-52|(7.52)]] 中定义的 $u$ 依赖于 $z$. 然而，假设函数 $f$ 未知或函数 $f$ 很复杂，但已知 $\frac{\partial J}{\partial u}$ 的值。那么，公式 [[chapter7_deep_learning#^eq7-54|(7.54)]] 提供了一种从 $\frac{\partial J}{\partial u}$ 计算 $\frac{\partial J}{\partial z}$ 的方法。
+
+^eq7-56
+$$
+\frac{\partial J}{\partial u} \quad \xRightarrow[\text{只需要关于}\  g(\cdot) \ \text{和}\  z \text{的信息}]{\text{利用链式法则和公式 7.54} } \quad \frac{\partial J}{\partial z}. \tag{7.56}
+$$
+
+此外，此公式仅涉及关于 $g$ 的知识 (更准确地说，是 $\frac{\partial g_j}{\partial z_i}$ )。将反复利用这一点来处理 $g$ 是复杂网络 $f$ 的构建模块的情况。
+
+根据经验，可以将公式 [[chapter7_deep_learning#^eq7-53|(7.53)]] 或 [[chapter7_deep_learning#^eq7-54|(7.54)]] 中的映射模块视为一个黑盒，并且定义一个数学符号也便于后续讨论。[^7] 使用 $\mathcal{B}[g, z]$ 定义将 $\frac{\partial J}{\partial u}$ 映射到 $\frac{\partial J}{\partial z}$ 的函数，并记作
+
+^eq7-57
+$$
+\frac{\partial J}{\partial z} = \mathcal{B}[g, z]\left(\frac{\partial J}{\partial u}\right). \tag{7.57}
+$$
+
+称 $\mathcal{B}[g, z]$ 为模块 $g$ 的 **反向函数 (backward function)**。注意，当 $z$ 固定时，$\mathcal{B}[g, z]$ 仅是从 $\mathbb{R}^n$ 到 $\mathbb{R}^m$ 的线性映射。使用公式 [[chapter7_deep_learning#^eq7-53|(7.53)]]，有
+
+$$
+(\mathcal{B}[g, z](v))_i = \sum_{j=1}^m \frac{\partial g_j}{\partial z_i} \cdot v_j. \tag{7.58}
+$$
+
+或者采用向量化符号，使用公式 \eqref{eq:7.54}，有
+
+$$
+\mathcal{B}[g, z](v) = \begin{bmatrix}
+    \ \frac{\partial g_1}{\partial z_1}&  &\cdots&  &\frac{\partial g_n}{\partial z_1} \ \\
+    \ \vdots&  &\ddots&  &\vdots \ \\
+    \ \frac{\partial g_1}{\partial z_m}&  &\cdots&  &\frac{\partial g_n}{\partial z_m} \ 
+\end{bmatrix} \cdot v. \tag{7.59}
+$$
+
+因此 $\mathcal{B}[g, z]$ 可以看作一个矩阵。然而实际上 $z$ 将不断变化，因此当 $g$ 固定时，反向映射必须针对不同的 $z$ 重新计算。因此，从经验上看，反向函数 $\mathcal{B}[g, z](v)$ 通常被视为一个函数，它接受 $z$ ($g$ 的输入) 和 $v$ ($J$ 对某个变量的梯度，该变量被认为是 $g$ 的输出) 作为输入，并输出一个向量，该向量被认为是 $J$ 对 $z$ 的梯度。
 
 ### 7.4.2 反向传播的通用策略
 
-lorem
+本节讨论自动微分的通用策略，以建立高层次的理解。然后，将把这种方法实例化到具体的神经网络中。采用的观点是，神经网络是由小的构建块组成的复杂组合，例如第 [[chapter7_deep_learning#7.3 现代神经网络的模块|7.3]] 节中定义的 $\text{MM}$、$\sigma$、$\text{Conv2D}$、$\text{LN}$ 等。注意，损失函数 (例如，均方误差损失或交叉熵损失) 也可以抽象地视为附加模块。因此，可以将损失函数 $J$ (针对单个样本 $(x, y)$) 抽象地写成许多模块的组合：[^8]
+
+^eq7-60
+$$
+J = M_k(M_{k-1}(\cdots M_1(x))). \tag{7.60}
+$$
+
+例如，对于具有 MLP $\bar{h}_\theta(x)$（在公式 [[chapter7_deep_learning#^eq7-36|(7.36)]] 和 [[chapter7_deep_learning#^eq7-37|(7.37)]] 中定义）的二分类问题，损失函数可以写成公式 [[chapter7_deep_learning#^eq7-60|(7.60)]] 的形式，其中 $M_1 = \text{MM}_{W^{[1]}, b^{[1]}}, M_2 = \sigma, M_3 = \text{MM}_{W^{[2]}, b^{[2]}}, \dots$, 以及 $M_{k-1} = \text{MM}_{W^{[r]}, b^{[r]}}$, $M_k = \ell_{\text{logistic}}$.
+
+从这个例子可以看出，有些模块涉及参数，而有些模块可能只涉及固定的操作集。为了通用性，假设每个 $M_i$ 都涉及一组参数 $\theta^{[i]}$, 尽管当 $M_i$ 是像非线性激活这样的固定操作时，$\theta^{[i]}$ 可能是一个空集。之后将更详细地讨论模块化的粒度，但目前假设所有模块 $M_i$ 都足够简单。
+
+引入用于公式 [[chapter7_deep_learning#^eq7-60|(7.60)]] 中计算的中间变量：
+
+^eqF
+$$
+\begin{align}
+    u^{[0]} &= x \notag\\
+    u^{[1]} &= M_1(u^{[0]}) \notag\\
+    u^{[2]} &= M_2(u^{[1]}) \notag\\
+    &\vdots \notag\\
+    J = u^{[k]} &= M_k(u^{[k-1]}). \tag{F}
+\end{align}
+$$
+
+反向传播由两个过程组成：前向传播和反向传播。在前向传播中，算法根据定义 [[chapter7_deep_learning#^eqF|(F)]] 按顺序计算 $u^{[1]}, \dots, u^{[k]}$，并将所有中间变量 $u^{[i]}$ 保存在内存中。
+
+在反向传播中，首先按反向顺序计算 $J$ 对中间变量的导数，即 $\frac{\partial J}{\partial u^{[k]}}, \dots, \frac{\partial J}{\partial u^{[1]}}$, 然后从 $\frac{\partial J}{\partial u^{[i]}}$ 和 $u^{[i-1]}$ 计算参数 $\theta^{[i]}$ 的导数 $\frac{\partial J}{\partial \theta^{[i]}}$. 这两类计算可以相互交织，因为 $\frac{\partial J}{\partial \theta^{[i]}}$ 仅依赖于 $\frac{\partial J}{\partial u^{[i]}}$ 和 $u^{[i-1]}$, 而不依赖于任何 $k < i$ 的 $\frac{\partial J}{\partial u^{[k]}}$.
+
+首先通过引用第 [[chapter7_deep_learning#7.4.1 偏导数初步|7.4.1]] 节关于链式法则的讨论来理解为什么 $\frac{\partial J}{\partial u^{[i-1]}}$ 可以从 $\frac{\partial J}{\partial u^{[i]}}$ 和 $u^{[i-1]}$ 有效计算。通过设置 $u = u^{[i]}$ 和 $z = u^{[i-1]}$, 以及 $f(u) = M_k(M_{k-1}(\cdots M_{i+1}(u)))$, 以及 $g(\cdot) = M_i(\cdot)$, 来实例化讨论。注意，$f$ 非常复杂，但不需要关于 $f$ 的任何具体信息。那么，结论性公式 [[chapter7_deep_learning#^eq7-56|(7.56)]] 对应于
+
+$$
+\frac{\partial J}{\partial u^{[i]}} \quad \xRightarrow[\textbf{只需要关于}\  M_i(\cdot) \ \textbf{和}\  u^{[i-1]} \ \textbf{的信息}]{\text{链式法则}} \frac{\partial J}{\partial u^{[i-1]}}. \tag{7.61}
+$$
+
+更准确地说，根据公式 [[chapter7_deep_learning#^eq7-57|(7.57)]]，可以写成
+
+$$
+\begin{align}
+    \frac{\partial J}{\partial u^{[i-1]}} &= \mathcal{B}[M_i, u^{[i-1]}]\left(\frac{\partial J}{\partial u^{[i]}}\right). \tag{B1}
+\end{align}
+$$
+
+将链式法则实例化为 $z = \theta^{[i]}$ 和 $u = u^{[i]}$, 也有
+
+$$
+\begin{align}
+    \frac{\partial J}{\partial \theta^{[i]}} &= \mathcal{B}[M_i, \theta^{[i]}]\left(\frac{\partial J}{\partial u^{[i]}}\right). \tag{B2}
+\end{align}
+$$
+有关算法的说明，请参见图 \ref{fig:7.5}。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figs/backpropagation.pdf}
+    \caption{反向传播}
+    \label{fig:7.5}
+\end{figure}
+
+**备注 7.4.3:** \[计算效率和模块的粒度]
+将复杂网络视为小型模块组合的主要根本目的是，小型模块往往具有可高效实现的后向函数。实际上，所有原子模块 (如加法、乘法和 $\text{ReLU}$) 的后向函数都可以像评估这些模块一样高效地计算 (最多相差一个乘法常数因子)。利用这一事实，可以通过将神经网络视为许多原子操作的组合，并调用上面讨论的反向传播来证明定理 [[chapter7_deep_learning#^theorem7-4-1|7.4.1]]。然而，在实践中，会更常使用矩阵乘法、层归一化这类模块来模块化网络。正如后文所述，这些操作的后向函数的朴素实现也具有与这些函数的评估相同的运行时间。
 
 ### 7.4.3 基本模块的反向函数
 
@@ -637,7 +776,7 @@ $$
 
 ### 实现中的复杂性/细微之处
 
-所有深度学习软件包或实现都将数据点放在数据矩阵的行中。(如果数据点本身是矩阵或张量，则将数据沿着第0维堆叠。) 然而，大多数深度学习论文使用与本讲义类似的表示法，其中数据点被视为列向量。[^5] 有一个简单的转换来处理这种不匹配：在实现中，所有列向量变成行向量，行向量变成列向量，所有矩阵都被转置，并且矩阵乘法的顺序被颠倒。在上面的例子中，使用行优先约定，数据矩阵是 $X \in \mathbb{R}^{3 \times d}$, 第一层权重矩阵的维度是 $d \times m$ (而不是两层神经网络部分中的 $m \times d$ )，偏置向量 $b^{[1]} \in \mathbb{R}^{1 \times m}$. 隐藏层激活的计算变为
+所有深度学习软件包或实现都将数据点放在数据矩阵的行中。(如果数据点本身是矩阵或张量，则将数据沿着第 $0$ 维堆叠。) 然而，大多数深度学习论文使用与本讲义类似的表示法，其中数据点被视为列向量。[^6] 有一个简单的转换来处理这种不匹配：在实现中，所有列向量变成行向量，行向量变成列向量，所有矩阵都被转置，并且矩阵乘法的顺序被颠倒。在上面的例子中，使用行优先约定，数据矩阵是 $X \in \mathbb{R}^{3 \times d}$, 第一层权重矩阵的维度是 $d \times m$ (而不是两层神经网络部分中的 $m \times d$ ), 偏置向量 $b^{[1]} \in \mathbb{R}^{1 \times m}$. 隐藏层激活的计算变为
 
 $$
 Z^{[1]} = XW^{[1]} + b^{[1]} \in \mathbb{R}^{3 \times m} \tag{7.84}
@@ -653,8 +792,12 @@ $$
 
 [^3]: 通常，对于多层神经网络的末端，也即靠近输出处不会应用 ReLU，特别是当输出不一定是正数时。
 
-[^4]: 注意到，如果函数 $f$ 的输出不依赖于某些输入的分量，则默认将关于这些分量的梯度设为零。在本节的计算方案中，将梯度设为零不计入总运行时间。因此，当 $N \le \ell$ 时，可以在 $O(N)$ 时间内计算梯度，这可能甚至小于 $\ell$.
+[^4]: 注意，这里的实际标准差是除以 $m$ 而不是 $m-1$, 因为所感兴趣的是使 $\text{LN-S}(z)$ 的输出的平方和等于 1 (与统计学中估计标准差不同)。
 
-[^5]: 笔者猜测这主要是因为在数学中，习惯对向量左乘矩阵。
+[^5]: 注意到，如果函数 $f$ 的输出不依赖于某些输入的分量，则默认将关于这些分量的梯度设为零。在本节的计算方案中，将梯度设为零不计入总运行时间。因此，当 $N \le \ell$ 时，可以在 $O(N)$ 时间内计算梯度，这可能甚至小于 $\ell$.
 
-[^6]: 注意，这里的实际标准差是除以 $m$ 而不是 $m-1$, 因为所感兴趣的是使 $\text{LN-S}(z)$ 的输出的平方和等于 1 (与统计学中估计标准差不同)。
+[^6]: 笔者猜测这主要是因为，在数学中习惯对向量左乘矩阵。
+
+[^7]: 该函数也是 `pytorch` 中模块的 `.backward()` 方法。
+
+[^8]: 严格来说，应该写成 $J = M_k(M_{k-1}(\cdots M_1(x)), y)$. 然而，为了计算相对于参数的导数，将 $y$ 视为常数，因此为了符号的简洁性，可以将其视为 $M_k$ 的一部分。
