@@ -14,10 +14,7 @@ title: 第 6 章 支持向量机
 
 为了获得另一种直觉，考虑下面的图，其中 x 表示正训练样本，o 表示负训练样本，还显示了决策边界 (这是由方程 $\theta^T x = 0$ 给出的直线，也称为 **分隔超平面 (separating hyperplane)**)，并且还标记了三个点 A、B 和 C.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{figs/svm_hyperplane.png}
-\end{figure}
+![[svm_hyperplane.png|500]]
 
 注意到点 A 离决策边界非常远。如果要求预测 A 点的 $y$ 值，似乎应该非常确信那里 $y=1$. 相反，点 C 离决策边界非常近，尽管它在决策边界预测 $y=1$ 的一侧，但决策边界的微小变化似乎很容易导致预测结果为 $y=0$. 因此，在 A 点的预测比在 C 点更确信。点 B 介于这两种情况之间，更广泛地说，可以看出，如果一个点离分隔超平面很远，那么预测可能会更确信。同样，非正式地认为，如果给定一个训练集，能够找到一个决策边界，使得在训练样本上做出所有正确且确信 (即远离决策边界) 的预测，那就可以称为很好的决策边界。稍后将使用几何间隔的概念来形式化这个想法。
 
@@ -53,10 +50,7 @@ $$
 
 接下来，讨论 **几何间隔 (geometric margins)**。考虑下面的图：
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{figs/svm_geo_margin.png}
-\end{figure}
+![[svm_geo_margin.png|500]]
 
 图中显示了与 $(w,b)$ 对应的决策边界以及向量 $w$. 注意 $w$ 与分隔超平面正交 (呈 $90^\circ$ 角) (可以自行证明确实如此)。 考虑 A 点，它代表标记为 $y^{(i)}=1$ 的某个训练样本的输入 $x^{(i)}$, 它到决策边界的距离 $\gamma^{(i)}$ 由线段 AB 给出。
 
@@ -285,10 +279,7 @@ $$
 
 每个训练样本都有一个这样的约束。注意，根据 KKT 对偶互补性条件，只有当训练样本的功能间隔恰好等于 $1$ 时 (即，对应于满足等式 $g_i(w) = 0$ 的约束)，$\alpha_i$ 才大于 $0$. 可以考虑下图中的情形，其中实线表示最大间隔分离超平面。
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{figs/svm_max_margin.png}
-\end{figure}
+![[svm_max_margin.png|500]]
 
 间隔最小的点恰好是离决策边界最近的点；在这里，这三个点 (一个负样本和两个正样本) 位于平行于决策边界的虚线上。因此，只有这三个 $\alpha_i$ (即，对应于这三个训练样本的 $\alpha_i$ ) 在最优解处非零。这三个点被称为该问题中的 **支持向量 (support vectors)** 。支持向量的数量可以远小于训练集的大小，这一事实将在稍后有用。
 
@@ -373,10 +364,7 @@ $$
 
 目前为止介绍的支持向量机推导假设数据是线性可分的。虽然通过 $\phi$ 将数据映射到高维特征空间通常会增加数据可分的可能性，但不能保证总是如此。此外，在某些情况下，找到一个分离超平面并非完全符合期望，因为它可能对离群点敏感。例如，下面左图显示了一个最优间隔分类器，当在左上方区域 (右图) 添加一个离群点时，决策边界会发生剧烈变化，并且得到的分类器的间隔会小得多。
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.93\linewidth]{figs/svm_regularization.png}
-\end{figure}
+![[svm_regularization.png]]
 
 为了使算法也适用于非线性可分数据集并降低对离群点的敏感度，我们重新构建了优化问题(使用 $\ell_1$ **正则化 (regularization)**)，如下所示：
 
@@ -451,10 +439,7 @@ $\qquad$\}
 
 当函数 $W$ 的形式恰好使得内层循环中的 “arg max” 可以高效执行时，坐标上升可以是一个相当高效的算法。这里是坐标上升算法的一个图例：
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{figs/svm_coordinate_ascent.png}
-\end{figure}
+![[svm_coordinate_ascent.png|500]]
 
 
 图中的椭圆是我们想要优化的二次函数的等高线。坐标上升从 $(2, -2)$ 初始化，图中绘制了它通往全局最大值的路径。注意到在每一步，坐标上升都沿着与一个坐标轴平行的方向前进，因为每次只优化一个变量。
@@ -518,10 +503,7 @@ $$
 
 因此，可以将 $\alpha_1$ 和 $\alpha_2$ 的约束可视化如下：
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{figs/svm_smo_constraint.png}
-\end{figure}
+![[svm_smo_constraint.png|500]]
 
 从约束 [[chapter6_support_vector_machines#^eq6-20|(6.20)]] 中，我们知道 $\alpha_1$ 和 $\alpha_2$ 必须位于所示的盒子 $[0, C] \times [0, C]$ 内。还绘制了直线 $\alpha_1 y^{(1)} + \alpha_2 y^{(2)} = \zeta$, 我们知道 $\alpha_1$ 和 $\alpha_2$ 必须位于该直线上。另外注意，从这些约束中可以推出 $L \le \alpha_2 \le H$; 否则，$(\alpha_1, \alpha_2)$ 无法同时满足盒子约束和直线约束。在此示例中，$L=0$. 但这取决于直线 $\alpha_1 y^{(1)} + \alpha_2 y^{(2)} = \zeta$ 的样子，情况并非总是如此；更普遍地，对于 $\alpha_2$ 的允许值，会有一个下界 $L$ 和一个上界 $H$, 以确保 $\alpha_1, \alpha_2$ 位于盒子 $[0, C] \times [0, C]$ 内。
 

@@ -62,3 +62,11 @@ title: CS229 机器学习 课程讲义
 
 > [!example]- [[CS229_CN/Part2_Deep_Learning/index|第 II 部分 深度学习]]  
 >   
+> > [!example]- [[chapter7_deep_learning|第 7 章 深度学习]]  
+> > 
+> >   &emsp;╠ [[chapter7_deep_learning#7.1 使用非线性模型的监督学习|7.1 使用非线性模型的监督学习]]  
+> >   &emsp;╠ [[chapter7_deep_learning#7.2 神经网络| 7.2 神经网络]]  
+> >   &emsp;╠ [[chapter7_deep_learning#7.3 现代神经网络的模块|7.3 现代神经网络的模块]]  
+> >   &emsp;╠ [[chapter7_deep_learning#7.4 反向传播|7.4 反向传播]]  
+> >   &emsp;╚ [[chapter7_deep_learning#7.5 训练样本的向量化|7.5 训练样本的向量化]]  
+

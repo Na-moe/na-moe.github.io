@@ -31,6 +31,7 @@ $$
 
 接下来定义二元分类的模型和损失函数。假设输入 $x \in \mathbb{R}^d$. 令 $\bar{h}_\theta: \mathbb{R}^d \to \mathbb{R}$ 是一个参数化模型 (逻辑线性回归中 $\theta^T x$ 的类比)。将输出 $\bar{h}_\theta(x) \in \mathbb{R}$ 称为 logit. 类似于第 [[chapter2_classification_and_logistic_regression#2.1 逻辑回归|2.1]] 节，使用 logistic 函数 $g(\cdot)$ 将 logit $\bar{h}_\theta(x)$ 转换为概率 $h_\theta(x) \in [0, 1]$:
 
+^eq7-3
 $$
 h_\theta(x) = g(\bar{h}_\theta(x)) = 1 / (1 + \exp(-\bar{h}_\theta(x))). \tag{7.3}
 $$
@@ -56,6 +57,7 @@ $$
 
 按照第 [[chapter2_classification_and_logistic_regression#2.3 多类别分类|2.3]] 节，考虑响应变量 $y$ 可以取 $k$ 个值之一的分类问题，即 $y \in \{1, 2, \dots, k\}$. 令 $\bar{h}_\theta: \mathbb{R}^d \to \mathbb{R}^k$ 是一个参数化模型。将输出 $\bar{h}_\theta(x) \in \mathbb{R}^k$ 称为 logits. 每个 logit 对应于 $k$ 个类别之一的预测。类似于第 [[chapter2_classification_and_logistic_regression#2.3 多类别分类|2.3]] 节，使用 $\text{softmax}$ 函数将 logits $\bar{h}_\theta(x)$ 转换为一个非负且和为 $1$ 的概率向量：
 
+^eq7-5
 $$
 P(y = j \mid x; \theta) = \frac{\exp(\bar{h}_\theta(x)_j)}{\sum_{s=1}^k \exp(\bar{h}_\theta(x)_s)}, \tag{7.5}
 $$
@@ -132,6 +134,40 @@ $$
 
 ## 7.2 神经网络
 
+神经网络是指一类广泛的非线性模型/参数化方法，涉及矩阵乘法和其它逐元素非线性运算的组合。为了统一处理回归问题和分类问题，此处将 $\bar{h}_\theta(x)$ 视为神经网络的输出。对于回归问题，最终预测 $h_\theta(x) = \bar{h}_\theta(x)$; 对于分类问题，$\bar{h}_\theta(x)$ 是 logits, 二分类的预测概率是 $h_\theta(x) = 1/(1+\exp(-\bar{h}_\theta(x)))$ (参见公式 [[chapter7_deep_learning#^eq7-3|(7.3)]])，多分类的则是 $h_\theta(x) = \text{softmax}(\bar{h}_\theta(x))$ 用于 (参见公式 [[chapter7_deep_learning#^eq7-5|(7.5)]])。
+
+接下来将从小到大逐步构建一个神经网络。
+
+### 单神经元神经网络
+
+lorem
+
+### 堆叠神经元
+
+lorem
+
+### 生物神经网络的启发
+
+lorem
+
+### 两层全连接神经网络
+
+lorem
+
+### 向量化
+
+lorem
+
+### 多层全连接神经网络
+
+lorem
+
+### 其他激活函数
+
+lorem
+
+### 为什么不使用恒等函数作为 $\sigma(z)$ ?
+
 lorem
 
 ## 7.3 现代神经网络的模块
@@ -139,6 +175,10 @@ lorem
 lorem
 
 ## 7.4 反向传播
+
+lorem
+
+## 7.5 训练样本的向量化
 
 lorem
 
