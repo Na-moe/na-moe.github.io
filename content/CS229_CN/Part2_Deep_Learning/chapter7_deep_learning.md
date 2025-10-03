@@ -142,7 +142,7 @@ $$
 
 回顾之前的房价预测问题：给定房屋大小，预测价格。 将在本小节中以此为例进行说明。
 
-之前，将直线拟合到房屋大小与房价的关系图上。现在，不拟合直线，希望通过将绝对最低价格设置为零来防止负房价。 这在图 \ref{fig:7.1} 中产生一个“拐点”。如何用具有单个拐点且参数未知的 $\bar{h}_\theta(x)$ 来表示这样的函数？ (完成此操作后，可以调用第 [[chapter7_deep_learning#7.1 使用非线性模型的监督学习|7.1]] 节中的机制。)
+之前，将直线拟合到房屋大小与房价的关系图上。现在，不拟合直线，希望通过将绝对最低价格设置为零来防止负房价。 这在图 [[chapter7_deep_learning#^fig7-1|7.1]] 中产生一个“拐点”。如何用具有单个拐点且参数未知的 $\bar{h}_\theta(x)$ 来表示这样的函数？ (完成此操作后，可以调用第 [[chapter7_deep_learning#7.1 使用非线性模型的监督学习|7.1]] 节中的机制。)
 
 定义一个参数化的函数 $\bar{h}_\theta(x)$，以 $x$ 为输入，由 $\theta$ 参数化，输出房屋价格 $y$. 形式上，$\bar{h}_\theta: x \to y$. 最简单的参数化也许是
 
@@ -150,7 +150,7 @@ $$
 \bar{h}_\theta(x) = \max(wx + b, 0), \text{其中}\  \theta = (w, b) \in \mathbb{R}^2 \tag{7.11}
 $$
 
-此处 $\bar{h}_\theta(x)$ 返回一个值：$(wx+b)$ 或 0 的较大者。在神经网络的预警中，函数 $\max\{t, 0\}$ 被称为 ReLU (读作“ray-lu”)，或修正线性单元 (Rectified Linear Unit)，通常记作 $\text{ReLU}(t) \triangleq \max\{t, 0\}$.
+此处 $\bar{h}_\theta(x)$ 返回一个值：$(wx+b)$ 或 0 的较大者。在神经网络的预警中，函数 $\max\{t, 0\}$ 被称为 $\text{ReLU}$ (读作“ray-lu”)，或修正线性单元 (Rectified Linear Unit)，通常记作 $\text{ReLU}(t) \triangleq \max\{t, 0\}$.
 
 通常，将 $\mathbb{R}$ 映射到 $\mathbb{R}$ 的一维非线性函数 (例如 $\text{ReLU}$) 通常被称为 **激活函数 (activation function)**。模型 $\bar{h}_\theta(x)$ 被称为具有单个神经元，部分原因是它具有单个非线性激活函数。(稍后将更详细地讨论为什么非线性激活函数被称为神经元。)
 
@@ -160,9 +160,8 @@ $$
 \bar{h}_\theta(x) = \text{ReLU}(w^\top x + b),\ \text{其中}\  w \in \mathbb{R}^d, b \in \mathbb{R}, \text{且}\  \theta = (w, b) \tag{7.12}
 $$
 
-```todo
-fig here
-```
+![[house_dataset_relu.svg|图 7.1 带拐点的房价拟合|500]]
+^fig7-1
 
 项 $b$ 通常被称为“偏置”，向量 $w$ 被称为权重向量。这样的神经网络称之为 $1$ 层。(后续将定义多层的含义。)
 
@@ -172,13 +171,12 @@ fig here
 
 现在来深化房价预测的例子。除了房屋大小，假设还知道卧室数量、邮政编码和社区财富。构建神经网络类似于乐高积木：将单个积木堆叠在一起以构建复杂的结构。 这同样适用于神经网络：将单个神经元堆叠在一起以创建复杂的神经网络。
 
-给定这些特征 (大小、卧室数量、邮政编码和财富)，可能会决定房屋价格取决于其可容纳的最大家庭人数。假设家庭人数是房屋大小和卧室数量的函数 (参见图 \ref{fig:7.2})。邮政编码可以提供额外信息，例如社区的步行便利程度 (即，是否可以步行到杂货店或需要开车)。结合邮政编码和社区财富可以预测当地小学的质量。可以认为，房屋价格最终取决于这三个特征。
+给定这些特征 (大小、卧室数量、邮政编码和财富)，可能会决定房屋价格取决于其可容纳的最大家庭人数。假设家庭人数是房屋大小和卧室数量的函数 (参见图 [[chapter7_deep_learning#^fig7-2|7.2]])。邮政编码可以提供额外信息，例如社区的步行便利程度 (即，是否可以步行到杂货店或需要开车)。结合邮政编码和社区财富可以预测当地小学的质量。可以认为，房屋价格最终取决于这三个特征。
 
-```todo
-fig here
-```
+![[diagram_nn.svg|图 7.3 预测房屋价格的小型神经网络示意图|500]]
+^fig7-2
 
-形式上，神经网络的输入是一组输入特征 $x_1, x_2, x_3, x_4$. 将“家庭人数”、“步行便利程度”和“学校质量”的中间变量记为 $a_1, a_2, a_3$ (这些 $a_i$ 通常被称为“隐藏单元”或“隐藏神经元”)。将每个 $a_i$ 表示为以 $x_1, \dots, x_4$ 的子集为输入的单神经元神经网络。然后，如在图 \ref{fig:7.1} 中，将有以下参数化：
+形式上，神经网络的输入是一组输入特征 $x_1, x_2, x_3, x_4$. 将“家庭人数”、“步行便利程度”和“学校质量”的中间变量记为 $a_1, a_2, a_3$ (这些 $a_i$ 通常被称为“隐藏单元”或“隐藏神经元”)。将每个 $a_i$ 表示为以 $x_1, \dots, x_4$ 的子集为输入的单神经元神经网络。然后，如在图 [[chapter7_deep_learning#^fig7-1|7.1]] 中，将有以下参数化：
 
 $$
 \begin{aligned}
@@ -356,14 +354,10 @@ $$
 \end{align}
 $$
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\linewidth]{figs/activations.pdf}
-    \caption{深度学习中的激活函数}
-    \tag{fig:7.3}
-\end{figure}
+![[activations.svg|图 7.3 深度学习中的激活函数|500]]
+^fig7-3
 
-激活函数在图 \ref{fig:7.3} 中绘制。$\text{Sigmoid}$ 和 $\text{tanh}$ 现在使用得越来越少，部分原因是它们在两侧都有界，并且当 $z$ 趋于正负无穷时，它们的梯度会消失 (而所有其他激活函数在输入趋于正无穷时仍然有梯度)。$\text{Softplus}$ 可以看作是 $\text{ReLU}$ 的平滑版本，它具有适当的二阶导数，不过在实践中也不常用。$\text{GELU}$ 和 $\text{leaky ReLU}$ 都是 $\text{ReLU}$ 的变体，但即使输入为负，它们也具有非零梯度。$\text{GELU}$ (或其变体) 用于 NLP 模型，例如 BERT 和 GPT (这将在第 14 章讨论)。
+激活函数在图 [[chapter7_deep_learning#^fig7-3|7.3]] 中绘制。$\text{Sigmoid}$ 和 $\text{tanh}$ 现在使用得越来越少，部分原因是它们在两侧都有界，并且当 $z$ 趋于正负无穷时，它们的梯度会消失 (而所有其他激活函数在输入趋于正无穷时仍然有梯度)。$\text{Softplus}$ 可以看作是 $\text{ReLU}$ 的平滑版本，它具有适当的二阶导数，不过在实践中也不常用。$\text{GELU}$ 和 $\text{leaky ReLU}$ 都是 $\text{ReLU}$ 的变体，但即使输入为负，它们也具有非零梯度。$\text{GELU}$ (或其变体) 用于 NLP 模型，例如 BERT 和 GPT (这将在第 14 章讨论)。
 
 ### 为什么不使用恒等函数作为 $\sigma(z)$ ?
 
@@ -428,15 +422,132 @@ $$
 
 ### 残差连接
 
-lorem
+一种非常有影响力的用于视觉应用的神经网络架构是 ResNet，它使用了残差连接，这些连接现在几乎用于所有大规模深度学习架构中。使用上面介绍的符号，一个非常简化的残差块可以定义为
+
+$$
+\text{Res}(z) = z + \sigma(\text{MM}(\sigma(\text{MM}(z)))). \tag{7.38}
+$$
+
+一个简化版 ResNet 是许多残差块的组合，后接一个矩阵乘法，
+
+$$
+\text{ResNet-S}(x) = \text{MM}(\text{Res}(\text{Res}(\cdots \text{Res}(x)))). \tag{7.39}
+$$
+
+这些模块的依赖关系也绘制在图 \ref{fig:7.4} 右侧。
+
+注意，ResNet-S 与经典论文 \[[[reference#^he2016resnet|He et al., 2016]]\] 中介绍的 ResNet 架构仍不完全相同，因为 ResNet 使用卷积层而不是普通的矩阵乘法，并在卷积和激活之间添加了批量归一化。下面将介绍卷积层和批量归一化的一些变体。ResNet-S 和层归一化是 Transformer 架构的一部分，它们在现代大型语言模型中被广泛使用。
 
 ### 层归一化
 
-lorem
+层归一化，本文中记为 $\text{LN}$，是一个将向量 $z \in \mathbb{R}^m$ 映射到规范化的向量 $\text{LN}(z) \in \mathbb{R}^m$ 的模块。它通常在非线性激活之后使用。
+
+首先定义层归一化的一个子模块，记为 $\text{LN-S}$:
+
+$$
+\text{LN-S}(z) = \begin{bmatrix}
+        \ \frac{z_1 - \hat{\mu}}{\hat{\sigma}} \ \\
+        \ \frac{z_2 - \hat{\mu}}{\hat{\sigma}} \ \\
+        \ \vdots \ \\
+        \ \frac{z_m - \hat{\mu}}{\hat{\sigma}} \
+    \end{bmatrix}, \tag{7.40}
+$$
+
+其中 $\hat{\mu} = \frac{\sum_{i=1}^m z_i}{m}$ 是向量 $z$ 的实际均值，$\hat{\sigma} = \sqrt{\frac{\sum_{i=1}^m (z_i - \hat{\mu})^2}{m}}$ 是 $z$ 中元素的实际标准差。[^6] 直观上看，$\text{LN-S}$ 是一个经过归一化处理的向量，其实际均值为零，实际标准差为 $1$.
+
+通常零均值和标准差 $1$ 并非最理想的归一化方案，因此层归一化引入了可学习的标量参数 $\beta$ 和 $\gamma$ 作为期望的均值和标准差，并使用仿射变换将 LN-S$(z)$ 的输出转换为均值为 $\beta$、标准差为 $\gamma$ 的向量。
+
+$$
+\text{LN}(z) = \beta + \gamma \cdot \text{LN-S}(z) = \begin{bmatrix}
+        \ \beta + \gamma \left(\frac{z_1 - \hat{\mu}}{\hat{\sigma}}\right)\  \\
+        \ \beta + \gamma \left(\frac{z_2 - \hat{\mu}}{\hat{\sigma}}\right)\  \\
+        \ \vdots\  \\
+        \ \beta + \gamma \left(\frac{z_m - \hat{\mu}}{\hat{\sigma}}\right)\ 
+    \end{bmatrix}. \tag{7.41}
+$$
+
+这里，第一个 $\beta$ 技术上应该解释为一个所有元素都是标量 $\beta$ 的向量。还需要注意，$\hat{\mu}$ 和 $\hat{\sigma}$ 也是 $z$ 的函数，在计算层归一化的导数时不应将其视为常数。此外，$\beta$ 和 $\gamma$ 是可学习参数，因此层归一化是一个带参数的模块 (与不带任何参数的激活层不同)。
+
+*尺度不变性:* 归一化一个重要的性质是它使得模型对参数的缩放具有不变性，具体如下。假设考虑将 $\text{LN}$ 与 $\text{MM}_{W,b}(z)$ 组合，得到一个子网络 $\text{LN}(\text{MM}_{W,b}(z))$. 那么，当 $\text{MM}_{W,b}$ 中的参数被缩放时，这个子网络的输出不会改变：
+
+$$
+\text{LN}(\text{MM}_{\alpha W, \alpha b}(z)) = \text{LN}(\text{MM}_{W,b}(z)), \forall \alpha > 0. \tag{7.42}
+$$
+
+为了说明这一点，首先知道 LN-S$(\cdot)$ 是尺度不变的：
+
+$$
+\text{LN-S}(\alpha z) = \begin{bmatrix}
+        \ \frac{\alpha z_1 - \alpha \hat{\mu}}{\alpha \hat{\sigma}}\  \\
+        \ \frac{\alpha z_2 - \alpha \hat{\mu}}{\alpha \hat{\sigma}}\  \\
+        \ \vdots\  \\
+        \ \frac{\alpha z_m - \alpha \hat{\mu}}{\alpha \hat{\sigma}}\ 
+    \end{bmatrix} = \begin{bmatrix}
+        \ \frac{z_1 - \hat{\mu}}{\hat{\sigma}}\  \\
+        \ \frac{z_2 - \hat{\mu}}{\hat{\sigma}}\  \\
+        \ \vdots\  \\
+        \ \frac{z_m - \hat{\mu}}{\hat{\sigma}}\ 
+    \end{bmatrix} = \text{LN-S}(z). \tag{7.43}
+$$
+
+然后有
+
+$$
+\begin{align}
+    \text{LN}(\text{MM}_{\alpha W, \alpha b}(z)) &= \beta + \gamma \text{LN-S}(\text{MM}_{\alpha W, \alpha b}(z)) \tag{7.44} \\
+    &= \beta + \gamma \text{LN-S}(\alpha \text{MM}_{W,b}(z)) \tag{7.45} \\
+    &= \beta + \gamma \text{LN-S}(\text{MM}_{W,b}(z)) \tag{7.46} \\
+    &= \text{LN}(\text{MM}_{W,b}(z)). \tag{7.47}
+\end{align}
+$$
+
+由于这一性质，大多数用于大规模计算机视觉和语言应用的现代深度学习架构都具有以下尺度不变性，即对于除最后一层权重 $W_{\text{last}}$ 以外的所有权重 $W$, 网络 $f$ 满足 $f_{W_{\text{last}}, \alpha W}(x) = f_{W_{\text{last}}, W}(x)$ 对于任意 $\alpha > 0$ 成立。这里，最后一层的权重是特殊的，因为在最后一层权重之后通常没有层归一化或批量归一化。
+
+*其他归一化层:* 还有几种其他归一化层，旨在将神经网络的中间层归一化到更固定和可控的尺度，例如批量归一化 \[[[reference#^sergey2015bn|Ioffe and Christian, 2015]]\] 和组归一化 \[[[reference#^yuxin2018gn|Wu and He, 2018]]\]。批量归一化和组归一化更常用于计算机视觉应用，而层归一化更常用于语言应用。
 
 ### 卷积层
 
-lorem
+卷积神经网络是由卷积层 (以及许多其他模块) 组成的神经网络，特别适用于计算机视觉应用。为了简化说明，本文重点介绍 1-D 卷积，并在本小节末尾非正式地简要提及 2-D 卷积。(2-D 卷积更适合于具有两个维度的图像。1-D 卷积也用于自然语言处理。)
+
+首先介绍一个简化版本的 1-D 卷积层，记为 $\text{Conv1D-S}(\cdot)$，它是一种具有特殊结构的矩阵乘法层。$\text{Conv1D-S}$ 的参数是一个滤波器向量 $w \in \mathbb{R}^k$，其中 $k$ 称为滤波器大小（通常 $k \ll m$），以及一个标量偏置 $b$。滤波器有时也称为核（但与核方法中的核无关）。为简单起见，假设 $k = 2\ell + 1$ 是一个奇数。首先在输入向量 $z$ 的两端填充零，即 $z_{1-\ell} = z_{1-\ell+1} = \cdots = z_0 = 0$ 和 $z_{m+1} = z_{m+2} = \cdots = z_{m+\ell} = 0$，并将 $z$ 看作一个 $(m+2\ell)$ 维向量。$\text{Conv1D-S}$ 输出一个维度为 $\mathbb{R}^m$ 的向量，其中每个输出维度是 $z$ 中子集元素的线性组合，系数来自 $w$,
+
+$$
+\text{Conv1D-S}(z)_i = w_1 z_{i-\ell} + w_2 z_{i-\ell+1} + \cdots + w_{2\ell+1} z_{i+\ell} = \sum_{j=1}^{2\ell+1} w_j z_{i-\ell+(j-1)}. \tag{7.48}
+$$
+因此，可以将 $\text{Conv1D-S}$ 视为具有共享参数的矩阵乘法：$\text{Conv1D-S}(z) = Qz$，其中
+
+$$
+Q = \begin{bmatrix}
+        &w_{\ell+1} &\cdots &w_{2\ell+1} & &\\
+        &\vdots     &\ddots &\ddots      &w_{2\ell+1} & &\\
+        &w_1        &\ddots &\ddots      &\ddots &\ddots & &\\
+        &           &w_1    &\ddots      &\ddots &\ddots &w_{2\ell+1} &\\
+        &           &       &\ddots      &\ddots &\ddots &\vdots &\\
+        &           &       &            &w_1    &\cdots &w_{\ell+1} &
+        
+    \end{bmatrix}. \tag{7.49}
+$$
+
+注意，$Q_{i,j} = Q_{i-1,j-1}$ 对于所有 $i, j \in \{2, \ldots, m\}$ 都成立，因此卷积是一种带有参数共享的矩阵乘法。还注意到，计算卷积只需要 $O(km)$ 的时间，而计算一般的矩阵乘法需要 $O(m^2)$ 的时间。卷积有 $k$ 个参数，而一般的矩阵乘法有 $m^2$ 个参数。因此，卷积应该比一般的矩阵乘法效率高得多 (只要施加的附加结构不损害模型的灵活性以适应数据)。
+
+还注意到，在实践中存在许多卷积层的变体，与这里定义的有所不同，例如，填充零的方式或有时卷积层输出的维度可能与输入的维度不同。为了简化，这里省略了一些这些细节。
+
+实践中使用的卷积层也有许多“通道”，上面的简化版本对应于 $1$ 通道版本。形式上，$\text{Conv1D}$ 接受 $C$ 个向量 $z_1, \ldots, z_C \in \mathbb{R}^m$ 作为输入，其中 $C$ 称为通道数。换句话说，更一般的版本 $\text{Conv1D}$ 接受一个矩阵作为输入，它是 $z_1, \ldots, z_C$ 的拼接，维度为 $m \times C$。它可以输出 $C'$ 个维度为 $m$ 的向量，记为 $\text{Conv1D}(z)_1, \ldots, \text{Conv1D}(z)_{C'}$，其中 $C'$ 称为输出通道，或等效地一个维度为 $m \times C'$ 的矩阵。每个输出是应用于不同通道的简化卷积之和。
+
+$$
+\forall i \in [C'], \text{Conv1D}(z)_i = \sum_{j=1}^C \text{Conv1D-S}_{i,j}(z_j). \tag{7.50}
+$$
+
+注意，每个 $\text{Conv1D-S}_{i,j}$ 都是具有不同参数的模块，因此总参数数量是 $k \times C \times C'$ ($\text{Conv1D-S}$ 的参数数量 $\times$ $\text{Conv1D-S}_{i,j}$ 的数量) $= kCC'$. 相比之下，从 $\mathbb{R}^{m \times C}$ 到 $\mathbb{R}^{m \times C'}$ 的一般线性映射具有 $m^2CC'$ 个参数。卷积的参数也可以表示为维度为 $k \times C \times C'$ 的三维张量。
+
+*2-D 卷积 (简述)：* 单通道的 2-D 卷积，记为 $\text{Conv2D-S}$，类似于  $\text{Conv1D-S}$，但接受一个 $2$ 维输入 $z \in \mathbb{R}^{m \times m}$ 并应用一个 $k \times k$ 大小的滤波器，输出 $\text{Conv2D-S}(z) \in \mathbb{R}^{m \times m}$。完整的 2-D 卷积层，记为  $\text{Conv2D}$，接受一系列矩阵 $z_1, \ldots, z_C \in \mathbb{R}^{m \times m}$ 作为输入，或者等效地一个 3-D 张量 $z = (z_1, \ldots, z_C) \in \mathbb{R}^{m \times m \times C}$，并输出一系列矩阵 $\text{Conv2D}(z)_1, \ldots, \text{Conv2D}(z)_{C'} \in \mathbb{R}^{m \times m}$，也可以看作一个维度为 $\mathbb{R}^{m \times m \times C'}$ 的 3D 张量。每个输出通道是应用于所有输入通道的  $\text{Conv2D-S}$ 层结果的总和。
+
+$$
+\forall i \in [C'], \text{Conv2D}(z)_i = \sum_{j=1}^C \text{Conv2D-S}_{i,j}(z_j). \tag{7.51}
+$$
+
+因为有 $CC'$ 个  $\text{Conv2D-S}$ 模块，并且每个  $\text{Conv2D-S}$ 模块有 $k^2$ 个参数，所以总参数数量是 $CC'k^2$. 其参数也可以看作一个维度为 $C \times C' \times k \times k$ 的四维张量。
+
 
 ## 7.4 反向传播
 
@@ -516,7 +627,7 @@ $$
 \end{bmatrix} \tag{7.83}
 $$
 
-然后可以执行计算：$Z^{[1]} = W^{[1]}X + \tilde{b}^{[1]}$. 通常没有必要显式地构造出 $\tilde{b}^{[1]}$. 通过检查公式 [[chapter7_deep_learning#^eq7-82]] 中的维度，可以假定 $b^{[1]} \in \mathbb{R}^{4 \times 1}$ 正确地广播到 $W^{[1]}X \in \mathbb{R}^{4 \times 3}$.
+然后可以执行计算：$Z^{[1]} = W^{[1]}X + \tilde{b}^{[1]}$. 通常没有必要显式地构造出 $\tilde{b}^{[1]}$. 通过检查公式 [[chapter7_deep_learning#^eq7-82|(7.82)]] 中的维度，可以假定 $b^{[1]} \in \mathbb{R}^{4 \times 1}$ 正确地广播到 $W^{[1]}X \in \mathbb{R}^{4 \times 3}$.
 
 上述矩阵化方法可以很容易地推广到多层，但有一个细微之处需要注意，如下所述。
 
@@ -541,3 +652,5 @@ $$
 [^4]: 注意到，如果函数 $f$ 的输出不依赖于某些输入的分量，则默认将关于这些分量的梯度设为零。在本节的计算方案中，将梯度设为零不计入总运行时间。因此，当 $N \le \ell$ 时，可以在 $O(N)$ 时间内计算梯度，这可能甚至小于 $\ell$.
 
 [^5]: 笔者猜测这主要是因为在数学中，习惯对向量左乘矩阵。
+
+[^6]: 注意，这里的实际标准差是除以 $m$ 而不是 $m-1$, 因为所感兴趣的是使 $\text{LN-S}(z)$ 的输出的平方和等于 1 (与统计学中估计标准差不同)。
