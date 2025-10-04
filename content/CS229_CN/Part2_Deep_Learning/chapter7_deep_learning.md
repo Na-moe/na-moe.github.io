@@ -396,9 +396,8 @@ $$
 
 第 [[chapter7_deep_learning#7.2 神经网络|7.2]] 节公式 [[chapter7_deep_learning#^eq7-22|(7.22)]] 中介绍的多层神经网络现在通常被称为多层感知机 (MLP)。现代神经网络在实践中通常更复杂，由多个构建块或多层构建块组成。在本节中，将介绍一些其他的构建块并讨论可能的组合方式。
 
-```todo
-fig4 here
-```
+![[modules.svg]] ^fig7-4
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.4  网络架构示意图。<b>左图: </b> r 层的MLP。<b>右图: </b> 残差网络。</p>
 
 首先，每个矩阵乘法可以看作是一个构建块。考虑一个带有参数 $(W, b)$ 的矩阵乘法运算，其中 $W$ 是权重矩阵，$b$ 是偏置向量，作用于输入 $z$，
 
@@ -424,7 +423,7 @@ $$
 
 注意，在本讲义中，默认情况下，所有模块都有不同的参数集，并且参数的维度是有意义的。
 
-较大的模块也可以通过较小的模块定义，例如，一个激活层 $\sigma$ 和一个矩阵乘法层 MM 经常组合在一起，在许多论文中被称为“层”。人们通常通过在图中指示这些模块之间的依赖关系来绘制架构。例如，参见图 \ref{fig:7.4} 左侧的 MLP 示意图。
+较大的模块也可以通过较小的模块定义，例如，一个激活层 $\sigma$ 和一个矩阵乘法层 MM 经常组合在一起，在许多论文中被称为“层”。人们通常通过在图中指示这些模块之间的依赖关系来绘制架构。例如，参见图 [[chapter7_deep_learning#^fig7-4|7.4]] 左侧的 MLP 示意图。
 
 ### 残差连接
 
@@ -440,7 +439,7 @@ $$
 \text{ResNet-S}(x) = \text{MM}(\text{Res}(\text{Res}(\cdots \text{Res}(x)))). \tag{7.39}
 $$
 
-这些模块的依赖关系也绘制在图 \ref{fig:7.4} 右侧。
+这些模块的依赖关系也绘制在图 [[chapter7_deep_learning#^fig7-4|7.4]] 右侧。
 
 注意，ResNet-S 与经典论文 \[[[reference#^he2016resnet|He et al., 2016]]\] 中介绍的 ResNet 架构仍不完全相同，因为 ResNet 使用卷积层而不是普通的矩阵乘法，并在卷积和激活之间添加了批量归一化。下面将介绍卷积层和批量归一化的一些变体。ResNet-S 和层归一化是 Transformer 架构的一部分，它们在现代大型语言模型中被广泛使用。
 
@@ -706,14 +705,10 @@ $$
     \frac{\partial J}{\partial \theta^{[i]}} &= \mathcal{B}[M_i, \theta^{[i]}]\left(\frac{\partial J}{\partial u^{[i]}}\right). \tag{B2}
 \end{align}
 $$
-有关算法的说明，请参见图 \ref{fig:7.5}。
+有关算法的说明，请参见图 [[chapter7_deep_learning#^fig7-5|7.5]]。
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\linewidth]{figs/backpropagation.pdf}
-    \caption{反向传播}
-    \label{fig:7.5}
-\end{figure}
+![[back_propagation.svg]] ^fig7-5
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 7.5 反向传播</p>
 
 **备注 7.4.3:** \[计算效率和模块的粒度]
 
