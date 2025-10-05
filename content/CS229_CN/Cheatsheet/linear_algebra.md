@@ -177,7 +177,7 @@ $$
 对于给定矩阵 $\boldsymbol{A}$, 可以用其对称部分和反对称部分表示：
 
 $$
-\boldsymbol{A} = \underbrace{\frac{\boldsymbol{A}+\boldsymbol{A}^T}{2}}_{对称部分} + \underbrace{\frac{\boldsymbol{A}-\boldsymbol{A}^T}{2}}_{反对称部分}
+\boldsymbol{A} = \underbrace{\frac{\boldsymbol{A}+\boldsymbol{A}^T}{2}}_{\text{对称部分}} + \underbrace{\frac{\boldsymbol{A}-\boldsymbol{A}^T}{2}}_{\text{反对称部分}}
 $$
 
 ### 范数
@@ -254,21 +254,21 @@ $$
 
 ### 梯度
 
-令 $f: \mathbb{R}^{m \times n} \to \mathbb{R}$ 为一个函数，$\boldsymbol{A} \in \mathbb{R}^{m \times n}$ 为一个矩阵。$f$ 关于 $\boldsymbol{A}$ 的梯度是一个 $m \times n$ 的矩阵，记作 $\nabla_\boldsymbol{A} f(\boldsymbol{A})$, 满足：
+令 $f: \mathbb{R}^{m \times n} \to \mathbb{R}$ 为一个函数，$\boldsymbol{A} \in \mathbb{R}^{m \times n}$ 为一个矩阵。$f$ 关于 $\boldsymbol{A}$ 的梯度是一个 $m \times n$ 的矩阵，记作 $\nabla_{\boldsymbol{A}} f(\boldsymbol{A})$, 满足：
 
 $$
 \boxed{
-	\left( \nabla_\boldsymbol{A} f(\boldsymbol{A}) \right)_{i,j} = \frac{\partial f(\boldsymbol{A})}{\partial A_{i,j}}
+	\left( \nabla_{\boldsymbol{A}} f(\boldsymbol{A}) \right)_{i,j} = \frac{\partial f(\boldsymbol{A})}{\partial A_{i,j}}
 }
 $$
 
 ### Hessian
 
-令 $f: \mathbb{R}^{m \times n} \to \mathbb{R}$ 为一个函数，$\boldsymbol{x} \in \mathbb{R}^{n}$ 为一个向量。$f$ 关于 $\boldsymbol{x}$ 的 Hessian 是一个 $n \times n$ 的对称矩阵，记作 $\nabla_\boldsymbol{x}^2 f(\boldsymbol{\boldsymbol{x}})$, 满足：
+令 $f: \mathbb{R}^{m \times n} \to \mathbb{R}$ 为一个函数，$\boldsymbol{x} \in \mathbb{R}^{n}$ 为一个向量。$f$ 关于 $\boldsymbol{x}$ 的 Hessian 是一个 $n \times n$ 的对称矩阵，记作 $\nabla_{\boldsymbol{x}}^2 f(\boldsymbol{\boldsymbol{x}})$, 满足：
 
 $$
 \boxed{
-	\left( \nabla_\boldsymbol{x}^2 f(\boldsymbol{\boldsymbol{x}}) \right)_{i,j} = \frac{\partial f(\boldsymbol{x})}{\partial x_{i}\partial x_{j}}
+	\left( \nabla_{\boldsymbol{x}}^2 f(\boldsymbol{\boldsymbol{x}}) \right)_{i,j} = \frac{\partial f(\boldsymbol{x})}{\partial x_{i}\partial x_{j}}
 }
 $$
 
@@ -279,16 +279,16 @@ $$
 $$
 \begin{gather*}
 	\boxed{
-		\nabla_\boldsymbol{A} \mathrm{tr}(\boldsymbol{A}\boldsymbol{B})  = \boldsymbol{B}^T
+		\nabla_{\boldsymbol{A}} \mathrm{tr}(\boldsymbol{A}\boldsymbol{B})  = \boldsymbol{B}^T
 	} \quad
 	\boxed{
-		\nabla_\boldsymbol{A}^T f(\boldsymbol{A}) = \left( \nabla_\boldsymbol{A} f(\boldsymbol{A}) \right)^T
+		\nabla_{\boldsymbol{A}}^T f(\boldsymbol{A}) = \left( \nabla_{\boldsymbol{A}} f(\boldsymbol{A}) \right)^T
 	} \\
 	\boxed{
-		\nabla_\boldsymbol{A} \mathrm{tr}(\boldsymbol{A}\boldsymbol{B}\boldsymbol{A}^T\boldsymbol{C})  = \boldsymbol{C}\boldsymbol{A}\boldsymbol{B} + \boldsymbol{C}^T\boldsymbol{A}\boldsymbol{B}^T
+		\nabla_{\boldsymbol{A}} \mathrm{tr}(\boldsymbol{A}\boldsymbol{B}\boldsymbol{A}^T\boldsymbol{C})  = \boldsymbol{C}\boldsymbol{A}\boldsymbol{B} + \boldsymbol{C}^T\boldsymbol{A}\boldsymbol{B}^T
 	} \quad
 	\boxed{
-		\nabla_\boldsymbol{A} \deg{A} = \left(\deg{A} \right)\left( \boldsymbol{A}^{-1} \right)^T
+		\nabla_{\boldsymbol{A}} \deg{A} = \left(\deg{A} \right)\left( \boldsymbol{A}^{-1} \right)^T
 	}
 \end{gather*}
 $$
