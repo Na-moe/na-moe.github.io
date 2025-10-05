@@ -78,10 +78,18 @@ title: CS229 机器学习 课程讲义
 >   
 > > [!example]- [[chapter8_generalization|第 8 章 泛化]]  
 > > 
-> >   &emsp;╠ [[chapter8_generalization#8.1 偏差-方差均衡|8.1偏差方差均衡]]  
+> >   &emsp;╠ [[chapter8_generalization#8.1 偏差-方差均衡|8.1 偏差方差均衡]]  
 > >   &emsp;║ ╚ [[chapter8_generalization#8.1.1 (对于回归问题的) 数学分解|8.1.1 (对于回归问题的) 数学分解]]  
 > >   &emsp;╠ [[chapter8_generalization#8.2 双下降现象|8.2 双下降现象]]  
 > >   &emsp;╚ [[chapter8_generalization#8.3 样本复杂度边界 (选读)|8.3 样本复杂度边界 (选读)]]  
 > >   &emsp;&emsp; ╠ [[chapter8_generalization#8.3.1 预备知识|8.3.1 预备知识]]  
 > >   &emsp;&emsp; ╠ [[chapter8_generalization#8.3.2 有限 𝓗 的情况|8.3.2 有限 𝓗 的情况]]  
 > >   &emsp;&emsp; ╚ [[chapter8_generalization#8.3.3 无限 𝓗 的情况|8.3.2 无限 𝓗 的情况]]  
+> 
+> >   [!example]- [[chapter9_regularization_and_model_selection|第 9 章 正则化与模型选择]]  
+> > 
+> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.1 正则化|9.1 正则化]]  
+> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.2 隐式正则化效应 (选读)|9.2 隐式正则化效应 (选读)]]  
+> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.3 通过交叉验证选择模型|9.3 通过交叉验证选择模型]]  
+> >   &emsp;╚ [[chapter9_regularization_and_model_selection#9.4 贝叶斯统计与正则化|9.4 贝叶斯统计与正则化]]  
+
