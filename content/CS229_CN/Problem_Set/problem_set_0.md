@@ -24,17 +24,17 @@ $$
 \end{bmatrix}.
 $$
 
-(a) 设$f(x) = \frac{1}{2} x^T A x + b^T x$, 其中$A$ 为对称矩阵，$b \in \mathbb{R}^n$ 为向量。试求$\nabla f(x)$？
+(a) 设$f(x) = \frac{1}{2} x^T A x + b^T x$, 其中$A$ 为对称矩阵，$b \in \mathbb{R}^n$ 为向量。试求 $\nabla f(x)$?
 
-(b) 设$f(x) = g(h(x))$, 其中$g: \mathbb{R} \to \mathbb{R}$ 与$h: \mathbb{R}^n \to \mathbb{R}$ 均为可微函数。试求$\nabla f(x)$？
+(b) 设$f(x) = g(h(x))$, 其中$g: \mathbb{R} \to \mathbb{R}$ 与$h: \mathbb{R}^n \to \mathbb{R}$ 均为可微函数。试求 $\nabla f(x)$?
 
-(c) 设$f(x) = \frac{1}{2} x^T A x + b^T x$, 其中$A$ 为对称矩阵，$b \in \mathbb{R}^n$ 为向量。试求$\nabla^2 f(x)$？
+(c) 设$f(x) = \frac{1}{2} x^T A x + b^T x$, 其中$A$ 为对称矩阵，$b \in \mathbb{R}^n$ 为向量。试求 $\nabla^2 f(x)$?
 
-(d) 设$f(x) = g(a^T x)$, 其中$g: \mathbb{R} \to \mathbb{R}$ 连续可微，$a \in \mathbb{R}^n$ 为向量。试求$\nabla f(x)$ 与$\nabla^2 f(x)$？(提示：$\nabla^2 f(x)$ 的表达式可简化为仅含 11 个符号，包括$\nabla$ 与括号)
+(d) 设$f(x) = g(a^T x)$, 其中$g: \mathbb{R} \to \mathbb{R}$ 连续可微，$a \in \mathbb{R}^n$ 为向量。试求 $\nabla f(x)$ 与 $\nabla^2 f(x)$?(提示：$\nabla^2 f(x)$ 的表达式可简化为仅含 11 个符号，包括 $\nabla$ 与括号)
 
 ---
 
-### 2. \[0分\] 正定矩阵
+### 2. \[0 分\] 正定矩阵
 
 若矩阵 $A \in \mathbb{R}^{n \times n}$ 满足 $A = A^T$ 且对所有 $x \in \mathbb{R}^n$ 有 $x^T A x \geq 0$, 则称其为*半正定*矩阵，记作 $A \succeq 0$. 若矩阵 $A$ 满足 $A = A^T$ 且对所有非零向量 $x \neq 0$ 有 $x^T A x > 0$, 则称其为*正定*矩阵，记作 $A \succ 0$. 正定矩阵的最简范例是单位矩阵 $I$ (对角线元素为 $1$、非对角线元素为 $0$ 的对角矩阵)，其满足 $x^T I x = \|x\|_2^2 = \sum_{i=1}^n x_i^2$.
 
@@ -46,7 +46,7 @@ $$
 
 ---
 
-### 3. \[0分\] 特征向量、特征值与谱定理
+### 3. \[0 分\] 特征向量、特征值与谱定理
 
 $n \times n$ 矩阵 $A \in \mathbb{R}^{n \times n}$ 的特征值是其特征多项式 $p_A(\lambda) = \det(\lambda I - A)$ 的根 (通常可能为复数)。特征值也可定义为满足 $A x = \lambda x$ (其中 $x \in \mathbb{C}^n$) 的标量 $\lambda \in \mathbb{C}$. 我们称这样的二元组 $(x, \lambda)$ 为特征向量-特征值对。在本问题中，我们使用符号 $\operatorname{diag}(\lambda_1, \dots, \lambda_n)$ 表示对角元素为 $\lambda_1, \dots, \lambda_n$ 的对角矩阵，即
 
