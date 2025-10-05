@@ -161,11 +161,13 @@ $$
 方阵的行列式，记作 $|\boldsymbol{A}|$ 或者 $\det{\boldsymbol{A}}$, 可以用去掉其第 $i$ 行第 $j$ 列的矩阵 $\boldsymbol{A}_{\backslash i, \backslash j}$ 递归表示：
 
 $$
-\det{\boldsymbol{A}} = |\boldsymbol{A}| = 
-	\begin{cases}
-	A_{1,1}, & \text{if } \boldsymbol{A} \in \mathbb{R}^{1\times 1} \\
-	\sum_{j=1}^n {(-1)^{i+j} A_{i,j} |\boldsymbol{A}_{\backslash i, \backslash j}|}, & \text{if } \boldsymbol{A} \in \mathbb{R}^{n\times n}, \ n \ne 1 \\
-	\end{cases}
+\boxed{
+	\det{\boldsymbol{A}} = |\boldsymbol{A}| = 
+		\begin{cases}
+		A_{1,1}, & \text{if } \boldsymbol{A} \in \mathbb{R}^{1\times 1} \\
+		\sum_{j=1}^n {(-1)^{i+j} A_{i,j} |\boldsymbol{A}_{\backslash i, \backslash j}|}, & \text{if } \boldsymbol{A} \in \mathbb{R}^{n\times n}, \ n \ne 1 \\
+		\end{cases}
+}
 $$
 
 *注: $\boldsymbol{A}$ 可逆当且仅当 $|\boldsymbol{A}| \ne 0$. 同样，有 $|\boldsymbol{A}\boldsymbol{B}|=|\boldsymbol{A}||\boldsymbol{B}|$ 和 $\boldsymbol{A^T}=\boldsymbol{A}$.*
@@ -177,7 +179,9 @@ $$
 对于给定矩阵 $\boldsymbol{A}$, 可以用其对称部分和反对称部分表示：
 
 $$
-\boldsymbol{A} = \underbrace{\frac{\boldsymbol{A}+\boldsymbol{A}^T}{2}}_{\text{对称部分}} + \underbrace{\frac{\boldsymbol{A}-\boldsymbol{A}^T}{2}}_{\text{反对称部分}}
+\boxed{
+	\boldsymbol{A} = \underbrace{\frac{\boldsymbol{A}+\boldsymbol{A}^T}{2}}_{\text{对称部分}} + \underbrace{\frac{\boldsymbol{A}-\boldsymbol{A}^T}{2}}_{\text{反对称部分}}
+}
 $$
 
 ### 范数
@@ -186,7 +190,7 @@ $$
 
 * $\mathcal{N}(\boldsymbol{x}+\boldsymbol{y}) \le \mathcal{N}(\boldsymbol{x}) + \mathcal{N}(\boldsymbol{y})$
 * 对于标量 $a$, 有 $\mathcal{N}(a\boldsymbol{x}) = |a| \mathcal{N}(\boldsymbol{x})$
-* 如果 $\mathcal{N}(\boldsymbol{x})=0$, 则 \boldsymbol{x}=0$
+* 如果 $\mathcal{N}(\boldsymbol{x})=0$, 则 $\boldsymbol{x}=0$
 
 对于 $\boldsymbol{x} \in \mathbb{V}$, 下表总结了最常用的范数：
 
