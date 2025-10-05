@@ -2,11 +2,11 @@
 title: 第 I 部分 监督学习
 ---
 
-| [[CS229_CN/index\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter1_linear_regression\|下一章]] |
-| :------------------------: | :----------------------: | :------------------------------------: |
+| [[CS229_CN/index\|介绍]] | [[CS229_CN/index#目录\|目录]] | ╠ [[chapter1_linear_regression\|第一章]]<br>╠ [[chapter2_classification_and_logistic_regression\|第二章]]<br>╠ [[chapter3_generalized_linear_model\|第三章]]<br>╠ [[chapter4_generative_learning_algorithms\|第四章]]<br>╠ [[chapter5_kernel_methods\|第五章]]<br>╚ [[chapter6_support_vector_machines\|第六章]] |
+| :--------------------: | :-----------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 <div style="
-        height: 75vh;
+        height: 80vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -46,5 +46,5 @@ title: 第 I 部分 监督学习
 
 当预测的目标是连续值时 (例如预测房价)，称这类学习问题为 **回归 (regression)** 问题。当 $y$ 只能取有限个离散值时 (例如根据居住面积预测住宅是房屋还是公寓)，则称为 **分类 (classification)** 问题。
 
-| [[CS229_CN/index\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter1_linear_regression\|下一章]] |
-| :------------------------: | :----------------------: | :------------------------------------: |
+| [[CS229_CN/index\|介绍]] | [[CS229_CN/index#目录\|目录]] | ╠ [[chapter1_linear_regression\|第一章]]<br>╠ [[chapter2_classification_and_logistic_regression\|第二章]]<br>╠ [[chapter3_generalized_linear_model\|第三章]]<br>╠ [[chapter4_generative_learning_algorithms\|第四章]]<br>╠ [[chapter5_kernel_methods\|第五章]]<br>╚ [[chapter6_support_vector_machines\|第六章]] |
+| :--------------------: | :-----------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |

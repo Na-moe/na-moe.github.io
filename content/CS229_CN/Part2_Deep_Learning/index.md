@@ -1,10 +1,12 @@
 ---
 title: 第 II 部分 深度学习
 ---
-| [[chapter6_support_vector_machines\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter7_deep_learning\|下一章]] |
-| :---------------------------------------: | :-----------------------: | :-----------------------------: |
+
+| [[CS229_CN/Part1_Supervised_Learning/index\|第 I 部分]] | [[CS229_CN/index#目录\|目录]] | ╚ [[chapter7_deep_learning\|第七章]] |
+| :--------------------------------------------------: | :-----------------------: | :-------------------------------: |
+
 <div style="
-        height: 75vh;
+        height: 80vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -19,5 +21,5 @@ title: 第 II 部分 深度学习
         </div>
 </div>
 
-| [[chapter6_support_vector_machines\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter7_deep_learning\|下一章]] |
-| :---------------------------------------: | :-----------------------: | :-----------------------------: |
+| [[CS229_CN/Part1_Supervised_Learning/index\|第 I 部分]] | [[CS229_CN/index#目录\|目录]] | [[chapter7_deep_learning\|第七章]] |
+| :--------------------------------------------------: | :-----------------------: | :-----------------------------: |

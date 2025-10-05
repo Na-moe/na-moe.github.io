@@ -65,7 +65,7 @@ title: CS229 机器学习 课程讲义
 > > [!example]- [[chapter7_deep_learning|第 7 章 深度学习]]  
 > > 
 > >   &emsp;╠ [[chapter7_deep_learning#7.1 使用非线性模型的监督学习|7.1 使用非线性模型的监督学习]]  
-> >   &emsp;╠ [[chapter7_deep_learning#7.2 神经网络| 7.2 神经网络]]  
+> >   &emsp;╠ [[chapter7_deep_learning#7.2 神经网络|7.2 神经网络]]  
 > >   &emsp;╠ [[chapter7_deep_learning#7.3 现代神经网络的模块|7.3 现代神经网络的模块]]  
 > >   &emsp;╠ [[chapter7_deep_learning#7.4 反向传播|7.4 反向传播]]  
 > >   &emsp;║ ╠ [[chapter7_deep_learning#7.4.1 偏导数初步|7.4.1 偏导数初步]]  
@@ -74,3 +74,14 @@ title: CS229 机器学习 课程讲义
 > >   &emsp;║ ╚ [[chapter7_deep_learning#7.4.4 MLP 的反向传播|7.4.4 MLP的反向传播]]  
 > >   &emsp;╚ [[chapter7_deep_learning#7.5 训练样本的向量化|7.5 训练样本的向量化]]  
 
+> [!example]- [[CS229_CN/Part3_generalization_and_regularization/index|第 III 部分 泛化与正则化]]  
+>   
+> > [!example]- [[chapter8_generalization|第 8 章 泛化]]  
+> > 
+> >   &emsp;╠ [[chapter8_generalization#8.1 偏差-方差均衡|8.1偏差方差均衡]]  
+> >   &emsp;║ ╚ [[chapter8_generalization#8.1.1 (对于回归问题的) 数学分解|8.1.1 (对于回归问题的) 数学分解]]  
+> >   &emsp;╠ [[chapter8_generalization#8.2 双下降现象|8.2 双下降现象]]  
+> >   &emsp;╚ [[chapter8_generalization#8.3 样本复杂度边界 (选读)|8.3 样本复杂度边界 (选读)]]  
+> >   &emsp;&emsp; ╠ [[chapter8_generalization#8.3.1 预备知识|8.3.1 预备知识]]  
+> >   &emsp;&emsp; ╠ [[chapter8_generalization#8.3.2 有限 𝓗 的情况|8.3.2 有限 𝓗 的情况]]  
+> >   &emsp;&emsp; ╚ [[chapter8_generalization#8.3.3 无限 𝓗 的情况|8.3.2 无限 𝓗 的情况]]  
