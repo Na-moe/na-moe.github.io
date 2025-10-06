@@ -7,13 +7,13 @@ title: "习题集 #0: 线性代数、多元微积分与概率论"
 
 ### 1. \[0 分\] 梯度与 Hessians
 
-若矩阵$A \in \mathbb{R}^{n \times n}$ 满足$A^T = A$, 即对所有$i, j$ 有$A_{ij} = A_{ji}$, 则称其为*对称*矩阵。同时回顾函数$f: \mathbb{R}^n \to \mathbb{R}$ 的梯度$\nabla f(x)$, 即由偏导数组成的$n$ 维向量：
+若矩阵 $A \in \mathbb{R}^{n \times n}$ 满足 $A^T = A$, 即对所有 $i, j$ 有 $A_{ij} = A_{ji}$, 则称其为*对称*矩阵。同时回顾函数 $f: \mathbb{R}^n \to \mathbb{R}$ 的梯度 $\nabla f(x)$, 即由偏导数组成的$n$ 维向量：
 
 $$
 \nabla f(x) = \begin{bmatrix} \frac{\partial}{\partial x_1} f(x) \\ \vdots \\ \frac{\partial}{\partial x_n} f(x) \end{bmatrix} \quad \text{其中} \quad x = \begin{bmatrix} x_1 \\ \vdots \\ x_n \end{bmatrix}.
 $$
 
-函数$f: \mathbb{R}^n \to \mathbb{R}$ 的黑塞矩阵$\nabla^2 f(x)$ 是由二阶偏导数构成的$n \times n$ 对称矩阵：
+函数 $f: \mathbb{R}^n \to \mathbb{R}$ 的 Hessian 矩阵 $\nabla^2 f(x)$ 是由二阶偏导数构成的 $n \times n$ 对称矩阵：
 
 $$
 \nabla^2 f(x) = \begin{bmatrix}
@@ -24,13 +24,16 @@ $$
 \end{bmatrix}.
 $$
 
-(a) 设$f(x) = \frac{1}{2} x^T A x + b^T x$, 其中$A$ 为对称矩阵，$b \in \mathbb{R}^n$ 为向量。试求 $\nabla f(x)$?
+(a) 设 $f(x) = \frac{1}{2} x^T A x + b^T x$, 其中 $A$ 为对称矩阵，$b \in \mathbb{R}^n$ 为向量。试求 $\nabla f(x)$?
 
-(b) 设$f(x) = g(h(x))$, 其中$g: \mathbb{R} \to \mathbb{R}$ 与$h: \mathbb{R}^n \to \mathbb{R}$ 均为可微函数。试求 $\nabla f(x)$?
+(b) 设 $f(x) = g(h(x))$, 其中 $g: \mathbb{R} \to \mathbb{R}$ 与$h: \mathbb{R}^n \to \mathbb{R}$ 均为可微函数。试求 $\nabla f(x)$?
 
-(c) 设$f(x) = \frac{1}{2} x^T A x + b^T x$, 其中$A$ 为对称矩阵，$b \in \mathbb{R}^n$ 为向量。试求 $\nabla^2 f(x)$?
+(c) 设 $f(x) = \frac{1}{2} x^T A x + b^T x$, 其中 $A$ 为对称矩阵，$b \in \mathbb{R}^n$ 为向量。试求 $\nabla^2 f(x)$?
 
-(d) 设$f(x) = g(a^T x)$, 其中$g: \mathbb{R} \to \mathbb{R}$ 连续可微，$a \in \mathbb{R}^n$ 为向量。试求 $\nabla f(x)$ 与 $\nabla^2 f(x)$?(提示：$\nabla^2 f(x)$ 的表达式可简化为仅含 11 个符号，包括 $\nabla$ 与括号)
+(d) 设 $f(x) = g(a^T x)$, 其中 $g: \mathbb{R} \to \mathbb{R}$ 连续可微，$a \in \mathbb{R}^n$ 为向量。试求 $\nabla f(x)$ 与 $\nabla^2 f(x)$?(提示：$\nabla^2 f(x)$ 的表达式可简化为仅含 11 个符号，包括 $\nabla$ 与括号)
+
+> [!example]- 答案  
+>   ![[CS229_CN/Problem_Set/problem_set_0/solution#1. 梯度与 Hessians]]
 
 ---
 
@@ -43,6 +46,9 @@ $$
 (b) 设 $z \in \mathbb{R}^n$ 为一*非零* $n$ 维向量，且 $A = z z^T$. 问：$A$ 的零空间是什么？$A$ 的秩是多少？
 
 (c) 设 $A \in \mathbb{R}^{n \times n}$ 为半正定矩阵，$B \in \mathbb{R}^{m \times n}$ 为任意矩阵，其中 $m, n \in \mathbb{N}$. 问：$B A B^T$ 是否为半正定矩阵？若是，请予以证明；若否，请给出具体的 $A$ 与 $B$ 作为反例。
+
+> [!example]- 答案  
+>   ![[CS229_CN/Problem_Set/problem_set_0/solution#2. 正定矩阵]]
 
 ---
 
@@ -75,6 +81,9 @@ $$
 
 (c) 证明：若 $A$ 是半正定矩阵，则对每个 $i$, 有 $\lambda_i(A) \geq 0$.
 
+> [!example]- 答案  
+>   ![[CS229_CN/Problem_Set/problem_set_0/solution#3. 特征向量、特征值与谱定理]]
+
 ---
 
 ### 4. \[0 分\] 概率论与多元高斯分布
@@ -84,3 +93,7 @@ $$
 (a) 描述随机变量 $Y = X_1 + X_2 + \dots + X_n$. 它的均值和方差是多少？这是一个常见的已知分布吗？如果是，是哪种分布？
 
 (b) 现在，进一步假设 $\Sigma$ 是可逆的。求 $\mathbb{E}[X^T \Sigma^{-1} X]$. (提示：利用迹的性质 $x^T A x = \operatorname{tr}(x^T A x)$)
+
+> [!example]- 答案  
+>   ![[CS229_CN/Problem_Set/problem_set_0/solution#4. 概率论与多元高斯分布]]
+
