@@ -77,7 +77,7 @@ def fit(self, x, y):
 
 | 数据集 1                  | 数据集 2                  |
 | ---------------------- | ---------------------- |
-| ![[logreg_pred_1.png]] | ![[logreg_pred_2.png]] |
+| ![[logreg_pred_1.svg]] | ![[logreg_pred_2.svg]] |
 
 (c)
 
@@ -182,7 +182,7 @@ def fit(self, x, y):
 
 | 数据集 1               | 数据集 2               |
 | ------------------- | ------------------- |
-| ![[gda_pred_1.png]] | ![[gda_pred_2.png]] |
+| ![[gda_pred_1.svg]] | ![[gda_pred_2.svg]] |
 
 (f)
 
@@ -213,10 +213,10 @@ y_pred = clf_a.predict(x_test)
 print(f"Part (a): Acc={np.mean((y_pred >= 0.5) == y_test):.3f}")
 
 np.savetxt(output_path_true, y_pred)
-util.plot(x_test, y_test, clf_a.theta, output_path_true.replace(".txt", ".png"))
+util.plot(x_test, y_test, clf_a.theta, output_path_true.replace(".txt", ".svg"))
 ```
 
-![[posonly_true_pred.png|500]]
+![[posonly_true_pred.svg|500]]
 
 (b)
 
@@ -231,10 +231,10 @@ y_pred = clf_b.predict(x_test)
 print(f"Part (b): Acc={np.mean((y_pred >= 0.5) == y_test):.3f}")
 
 np.savetxt(output_path_naive, y_pred)
-util.plot(x_test, y_test, clf_b.theta, output_path_naive.replace(".txt", ".png"))
+util.plot(x_test, y_test, clf_b.theta, output_path_naive.replace(".txt", ".svg"))
 ```
 
-![[posonly_naive_pred.png|500]]
+![[posonly_naive_pred.svg|500]]
 
 (c)
 
@@ -297,7 +297,213 @@ y_pred = np.clip(y_pred, 0, 1)  # Ensure probabilities are in [0, 1]
 print(f"Part (f): Acc={np.mean((y_pred >= 0.5) == y_test):.3f}")
 
 np.savetxt(output_path_adjusted, y_pred)
-util.plot(x_test, y_test, clf_b.theta, output_path_naive.replace(".txt", ".png"), correction=alpha)
+util.plot(x_test, y_test, clf_b.theta, output_path_naive.replace(".txt", ".svg"), correction=alpha)
 ```
 
-![[posonly_adjusted_pred.png|500]]
+![[posonly_adjusted_pred.svg|500]]
+
+### 3. 泊松回归
+
+(a)
+
+$$
+\begin{aligned}
+  p(y; \lambda) 
+    &= \frac{e^{-\lambda} \lambda^y}{y!}, \\
+    &= \underbrace{ \frac{1}{y!} }_{ b(y) } \cdot \exp(\underbrace{ y }_{ T(y) }\underbrace{ \log\lambda }_{ \eta }-\underbrace{ \lambda }_{ a(\eta)={e}^\eta })
+\end{aligned}
+$$
+
+(b)
+
+由 (a) 知，泊松分布的自然参数 $\eta = \log \lambda$, 泊松分布的均值 $\mu = \lambda$, 则典范响应函数为
+
+$$
+\begin{aligned}
+  g(\eta) 
+    &= E[T(y); \eta] \\
+    &= \mu = \lambda \\
+    &= \boxed{ {e}^\eta }
+\end{aligned}
+$$
+
+(c)
+
+由 (a), (b) 知，单个样本的对数似然为：
+
+$$
+\begin{aligned}
+  \ell^{(i)} 
+    &= \log p(y^{(i)} \mid x^{(i)}; \theta) \\
+    &= \log \frac{e^{-\lambda^{(i)}} (\lambda^{(i)})^{y^{(i)}}}{y^{(i)}!} \\
+    &= \log \frac{e^{-e^{\eta^{(i)}}} (e^{\eta^{(i)}})^{y^{(i)}}}{y^{(i)}!} \\
+    &= \theta^Tx^{(i)}y^{(i)}- e^{\theta^Tx^{(i)}} - \log (y^{(i)}!)​
+\end{aligned}
+$$
+
+对 $\theta$ 求导得：
+
+$$
+\begin{aligned}
+  \frac{ \partial \ell^{(i)} }{ \partial \theta } 
+    &= x^{(i)}y^{(i)} - e^{\theta^T x^{(i)}} x^{(i)} \\ 
+    &= (y^{(i)} - e^{\theta^T x^{(i)}}) x^{(i)}
+\end{aligned}
+$$
+
+所以随机梯度上升更新规则为：
+
+$$
+\begin{aligned}
+  \theta 
+    &:= \theta + \alpha \frac{ \partial \ell^{(i)} }{ \partial \theta } \\
+    &\boxed{:= \theta + \alpha (y^{(i)} - e^{\theta^T x^{(i)}}) x^{(i)}}
+\end{aligned}
+$$
+
+(d)
+
+```python
+	n, d = x.shape
+
+	if self.theta is None:
+		self.theta = np.zeros(d)
+
+	for i in range(self.max_iter):
+		eta = x @ self.theta
+		mu = np.exp(eta)
+		gradient = x.T @ (y - mu)
+		update = self.step_size * gradient
+		
+		if np.linalg.norm(update) < self.eps:
+			break
+		self.theta += update
+```
+
+![[poisson_pred.svg|500]]
+
+### 4. 广义线性模型的凸性
+
+(a)
+
+我们有 $\frac{ \partial p(y; \eta) }{ \partial \eta } = p(y; \eta) \left(T(y) - \frac{ \partial \alpha }{ \partial \eta }\right)$, 于是：
+
+$$
+\begin{gathered}
+   &\int p(y; \eta) \, dy = 1 \\
+   \underset{ \text{两侧对 } \eta \text{ 求导} }{ \Rightarrow } &\frac{ \partial  }{ \partial \eta } \int p(y; \eta) \, dy = 0 \\
+   \underset{ 交换积分与求导 }{ \Rightarrow } \ & \int p(y; \eta) \left(T(y) - \frac{ \partial  }{ \partial \eta } \alpha(\eta)\right) \, dy = 0 \\
+   \Rightarrow \ & \int T(y)p(y; \eta) \, dy - \frac{ \partial  }{ \partial \eta } \alpha(\eta)\int p(y; \eta) \, dy = 0 \\
+   \Rightarrow \ & \mathbb{E}[T(y); \eta] - \frac{ \partial  }{ \partial \eta } \alpha(\eta) = 0 \\
+   \Rightarrow \ & \boxed{\mathbb{E}[y; \eta] = \frac{ \partial  }{ \partial \eta } \alpha(\eta)}
+\end{gathered}
+$$
+
+(b)
+
+$$
+\begin{gathered}
+   &\int p(y; \eta) \, dy = 1 \\
+   \underset{ \text{两侧对 } \eta \text{ 求二阶导} }{ \Rightarrow } &\frac{ \partial^2  }{ \partial \eta^2 } \int p(y; \eta) \, dy = 0 \\
+   \underset{ 交换积分与求导 }{ \Rightarrow } \ & \int \left[ p(y; \eta) \left(T(y) - \frac{ \partial  }{ \partial \eta } \alpha(\eta)\right)^2 -  p(y; \eta) \frac{ \partial^2  }{ \partial \eta^2 }\alpha(\eta) \right] \, dy = 0 \\
+   \Rightarrow \ & \int \left(T(y) - \frac{ \partial  }{ \partial \eta } \alpha(\eta)\right)^2p(y; \eta) \, dy - \frac{ \partial^2  }{ \partial \eta^2 } \alpha(\eta)\int p(y; \eta) \, dy = 0 \\
+   \Rightarrow \ & \mathrm{Var}[T(y); \eta] - \frac{ \partial^2  }{ \partial \eta^2 } \alpha(\eta) = 0 \\
+   \Rightarrow \ & \boxed{\mathrm{Var}[y; \eta] = \frac{ \partial^2  }{ \partial \eta^2 } \alpha(\eta)}
+\end{gathered}
+$$
+
+(c)
+
+$$
+\begin{aligned}
+  \ell(\theta) 
+    &= -\log\left( \prod_{i} p(y^{(i)} \mid x^{(i)}; \theta) \right) \\
+    &= -\sum_{i}\log \left( b(y^{(i)}) \exp({\eta^{(i)}}^T T(y^{(i)}) - a({\eta^{(i)}})) \right) \\
+    &= -\sum_{i}\log \left( b(y^{(i)}) \exp({x^{(i)}}^T\theta T(y^{(i)}) - a(\theta^Tx^{(i)})) \right) \\
+    &= -\sum_{i}\log b(y^{(i)}) - \sum_{i} ({x^{(i)}}^T\theta T(y^{(i)}) - a(\theta^Tx^{(i)}))
+\end{aligned}
+$$
+
+对 $\theta$ 求导得：
+
+$$
+\begin{aligned}
+  \nabla_{\theta}\ell
+    &= -\sum_{i} \left( x^{(i)}T(y^{(i)}) -  \frac{ \partial  }{ \partial \eta^{(i)} } \alpha({\eta}^{(i)})x^{(i)} \right) \\
+    &= \sum_{i} \left( \frac{ \partial  }{\partial \eta^{(i)}}  \alpha({\eta}^{(i)}) - T(y^{(i)}) \right) x^{(i)}
+\end{aligned}
+$$
+
+再对 $\theta$ 求导得：
+
+$$
+\begin{aligned}
+  H_{\theta} 
+    &= -\sum_{i} \left( x^{(i)}T(y^{(i)}) -  \frac{ \partial  }{ \partial \eta^{(i)} } \alpha({\eta}^{(i)})x^{(i)} \right) \\
+    &= \sum_{i} \frac{ \partial^2  }{\partial {\eta^{(i)}}^2}  \alpha({\eta}^{(i)}) x^{(i)}{x^{(i)}}^T \\
+    &= \boxed{\sum_{i} \mathrm{Var}[y; \eta] x^{(i)}{x^{(i)}}^T}
+\end{aligned}
+$$
+
+对于任意向量 $z$:
+
+$$
+\begin{gathered}
+  &z^TH_{\theta}z = \sum_{i} \underbrace{ \mathrm{Var}[y; \eta] }_{ \ge 0 } \ \underbrace{ \|{x^{(i)}}^Tz\|^2_{2} }_{ \ge 0 } \ge 0 \\
+  \Rightarrow \ & \boxed{H_{\theta} \text{ 正定}}
+\end{gathered}
+$$
+
+所以 GLM 的 NLL 损失函数是**凸**的。
+
+### 5. 线性回归：何为线性？
+
+(a)
+
+$$
+\boxed{J(\theta) = \frac{1}{2} \sum_{i=1}^n {\|h_{\theta}(\hat{x}^{(i)}) - y^{(i)}\|}_{2}^2}
+$$
+
+$$
+\begin{aligned}
+  \theta &:= \theta - \alpha\nabla_{\theta}J \\
+    &:= \boxed{\theta - \alpha \sum_{i=1}^n (h_{\theta}(\hat{x}^{(i)}) - y^{(i)})\hat{x}^{(i)}}
+\end{aligned}
+
+$$
+
+(c)
+
+```python
+def fit(self, X, y):
+	self.theta = np.linalg.solve(X.T.dot(X), X.T.dot(y))
+	
+def create_poly(self, k, X):
+	n, d = X.shape
+	assert d == 2, "Input should be of shape (n_examples, 2)"
+
+	X_poly = np.ones((n, k + 1))
+	for i in range(1, k + 1):
+		X_poly[:, i] = X[:, 1] ** i
+	return X_poly
+```
+
+![[lin_poly_3_train.svg|500]]
+
+(d)
+
+![[lin_poly_k_train.svg|500]]
+
+随着 $k$ 的增加，曲线越来越贴近数据点，但是波动越来越大。
+
+(e)
+
+![[lin_sin_k_train.svg|500]]
+
+小的 $k$ 也可以很好地拟合数据点。
+
+(f)
+
+![[lin_poly_k_small.svg|500]]
+
+$k$ 较大时，拟合曲线的波动很大。
