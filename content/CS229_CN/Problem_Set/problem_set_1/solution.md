@@ -3,7 +3,7 @@ title: 答案
 ---
 ### 1. 线性分类器 (逻辑回归与高斯判别分析)
 
-(a)
+#### 1(a)
 
 记 $z_i=\theta^Tx^{(i)}$, 有 $\frac{\mathrm{d}z_i}{\mathrm{d}\theta_j}=x^{(i)}_j$, 先考虑单个样本的损失 $\ell^{(i)}(\theta)$:
 
@@ -50,7 +50,7 @@ $$
 \end{aligned}
 $$
 
-(b)
+#### 1(b)
 
 ```python
 def fit(self, x, y):
@@ -79,7 +79,7 @@ def fit(self, x, y):
 | ---------------------- | ---------------------- |
 | ![[logreg_pred_1.svg]] | ![[logreg_pred_2.svg]] |
 
-(c)
+#### 1(c)
 
 $$
 \begin{aligned}
@@ -101,7 +101,7 @@ $$
 
 其中 $\theta=\Sigma^{-1}(\mu_1 - \mu_0), \theta_0=\frac12  (\mu_0^T\Sigma^{-1}\mu_0 - \mu_1^T\Sigma^{-1}\mu_1) + \log{(\frac{\phi}{1-\phi})}$.
 
-(d)
+#### 1(d)
 
 我们有
 
@@ -155,7 +155,7 @@ $$
 
 以上，所有最大似然估计得证。
 
-(e)
+#### 1(e)
 
 ```python
 def fit(self, x, y):
@@ -184,23 +184,23 @@ def fit(self, x, y):
 | ------------------- | ------------------- |
 | ![[gda_pred_1.svg]] | ![[gda_pred_2.svg]] |
 
-(f)
+#### 1(f)
 
 对于数据集 1，逻辑回归在其验证集上的结果比 GDA 更好。
 
-(g)
+#### 1(g)
 
 已包含在 (b) (e) 的解答中。
 
 数据集 1 上 GDA 的表现更差，原因可能是数据集 1 的数据分布不满足 GDA 数据服从正态分布的假设。
 
-(h)
+#### 1(h)
 
 使用 Box-cox 变换对数据集 1 进行处理，使其更接近正态分布。
 
 ### 2. 不完整的、仅含正类标签的数据
 
-(a)
+#### 2(a)
 
 ```python
 x_train, y_train = util.load_dataset(train_path, label_col="t", add_intercept=True)
@@ -218,7 +218,7 @@ util.plot(x_test, y_test, clf_a.theta, output_path_true.replace(".txt", ".svg"))
 
 ![[posonly_true_pred.svg|500]]
 
-(b)
+#### 2(b)
 
 ```python
 x_train, y_train = util.load_dataset(train_path, label_col="y", add_intercept=True)
@@ -236,7 +236,7 @@ util.plot(x_test, y_test, clf_b.theta, output_path_naive.replace(".txt", ".svg")
 
 ![[posonly_naive_pred.svg|500]]
 
-(c)
+#### 2(c)
 
 $$
 \begin{aligned}
@@ -246,7 +246,7 @@ $$
 \end{aligned}
 $$
 
-(d)
+#### 2(d)
 
 $$
 \begin{aligned}
@@ -257,7 +257,7 @@ $$
 \end{aligned}
 $$
 
-(e)
+#### 2(e)
 
 由 (d) 知
 
@@ -281,7 +281,7 @@ $$
 \end{aligned}
 $$
 
-(f)
+#### 2(f)
 
 ```python
 x_valid, y_valid = util.load_dataset(valid_path, label_col="y", add_intercept=True)
@@ -304,7 +304,7 @@ util.plot(x_test, y_test, clf_b.theta, output_path_naive.replace(".txt", ".svg")
 
 ### 3. 泊松回归
 
-(a)
+#### 3(a)
 
 $$
 \begin{aligned}
@@ -314,7 +314,7 @@ $$
 \end{aligned}
 $$
 
-(b)
+#### 3(b)
 
 由 (a) 知，泊松分布的自然参数 $\eta = \log \lambda$, 泊松分布的均值 $\mu = \lambda$, 则典范响应函数为
 
@@ -327,7 +327,7 @@ $$
 \end{aligned}
 $$
 
-(c)
+#### 3(c)
 
 由 (a), (b) 知，单个样本的对数似然为：
 
@@ -361,7 +361,7 @@ $$
 \end{aligned}
 $$
 
-(d)
+#### 3(d)
 
 ```python
 	n, d = x.shape
@@ -384,7 +384,7 @@ $$
 
 ### 4. 广义线性模型的凸性
 
-(a)
+#### 4(a)
 
 我们有 $\frac{ \partial p(y; \eta) }{ \partial \eta } = p(y; \eta) \left(T(y) - \frac{ \partial \alpha }{ \partial \eta }\right)$, 于是：
 
@@ -399,7 +399,7 @@ $$
 \end{gathered}
 $$
 
-(b)
+#### 4(b)
 
 $$
 \begin{gathered}
@@ -412,7 +412,7 @@ $$
 \end{gathered}
 $$
 
-(c)
+#### 4(c)
 
 $$
 \begin{aligned}
@@ -458,7 +458,7 @@ $$
 
 ### 5. 线性回归：何为线性？
 
-(a)
+#### 5(a)
 
 $$
 \boxed{J(\theta) = \frac{1}{2} \sum_{i=1}^n {\|h_{\theta}(\hat{x}^{(i)}) - y^{(i)}\|}_{2}^2}
@@ -472,7 +472,7 @@ $$
 
 $$
 
-(c)
+#### 5(b)
 
 ```python
 def fit(self, X, y):
@@ -490,19 +490,32 @@ def create_poly(self, k, X):
 
 ![[lin_poly_3_train.svg|500]]
 
-(d)
+#### 5(c)
 
 ![[lin_poly_k_train.svg|500]]
 
 随着 $k$ 的增加，曲线越来越贴近数据点，但是波动越来越大。
 
-(e)
+#### 5(d)
+
+```python
+def create_sin(self, k, X):
+	n, d = X.shape
+	assert d == 2, "Input should be of shape (n_examples, 2)"
+
+	X_sin = np.ones((n, k + 2))
+	for i in range(1, k + 1):
+		X_sin[:, i] = X[:, 1] ** i
+	X_sin[:, -1] = np.sin(X[:, 1])
+	return X_sin
+
+```
 
 ![[lin_sin_k_train.svg|500]]
 
 小的 $k$ 也可以很好地拟合数据点。
 
-(f)
+#### 5(e)
 
 ![[lin_poly_k_small.svg|500]]
 
