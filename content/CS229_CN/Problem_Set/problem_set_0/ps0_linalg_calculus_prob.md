@@ -1,5 +1,5 @@
 ---
-title: 线性代数、多元微积分与概率论
+title: 习题
 ---
 此为 [2020-夏](https://cs229.stanford.edu/summer2020/ps0_template.pdf) 版的习题集#0
 

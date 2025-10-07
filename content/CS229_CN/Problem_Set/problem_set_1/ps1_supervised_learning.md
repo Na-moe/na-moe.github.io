@@ -1,5 +1,5 @@
 ---
-title: 监督学习
+title: 习题
 ---
 此习题集中习题 (1-5) 为 [2020-夏](https://cs229.stanford.edu/summer2020/ps1.pdf) 版的习题集#1
 
