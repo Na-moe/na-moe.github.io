@@ -7,7 +7,6 @@ title: 第 I 部分 监督学习
         justify-content: center;
         align-items: center;
         background: rgba(0, 0, 0, 0.0);
-        color: white;
     ">
         <div style="
             font-size: 36px;

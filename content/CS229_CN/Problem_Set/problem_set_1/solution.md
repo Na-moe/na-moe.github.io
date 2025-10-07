@@ -1,5 +1,5 @@
 ---
-title: "习题集 #1: 答案"
+title: 答案
 ---
 ### 1. 线性分类器 (逻辑回归与高斯判别分析)
 
@@ -467,7 +467,7 @@ $$
 $$
 \begin{aligned}
   \theta &:= \theta - \alpha\nabla_{\theta}J \\
-    &:= \boxed{\theta - \alpha \sum_{i=1}^n (h_{\theta}(\hat{x}^{(i)}) - y^{(i)})\hat{x}^{(i)}}
+    &\boxed{:= \theta - \alpha \sum_{i=1}^n (h_{\theta}(\hat{x}^{(i)}) - y^{(i)})\hat{x}^{(i)}}
 \end{aligned}
 
 $$

@@ -7,7 +7,6 @@ title: 第 III 部分 泛化与正则化
         justify-content: center;
         align-items: center;
         background: rgba(0, 0, 0, 0.0);
-        color: white;
     ">
         <div style="
             font-size: 36px;
