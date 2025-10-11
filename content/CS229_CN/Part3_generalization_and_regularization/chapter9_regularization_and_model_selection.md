@@ -133,9 +133,9 @@ $$
 E[y|x, S] = \int_y y p(y|x, S) dy
 $$
 
-所概述的这个过程可以被认为是进行“完全贝叶斯”预测，其中模型的预测是通过对 $\theta$ 的后验分布 $p(\theta|S)$ 求平均来计算的。不幸的是，通常情况下计算这个后验分布的计算成本非常高。这是因为这需要对公式  中的 (通常是高维的) $\theta$ 进行积分，而这通常无法得到闭式解。
+所概述的这个过程可以被认为是进行“完全贝叶斯”预测，其中模型的预测是通过对 $\theta$ 的后验分布 $p(\theta|S)$ 求平均来计算的。不幸的是，通常情况下计算这个后验分布的计算成本非常高。这是因为这需要对公式 [[chapter9_regularization_and_model_selection#^eq9-3|(9.3)]] 中的 (通常是高维的) $\theta$ 进行积分，而这通常无法得到闭式解。
 
-因此，实践中将转而近似 $\theta$ 的后验分布。一种常见的近似方法是用一个单点估计来代替 $\theta$ 的后验分布 (如公式 [[chapter9_regularization_and_model_selection#^eq9-4|(9.4)]] 中所示) 。$\theta$ 的 **最大后验 (maximum a posteriori, MAP)** 估计由下式给出：
+因此，实践中将转而近似 $\theta$ 的后验分布。一种常见的近似方法是用一个单点估计来代替 $\theta$ 的后验分布 (如公式 [[chapter9_regularization_and_model_selection#^eq9-4|(9.4)]] 中所示)。$\theta$ 的 **最大后验 (maximum a posteriori, MAP)** 估计由下式给出：
 
 $$
 \theta_{\text{MAP}} = \arg \max_\theta \prod_{i=1}^n p(y^{(i)} | x^{(i)}, \theta) p(\theta). \tag{9.5}
