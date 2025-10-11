@@ -86,7 +86,7 @@ title: CS229 机器学习 课程讲义
 > >   &emsp;&emsp; ╠ [[chapter8_generalization#8.3.2 有限 𝓗 的情况|8.3.2 有限 𝓗 的情况]]  
 > >   &emsp;&emsp; ╚ [[chapter8_generalization#8.3.3 无限 𝓗 的情况|8.3.2 无限 𝓗 的情况]]  
 > 
-> >   [!example]- [[chapter9_regularization_and_model_selection|第 9 章 正则化与模型选择]]  
+> > [!example]- [[chapter9_regularization_and_model_selection|第 9 章 正则化与模型选择]]  
 > > 
 > >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.1 正则化|9.1 正则化]]  
 > >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.2 隐式正则化效应 (选读)|9.2 隐式正则化效应 (选读)]]  

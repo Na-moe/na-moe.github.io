@@ -5,6 +5,8 @@ Mikhail Belkin, Daniel Hsu, Siyuan Ma, and Soumik Mandal. Reconciling modern mac
 
 Mikhail Belkin, Daniel Hsu, and Ji Xu. Two models of double descent for weak features. SIAM Journal on Mathematics of Data Science, 2(4):1167–1180, 2020. [🔗](https://epubs.siam.org/doi/abs/10.1137/20M1336072) ^belkin2020two
 
+Jeff Z HaoChen, Colin Wei, Jason D Lee, and Tengyu Ma. Shape matters: Understanding the implicit bias of the noise covariance. In *Proceedings of  Conference on Learning Theory*, pages 2315--2357, 2021. [🔗](https://proceedings.mlr.press/v125/woodworth20a) ^haochen2021shape
+
 Trevor Hastie, Andrea Montanari, Saharon Rosset, and Ryan J Tibshirani. Surprises in high-dimensional ridgeless least squares interpolation. *Annals of statistic*s, 50(2):949, 2022. [🔗](https://pmc.ncbi.nlm.nih.gov/articles/PMC9481183/) ^hastie2022surprises
 
 Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image recognition. In *Proceedings of the IEEE conference on computer vision and pattern recognition*, pages 770–778, 2016. [🔗](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html) ^he2016resnet
@@ -24,4 +26,8 @@ Preetum Nakkiran, Prayaag Venkat, Sham Kakade, and Tengyu Ma. Optimal regulariza
 Manfred Opper. Statistical mechanics of learning: Generalization, pages 922–925, 1995. [🔗](https://philpapers.org/rec/oppsmo) ^opper1995stats
 
 Manfred Opper. Learning to generalize. *Frontiers of Life*, 3(part 2):763–775, 2001. ^opper2001learning
+
+Blake Woodworth, Suriya Gunasekar, Jason D Lee, Edward Moroshko, Pedro Savarese, Itay Golan, Daniel Soudry, and Nathan Srebro. Kernel and rich regimes in overparametrized models. In *Proceedings of  Conference on Learning Theory*, pages 3635--3673, 2020. [🔗](https://proceedings.mlr.press/v125/woodworth20a) ^woodworth2020kernel
+
+
 
