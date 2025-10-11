@@ -78,7 +78,7 @@ title: CS229 机器学习 课程讲义
 >   
 > > [!example]- [[chapter8_generalization|第 8 章 泛化]]  
 > > 
-> >   &emsp;╠ [[chapter8_generalization#8.1 偏差-方差均衡|8.1 偏差方差均衡]]  
+> >   &emsp;╠ [[chapter8_generalization#8.1 偏差-方差均衡|8.1 偏差-方差均衡]]  
 > >   &emsp;║ ╚ [[chapter8_generalization#8.1.1 (对于回归问题的) 数学分解|8.1.1 (对于回归问题的) 数学分解]]  
 > >   &emsp;╠ [[chapter8_generalization#8.2 双下降现象|8.2 双下降现象]]  
 > >   &emsp;╚ [[chapter8_generalization#8.3 样本复杂度边界 (选读)|8.3 样本复杂度边界 (选读)]]  
@@ -87,6 +87,30 @@ title: CS229 机器学习 课程讲义
 > >   &emsp;&emsp; ╚ [[chapter8_generalization#8.3.3 无限 𝓗 的情况|8.3.2 无限 𝓗 的情况]]  
 > 
 > > [!example]- [[chapter9_regularization_and_model_selection|第 9 章 正则化与模型选择]]  
+> > 
+> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.1 正则化|9.1 正则化]]  
+> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.2 隐式正则化效应 (选读)|9.2 隐式正则化效应 (选读)]]  
+> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.3 通过交叉验证选择模型|9.3 通过交叉验证选择模型]]  
+> >   &emsp;╚ [[chapter9_regularization_and_model_selection#9.4 贝叶斯统计与正则化|9.4 贝叶斯统计与正则化]]  
+
+> [!example]- [[CS229_CN/Part4_Unsupervised_Learning/index|第 IV 部分 无监督学习]]  
+>   
+> > [!example]- [[chapter10_clustering_and_the_k-means_algorithm|第 10 章 聚类与 k-means 算法]]  
+> 
+> > [!example]- [[chapter11_EM_algorithms|第 11 章 EM 算法]]  
+> > 
+> >   &emsp;╠ [[chapter11_EM_algorithms#11.1 面向高斯混合模型的 EM 算法|11.1 面向高斯混合模型的 EM 算法]]  
+> >   &emsp;╠ [[chapter11_EM_algorithms#11.2 Jensen 不等式|11.2 Jensen 不等式]]  
+> >   &emsp;╠ [[chapter11_EM_algorithms#11.3 广义 EM 算法|11.3 广义 EM 算法]]  
+> >   &emsp;║ ╚ [[chapter11_EM_algorithms#11.3.1 ELBO 的另一个解释|11.3.1 ELBO 的另一个解释]]  
+> >   &emsp;╠ [[chapter11_EM_algorithms#11.4 回顾高斯混合模型|11.4 回顾高斯混合模型]]  
+> >   &emsp;╚ [[chapter11_EM_algorithms#11.5 变分推断与变分自编码器 (选读)|11.5 变分推断与变分自编码器 (选读)]]  
+>   
+> > [!example]- [[chapter12_pca|第 12 章 主成分分析]]  
+>   
+> > [!example]- [[chapter13_ica|第 13 章 独立成分分析]]  
+> 
+> > [!example]- [[chapter14_self-supervised_learning_and_foundation_models|第 14 章 自监督学习与基础模型]]  
 > > 
 > >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.1 正则化|9.1 正则化]]  
 > >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.2 隐式正则化效应 (选读)|9.2 隐式正则化效应 (选读)]]  
