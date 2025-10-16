@@ -23,28 +23,28 @@ $$
 
 作为说明性示例，考虑图 [[chapter8_generalization#^fig8-1|8.1]] 所示的训练数据集和测试数据集。训练输入 $x^{(i)}$ 是随机选择的，输出 $y^{(i)}$ 由 $y^{(i)} = h^*(x^{(i)}) + \xi^{(i)}$ 生成，其中函数 $h^*(\cdot)$ 是一个二次函数，在图 [[chapter8_generalization#^fig8-1|8.1]] 中以实线显示，而 $\xi^{(i)}$ 是假定从 $\sim N(0, \sigma^2)$ 生成的观测噪声。测试样本 $(x, y)$ 也有相同的输入-输出关系 $y = h^*(x) + \xi$, 其中 $\xi \sim N(0, \sigma^2)$. 预测噪声 $\xi$ 是不可能的，因此本质上我们的目标是恢复函数 $h^*(\cdot)$.
 
-![[fitting_gt.png]] ^fig8-1
+![[fitting_dataset.svg]] ^fig8-1
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 8.1 用于本节的一个训练数据集和测试数据集的示例</p>
 
 将考虑学习各种类型模型的测试误差。在讨论线性回归时，讨论了拟合“简单”模型，例如线性模型 $y = \theta_0 + \theta_1 x$, 还是更“复杂”的模型，例如多项式模型 $y = \theta_0 + \theta_1 x + \dots + \theta_5 x^5$ 的问题。
 
-![[fitting_linear.png]] ^fig8-2
+![[fitting_linear.svg]] ^fig8-2
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 8.2 最好的线性拟合模型也有着巨大的训练和测试误差。</p>
 
 从拟合线性模型开始，如图 [[chapter8_generalization#^fig8-2|8.2]] 所示。即使在训练数据集上，最佳拟合线性模型也无法准确预测 $y$ 与 $x$ 的关系，更不用说在测试数据集上了。这是因为 $y$ 和 $x$ 之间的真实关系不是线性的——任何线性模型都远离真实函数 $h^*(\cdot)$. 因此，训练误差很大，这是*欠拟合*的典型情况。
 
-![[fitting_large.png|400]] ^eq8-3
+![[fitting_linear_large.svg|400]] ^eq8-3
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 8.3 最好的线性拟合模型在超大训练集上也有着巨大的训练误差。</p>
 
-![[fitting_noiseless.png|400]] ^eq8-4
+![[fitting_linear_noiseless.svg|400]] ^eq8-4
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 8.4 最好的线性拟合模型在没有噪声的训练集上也有着巨大的训练和测试误差。</p>
 
 这个问题不能通过增加训练样本来缓解——即使有非常大量的，甚至无限的训练样本，最佳拟合的线性模型仍然不准确，并且无法捕捉数据的结构 (图 [[chapter8_generalization#^fig8-3|8.3]])。即使训练数据中不存在噪声，问题仍然存在 (图 [[chapter8_generalization#^fig8-4|8.4]])。因此，这里的根本瓶颈在于线性模型族无法捕捉数据中的结构——线性模型无法表示真实的二次函数 $h^*$——而不是缺乏数据。非正式地，我们将模型的 **偏差 (bias)** 定义为即使我们将其拟合到非常大 (例如，无限大) 的训练数据集时的测试误差。因此，在这种情况下，线性模型具有较大的偏差，并且欠拟合 (即无法捕捉数据所表现出的结构)。
 
-![[fitting_5th.png]] ^eq8-5
+![[fitting_5th.svg]] ^eq8-5
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 8.5 最佳的 5 次多项式拟合模型训练误差为零，但测试误差仍然很大，并且未能恢复真实情况。这是经典的过拟合情形。</p>
 
-![[fitting_5th_large.png|400]] ^eq8-6
+![[fitting_5th_large.svg|400]] ^eq8-6
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 8.6 在大型数据集上拟合的最佳 5 次多项式几乎恢复了真实情况——这表明图 8.5 中的问题是方差 (或数据不足) 而不是偏差。</p>
 
 接下来，我们将一个 $5$ 次多项式拟合到数据。图 [[chapter8_generalization#^fig8-5|8.5]] 表明它也未能学习到一个好的模型。然而，其失败模式与线性模型的情况不同。具体来说，尽管学习到的 $5$ 次多项式在预测训练样本的 $y^{(i)}$ 与 $x^{(i)}$ 时表现非常好，但在测试样本上效果不佳 (图 [[chapter8_generalization#^fig8-5|8.5]])。换句话说，从训练集学习到的模型无法很好地 *泛化 (generalize)* 到其他测试样本——测试误差很高。与线性模型的行为相反，$5$ 次多项式的偏差较小——如果我们将 $5$ 次多项式拟合到非常大的数据集，得到的模型将接近二次函数并且也很准确 (图 [[chapter8_generalization#^fig8-6|8.6]])。这是因为 $5$ 次多项式族包含所有二次函数 (将 $\theta_5 = \theta_4 = \theta_3 = 0$ 设置为零即可得到二次函数)，因此，原则上 $5$ 次多项式能够捕捉数据的结构。
@@ -59,7 +59,7 @@ $$
 
 方差可以直观地（以及数学上证明，如第 [[chapter8_generalization#8.1.1 (对于回归问题的) 数学分解|8.1.1]] 节所示）通过在多个不同的训练数据集 (从相同的潜在分布中抽取) 上学习到的模型之间的变化量来表征。“虚假模式”是特定于特定数据集中的噪声 (和输入) 的随机性，因此在多个训练数据集之间是不同的。因此，对多个数据集的“虚假模式”过拟合应该会导致非常不同的模型。实际上，如图 [[chapter8_generalization#^fig8-7|8.7]] 所示，在三个不同训练数据集上学习到的模型差异很大，对每个数据集的“虚假模式”都存在过拟合。通常，偏差和方差之间存在权衡。如果我们的模型过于“简单”且参数很少，那么它可能具有较大的偏差 (但方差较小)，并且通常会遭受欠拟合。如果它过于“复杂”且参数很多，那么它可能遭受较大的方差 (但偏差较小)，因此会过拟合。图 [[chapter8_generalization#^fig8-8|8.8]] 展示了偏差和方差之间典型的权衡关系。
 
-![[fitting_quadratic.png]] ^eq8-9
+![[fitting_quadratic.svg]] ^eq8-9
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 8.9 最佳的二次拟合模型的训练误差和测试误差都很小，因为二次模型达到了良好的偏差-方差权衡。</p>
 
 正如我们将在第 [[chapter8_generalization#8.1.1 (对于回归问题的) 数学分解|8.1.1]] 节中正式看到的，测试误差可以分解为偏差和方差之和。这意味着随着模型复杂度的增加，测试误差将呈现凸曲线，在实践中我们应该调整模型复杂度以达到最佳权衡。例如，在上面的例子中，拟合二次函数比拟合一次或五次多项式效果更好，如图 [[chapter8_generalization#^fig8-9|8.9]] 所示。

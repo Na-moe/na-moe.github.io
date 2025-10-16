@@ -43,7 +43,7 @@ $$
 
 在大多数经典设置中，损失或正则化损失具有唯一的全局最小值，因此任何合理的优化器都应该收敛到该全局最小值，并且不施加任何额外的偏好。然而，在深度学习中，通常损失或正则化损失具有多个 (近似) 全局最小值，不同的优化器可能收敛到不同的全局最小值。尽管这些全局最小值具有相同或相似的训练损失，但它们的性质可能不同，并且泛化性能也可能显著不同。参见图 [[chapter9_regularization_and_model_selection#^fig9-1|9.1]] 和 [[chapter9_regularization_and_model_selection#^fig9-2|9.2]] 及其说明文字，以了解插图和一些实验结果。例如，某个全局最小值可能比其他全局最小值产生更具 Lipschitz 性或更稀疏的模型，从而具有更好的测试误差。结果表明，许多常用的优化器 (或其组成部分) 倾向于或偏向于寻找具有某些特性的全局最小值，从而带来更好的测试性能。[^4]
 
-![[global_minima.png|500]] ^fig9-1
+![[global_minima.svg|500]] ^fig9-1
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">图 9.1 在训练损失上的全局最小点的测试性能不相同的图示</p>
 
 ![[global_minima_nn.png]] ^fig9-2
