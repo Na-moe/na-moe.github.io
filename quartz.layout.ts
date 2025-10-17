@@ -8,8 +8,9 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      "https://favicon.im/github.com": "https://github.com/Na-moe/na-moe.github.io",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
+      "GitHub": "https://github.com/Na-moe/na-moe.github.io",
+      "RSS": "https://na-moe.github.io/index.xml",
+      // "Discord Community": "https://discord.gg/cRFFHYye7t",
     },
   }),
 }
