@@ -20,7 +20,7 @@ export default ((opts?: Options) => {
         <ul>
           {Object.entries(links).map(([text, link]) => {
             
-            const isImage = text.includes('.svg');
+            const isImage = text.includes('favicon');
             const content = isImage? (<img src={text} />) : (text);
             return (
               <li>
