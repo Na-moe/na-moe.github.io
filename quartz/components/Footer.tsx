@@ -21,7 +21,7 @@ export default ((opts?: Options) => {
           {Object.entries(links).map(([text, link]) => {
             
             const isImage = text.includes('favicon');
-            const content = isImage? (<img src={text} />) : (text);
+            const content = isImage? (<img src={text} style="height: 1rem; vertical-align: middle;" />) : (text);
             return (
               <li>
                 <a href={link}>{content}</a>
