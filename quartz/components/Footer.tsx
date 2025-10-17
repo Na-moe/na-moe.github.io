@@ -18,11 +18,16 @@ export default ((opts?: Options) => {
           <a href="https://quartz.jzhao.xyz/">Quartz v{version}</a> © {year}
         </p>
         <ul>
-          {Object.entries(links).map(([text, link]) => (
-            <li>
-              <a href={link}>{text}</a>
-            </li>
-          ))}
+          {Object.entries(links).map(([text, link]) => {
+            
+            const isImage = text.includes('.svg');
+            const content = isImage? (<img src={text} />) : (text);
+            return (
+              <li>
+                <a href={link}>{content}</a>
+              </li>
+            )
+          })}
         </ul>
       </footer>
     )
