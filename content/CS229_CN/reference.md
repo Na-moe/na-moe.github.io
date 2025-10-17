@@ -5,7 +5,7 @@ Mikhail Belkin, Daniel Hsu, Siyuan Ma, and Soumik Mandal. Reconciling modern mac
 
 Mikhail Belkin, Daniel Hsu, and Ji Xu. Two models of double descent for weak features. SIAM Journal on Mathematics of Data Science, 2(4):1167–1180, 2020. [🔗](https://epubs.siam.org/doi/abs/10.1137/20M1336072) ^belkin2020two
 
-David M Blei, Alp Kucukelbir, and Jon D McAuliffe. Variational inference: A review for statisticians. *Journal of the American Statistical Association*, 112(518):859–877, 2017. [🔗](https://www.tandfonline.com/doi/abs/10.1080/01621459.2017.1285773) ^Blei2017variational
+David M Blei, Alp Kucukelbir, and Jon D McAuliffe. Variational inference: A review for statisticians. *Journal of the American Statistical Association*, 112(518):859–877, 2017. [🔗](https://www.tandfonline.com/doi/abs/10.1080/01621459.2017.1285773) ^blei2017variational
 
 Jeff Z HaoChen, Colin Wei, Jason D Lee, and Tengyu Ma. Shape matters: Understanding the implicit bias of the noise covariance. In *Proceedings of  Conference on Learning Theory*, pages 2315--2357, 2021. [🔗](https://proceedings.mlr.press/v125/woodworth20a) ^haochen2021shape
 
