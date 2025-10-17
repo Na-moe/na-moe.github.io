@@ -2,8 +2,8 @@
 title: 第 11 章 EM 算法
 ---
 
-| [[chapter10_clustering_and_the_k-means_algorithm\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter11_EM_algorithms\|下一章]] |
-| :-----------------------------------------------------: | :-----------------------: | :------------------------------: |
+| [[chapter10_clustering_and_the_k-means_algorithm\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter12_pca\|下一章]] |
+| :-----------------------------------------------------: | :-----------------------: | :--------------------: |
 
 本章将讨论用于密度估计的 EM (期望最大化) 算法。
 
@@ -152,7 +152,7 @@ $$
 ^eq11-6
 $$
 \begin{align}
-    \log p(x; \theta)  \\
+    \log p(x; \theta) 
       &= \log \sum_z p(x, z; \theta) \notag \\
       &= \log \sum_z Q(z) \frac{p(x, z; \theta)}{Q(z)} \tag{11.6} \\
       &\geq \sum_z Q(z) \log \frac{p(x, z; \theta)}{Q(z)} \tag{11.7}
@@ -355,8 +355,8 @@ $$
 $$
 \begin{aligned}
     \sum_{i=1}^n &\sum_{z^{(i)}} Q_i(z^{(i)}) \log \frac{p(x^{(i)}, z^{(i)}; \phi, \mu, \Sigma)}{Q_i(z^{(i)})}\\
-    &= \sum_{i=1}^n \sum_{j=1}^k Q_i(z^{(i)} = j) \log \frac{p(x^{(i)}|z^{(i)} = j; \mu, \Sigma) p(z^{(i)} = j; \phi)}{Q_i(z^{(i)} = j)} \\
-    &= \sum_{i=1}^n \sum_{j=1}^k w_j^{(i)} \log \frac{\frac{1}{(2\pi)^{d/2}|\Sigma_j|^{1/2}} \exp(-\frac{1}{2}(x^{(i)} - \mu_j)^T \Sigma_j^{-1} (x^{(i)} - \mu_j)) \cdot \phi_j}{w_j^{(i)}}
+      &= \sum_{i=1}^n \sum_{j=1}^k Q_i(z^{(i)} = j) \log \frac{p(x^{(i)}|z^{(i)} = j; \mu, \Sigma) p(z^{(i)} = j; \phi)}{Q_i(z^{(i)} = j)} \\
+      &= \sum_{i=1}^n \sum_{j=1}^k w_j^{(i)} \log \frac{\frac{1}{(2\pi)^{d/2}|\Sigma_j|^{1/2}} \exp(-\frac{1}{2}(x^{(i)} - \mu_j)^T \Sigma_j^{-1} (x^{(i)} - \mu_j)) \cdot \phi_j}{w_j^{(i)}}
 \end{aligned}
 $$
 
@@ -493,7 +493,7 @@ $$
 解决这个问题的方式是所谓的 **重参数化技巧 (re-parameterization trick)**：将 $z^{(i)} \sim Q_i = \mathcal{N}(q(x^{(i)}; \phi), \text{diag}(v(x^{(i)}; \psi))^2)$ 重写为等价的形式：
 
 $$
-z^{(i)} = q(x^{(i)}; \phi) + v(x^{(i)}; \psi) \odot \xi^{(i)} \quad \text{其中} \quad \xi^{(i)} \sim \mathcal{N}(0, I_{k \times k}) \tag{eq:11.24}
+z^{(i)} = q(x^{(i)}; \phi) + v(x^{(i)}; \psi) \odot \xi^{(i)} \quad \text{其中} \quad \xi^{(i)} \sim \mathcal{N}(0, I_{k \times k}) \tag{11.24}
 $$
 
 这里的 $\odot$ 表示两个维度相同的向量的逐元素乘积。这里利用了 $x \sim \mathcal{N}(\mu, \sigma^2)$ 等价于 $x = \mu + \xi \sigma$, 其中 $\xi \sim \mathcal{N}(0, 1)$ 这一点。这里是在随机变量 $z^{(i)} \sim Q_i$ 的每个维度上同时应用了这一点。
@@ -523,8 +523,8 @@ $$
 
 
 
-| [[chapter10_clustering_and_the_k-means_algorithm\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter11_EM_algorithms\|下一章]] |
-| :-----------------------------------------------------: | :-----------------------: | :------------------------------: |
+| [[chapter10_clustering_and_the_k-means_algorithm\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter12_pca\|下一章]] |
+| :-----------------------------------------------------: | :-----------------------: | :--------------------: |
 
 [^1]: 这里的公式与在习题集 1 中高斯判别分析的公式有一些细微差别，首先是因为我们将 $z^{(i)}$ 推广为多项分布而不是伯努利分布，其次是因为这里我们对每个高斯分布使用不同的 $\Sigma_j$.
 
