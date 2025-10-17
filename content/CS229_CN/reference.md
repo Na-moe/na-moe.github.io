@@ -5,6 +5,8 @@ Mikhail Belkin, Daniel Hsu, Siyuan Ma, and Soumik Mandal. Reconciling modern mac
 
 Mikhail Belkin, Daniel Hsu, and Ji Xu. Two models of double descent for weak features. SIAM Journal on Mathematics of Data Science, 2(4):1167–1180, 2020. [🔗](https://epubs.siam.org/doi/abs/10.1137/20M1336072) ^belkin2020two
 
+David M Blei, Alp Kucukelbir, and Jon D McAuliffe. Variational inference: A review for statisticians. *Journal of the American Statistical Association*, 112(518):859–877, 2017. [🔗](https://www.tandfonline.com/doi/abs/10.1080/01621459.2017.1285773) ^Blei2017variational
+
 Jeff Z HaoChen, Colin Wei, Jason D Lee, and Tengyu Ma. Shape matters: Understanding the implicit bias of the noise covariance. In *Proceedings of  Conference on Learning Theory*, pages 2315--2357, 2021. [🔗](https://proceedings.mlr.press/v125/woodworth20a) ^haochen2021shape
 
 Trevor Hastie, Andrea Montanari, Saharon Rosset, and Ryan J Tibshirani. Surprises in high-dimensional ridgeless least squares interpolation. *Annals of statistic*s, 50(2):949, 2022. [🔗](https://pmc.ncbi.nlm.nih.gov/articles/PMC9481183/) ^hastie2022surprises
@@ -16,6 +18,8 @@ Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani, et al. An introd
 Sergey Ioffe and Szegedy Christian. Batch normalization: Accelerating deep network training by reducing internal covariate shift. In *International conference on machine learning*, pages 448-456, 2015. [🔗](https://proceedings.mlr.press/v37/ioffe15.html) ^sergey2015bn
 
 Yuxin Wu and Kaiming He. Group normalization. In *Proceedings of the European conference on computer vision*, pages 3-19, 2018. [🔗](https://openaccess.thecvf.com/content_ECCV_2018/html/Yuxin_Wu_Group_Normalization_ECCV_2018_paper.html) ^yuxin2018gn
+
+Diederik P Kingma and Max Welling. Auto-encoding variational bayes. *arXiv preprint arXiv:1312.6114*, 2013. [🔗](https://arxiv.org/abs/1312.6114) ^kingma2013auto
 
 Song Mei, and Andrea Montanari. The generalization error of random features regression: Precise asymptotics and the double descent curve. *Communications on Pure and Applied Mathematics*, 75(4):667–766, 2022. [🔗](https://onlinelibrary.wiley.com/doi/abs/10.1002/cpa.22008) ^mei2022gen
 
