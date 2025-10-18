@@ -11,43 +11,43 @@ title: CS229 机器学习 课程讲义
 >   
 > > [!example]- [[chapter1_linear_regression|第 1 章 线性回归]]  
 > > 
-> > ║ ╠ [[chapter1_linear_regression#1.1 最小均方算法|1.1 最小均方算法]]  
-> > ║ ╠ [[chapter1_linear_regression#1.2 正规方程|1.2 正规方程]]  
-> > ║ ║ ╠ [[chapter1_linear_regression#1.2.1 矩阵导数|1.2.1 矩阵导数]]  
-> > ║ ║ ╚ [[chapter1_linear_regression#1.2.2 再探最小二乘法|1.2.2 再探最小二乘法]]  
-> > ║ ╠ [[chapter1_linear_regression#1.3 概率解释|1.3 概率解释]]  
-> > ║ ╚ [[chapter1_linear_regression#1.4 局部加权线性回归 (选读)|1.4 局部加权线性回归 (选读)]]  
+> >   &emsp;╠ [[chapter1_linear_regression#1.1 最小均方算法|1.1 最小均方算法]]  
+> >   &emsp;╠ [[chapter1_linear_regression#1.2 正规方程|1.2 正规方程]]  
+> >   &emsp;║ ╠ [[chapter1_linear_regression#1.2.1 矩阵导数|1.2.1 矩阵导数]]  
+> >   &emsp;║ ╚ [[chapter1_linear_regression#1.2.2 再探最小二乘法|1.2.2 再探最小二乘法]]  
+> >   &emsp;╠ [[chapter1_linear_regression#1.3 概率解释|1.3 概率解释]]  
+> >   &emsp;╚ [[chapter1_linear_regression#1.4 局部加权线性回归 (选读)|1.4 局部加权线性回归 (选读)]]  
 >   
 > > [!example]-  [[chapter2_classification_and_logistic_regression|第 2 章 分类与逻辑回归]]  
 > > 
-> > ║ ╠ [[chapter2_classification_and_logistic_regression#2.1 逻辑回归|2.1 逻辑回归]]  
-> > ║ ╠ [[chapter2_classification_and_logistic_regression#2.2 离题：感知机学习算法|2.2 离题：感知机学习算法]]  
-> > ║ ╠ [[chapter2_classification_and_logistic_regression#2.3 多类别分类|2.3 多类别分类]]  
-> > ║ ╚ [[chapter2_classification_and_logistic_regression#2.4 最大化 ℓ(θ) 的另一种算法|2.4 最大化ℓ(θ) 的另一种算法]]  
+> >   &emsp;╠ [[chapter2_classification_and_logistic_regression#2.1 逻辑回归|2.1 逻辑回归]]  
+> >   &emsp;╠ [[chapter2_classification_and_logistic_regression#2.2 离题：感知机学习算法|2.2 离题：感知机学习算法]]  
+> >   &emsp;╠ [[chapter2_classification_and_logistic_regression#2.3 多类别分类|2.3 多类别分类]]  
+> >   &emsp;╚ [[chapter2_classification_and_logistic_regression#2.4 最大化 ℓ(θ) 的另一种算法|2.4 最大化ℓ(θ) 的另一种算法]]  
 >   
 > > [!example]-  [[chapter3_generalized_linear_model|第 3 章 广义线性模型]]  
 > > 
-> > ║ ╠ [[chapter3_generalized_linear_model#3.1 指数族|3.1 指数族]]  
-> > ║ ╚ [[chapter3_generalized_linear_model#3.2 构造广义线性模型|3.2 构造广义线性模型]]  
-> > ║     &emsp;&nbsp;╠ [[chapter3_generalized_linear_model#3.2.1 普通最小二乘|3.2.1 普通最小二乘]]  
-> > ║     &emsp;&nbsp;╚ [[chapter3_generalized_linear_model#3.2.2 逻辑回归|3.2.2 逻辑回归]]  
+> >   &emsp;╠ [[chapter3_generalized_linear_model#3.1 指数族|3.1 指数族]]  
+> >   &emsp;╚ [[chapter3_generalized_linear_model#3.2 构造广义线性模型|3.2 构造广义线性模型]]  
+> >   &emsp;&emsp;&nbsp;╠ [[chapter3_generalized_linear_model#3.2.1 普通最小二乘|3.2.1 普通最小二乘]]  
+> >   &emsp;&emsp;&nbsp;╚ [[chapter3_generalized_linear_model#3.2.2 逻辑回归|3.2.2 逻辑回归]]  
 >   
 > > [!example]-  [[chapter4_generative_learning_algorithms|第 4 章 生成式学习算法]]  
 > > 
-> > ║ ╠ [[chapter4_generative_learning_algorithms#4.1 高斯判别分析|4.1 高斯判别分析]]  
-> > ║ ║ ╠ [[chapter4_generative_learning_algorithms#4.1.1 多元正态分布|4.1.1 多元正态分布]]  
-> > ║ ║ ╠ [[chapter4_generative_learning_algorithms#4.1.2 高斯判别分析模型|4.1.2 高斯判别分析模型]]  
-> > ║ ║ ╚ [[chapter4_generative_learning_algorithms#4.1.3 讨论：GDA 与逻辑回归|4.1.3 讨论：GDA 与逻辑回归]]  
-> > ║ ╚ [[chapter4_generative_learning_algorithms#4.2 朴素贝叶斯 (选读)|4.2 朴素贝叶斯 (选读)]]  
-> > ║  &emsp;&nbsp;╠ [[chapter4_generative_learning_algorithms#4.2.1 拉普拉斯平滑|4.2.1 拉普拉斯平滑]]  
-> > ║  &emsp;&nbsp;╚ [[chapter4_generative_learning_algorithms#4.2.2 文本分类的事件模型|4.2.2 文本分类的事件模型]]  
+> >   &emsp;╠ [[chapter4_generative_learning_algorithms#4.1 高斯判别分析|4.1 高斯判别分析]]  
+> >   &emsp;║ ╠ [[chapter4_generative_learning_algorithms#4.1.1 多元正态分布|4.1.1 多元正态分布]]  
+> >   &emsp;║ ╠ [[chapter4_generative_learning_algorithms#4.1.2 高斯判别分析模型|4.1.2 高斯判别分析模型]]  
+> >   &emsp;║ ╚ [[chapter4_generative_learning_algorithms#4.1.3 讨论：GDA 与逻辑回归|4.1.3 讨论：GDA 与逻辑回归]]  
+> >   &emsp;╚ [[chapter4_generative_learning_algorithms#4.2 朴素贝叶斯 (选读)|4.2 朴素贝叶斯 (选读)]]  
+> >   &emsp;&emsp;&nbsp;╠ [[chapter4_generative_learning_algorithms#4.2.1 拉普拉斯平滑|4.2.1 拉普拉斯平滑]]  
+> >   &emsp;&emsp;&nbsp;╚ [[chapter4_generative_learning_algorithms#4.2.2 文本分类的事件模型|4.2.2 文本分类的事件模型]]  
 >   
 > > [!example]-  [[chapter5_kernel_methods|第 5 章 核方法]]  
 > > 
-> > ║ ╠ [[chapter5_kernel_methods#5.1 特征映射|5.1 特征映射]]  
-> > ║ ╠ [[chapter5_kernel_methods#5.2 特征的最小均方|5.2 特征的最小均方]]  
-> > ║ ╠ [[chapter5_kernel_methods#5.3 使用核技巧的最小均方|5.3 使用核技巧的最小均方]]  
-> > ║ ╚ [[chapter5_kernel_methods#5.4 核的性质|5.4 核的性质]]  
+> >   &emsp;╠ [[chapter5_kernel_methods#5.1 特征映射|5.1 特征映射]]  
+> >   &emsp;╠ [[chapter5_kernel_methods#5.2 特征的最小均方|5.2 特征的最小均方]]  
+> >   &emsp;╠ [[chapter5_kernel_methods#5.3 使用核技巧的最小均方|5.3 使用核技巧的最小均方]]  
+> >   &emsp;╚ [[chapter5_kernel_methods#5.4 核的性质|5.4 核的性质]]  
 >   
 > > [!example]-  [[chapter6_support_vector_machines|第 6 章 支持向量机]]  
 > > 
@@ -109,11 +109,15 @@ title: CS229 机器学习 课程讲义
 > > [!example]- [[chapter12_pca|第 12 章 主成分分析]]  
 >   
 > > [!example]- [[chapter13_ica|第 13 章 独立成分分析]]  
+> > 
+> >   &emsp;╠ [[chapter13_ica#13.1 ICA 的不确定性|13.1 ICA 的不确定性]]  
+> >   &emsp;╠ [[chapter13_ica#13.2 密度与线性变换|13.2 密度与线性变换]]  
+> >   &emsp;╚ [[chapter13_ica#13.3 ICA 算法|13.3 ICA 算法]]  
 > 
 > > [!example]- [[chapter14_self-supervised_learning_and_foundation_models|第 14 章 自监督学习与基础模型]]  
 > > 
-> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.1 正则化|9.1 正则化]]  
-> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.2 隐式正则化效应 (选读)|9.2 隐式正则化效应 (选读)]]  
-> >   &emsp;╠ [[chapter9_regularization_and_model_selection#9.3 通过交叉验证选择模型|9.3 通过交叉验证选择模型]]  
-> >   &emsp;╚ [[chapter9_regularization_and_model_selection#9.4 贝叶斯统计与正则化|9.4 贝叶斯统计与正则化]]  
+> >   &emsp;╠ [[chapter14_self-supervised_learning_and_foundation_models#14.1 预训练与适配|14.1 预训练与适配]]  
+> >   &emsp;╠ [[chapter14_self-supervised_learning_and_foundation_models#14.2 计算机视觉的预训练方法|14.2 计算机视觉的预训练方法]]  
+> >   &emsp;╚ [[chapter14_self-supervised_learning_and_foundation_models#14.3 预训练的大语言模型|14.3 预训练的大语言模型]]  
+> >   &emsp;&emsp;╚ [[chapter14_self-supervised_learning_and_foundation_models#14.3.1 零样本学习与语境学习|14.3.1 零样本学习与语境学习]]  
 
