@@ -3,174 +3,29 @@ title: 线性代数速查表
 ---
 ## 通用符号
 
-### 向量
-
-我们记 $\boldsymbol{x} \in \mathbb{R}^n$ 为一个 $n$ 维向量，其中 $\boldsymbol{x} \in \mathbb{R}$ 是第 $i$ 维：
-
-$$
-\boldsymbol{x} = \begin{pmatrix}
-	\ x_1 \ \\
-	\ x_2 \ \\
-	\ \vdots \ \\
-	\ x_n \
-\end{pmatrix} \in \mathbb{R}^n
-$$
-
-### 矩阵 
-
-我们记 $\boldsymbol{A} \in \mathbb{R}^{m \times n}$ 为一个 $m$ 行 $n$ 列的矩阵，其中 $A_{i,j}$ 是第 $i$ 行 $j$ 列的元素：
-
-$$
-\boldsymbol{A} = \begin{pmatrix}
-	\ A_{1,1} & \cdots & A_{1,n} \ \\
-	\ \vdots & & \vdots \ \\
-	\ A_{m,1} & \cdots & A_{m,n} \
-\end{pmatrix} \in \mathbb{R}^{m \times n}
-$$
-
-*注: 上述定义的向量 $\boldsymbol{x}$ 也可视为一个 $n \times 1$ 维的矩阵，也常被被称为列向量。*
-
-### 单位矩阵
-
-单位矩阵 $\boldsymbol{I} \in \mathbb{R}^{n\times n}$ 是一个方阵，其对角线上元素为 $1$, 其余元素均为 $0$ :
-
-$$
-\boldsymbol{I} = \begin{pmatrix}
-	\ 1 & 0 & \cdots & 0 \ \\
-	\ 0 & \ddots & \ddots & \vdots \ \\
-	\ \vdots & \ddots & \ddots & 0 \ \\
-	\ 0 & \cdots & 0 & 1 \ 
-\end{pmatrix}
-$$
-
-*注: 对于任意矩阵 $\boldsymbol{A}$, 有 $\boldsymbol{A}\boldsymbol{I}=\boldsymbol{I}\boldsymbol{A}=\boldsymbol{A}$.*
-
-### 对角矩阵
-
-对角矩阵 $\boldsymbol{D} \in \mathbb{R}^{n\times n}$ 是一个方阵，其对角线上元素不为 $0$, 其余元素均为 $0$ :
-
-$$
-\boldsymbol{A} = \begin{pmatrix}
-	\ d_1 & 0 & \cdots & 0 \ \\
-	\ 0 & \ddots & \ddots & \vdots \ \\
-	\ \vdots & \ddots & \ddots & 0 \ \\
-	\ 0 & \cdots & 0 & d_n \ 
-\end{pmatrix}
-$$
-
-*注: 也记 $\boldsymbol{D}$ 为 $\mathrm{diag}(d_1, \dots, d_N)$.*
+|          |                                                定义                                                |                                                                                          形式                                                                                          |                                                  注释                                                   |
+| -------- | :----------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
+| **向量**   |      记 $\boldsymbol{x} \in \mathbb{R}^n$ 为一个 $n$ 维向量，其中 ${x}_{i} \in \mathbb{R}$ 是第 $i$ 维元素      |                                      $$\boldsymbol{x} = \begin{pmatrix}\ x_1\ \\ \ x_2\ \\ \ \vdots\ \\ \ x_n\ \end{pmatrix} \in \mathbb{R}^n$$                                      |                        向量 $\boldsymbol{x}$ 也可视为一个 $n \times 1$ 维的矩阵，也常被被称为列向量                         |
+| **矩阵**   | 记 $\boldsymbol{A} \in \mathbb{R}^{m \times n}$ 为一个 $m$ 行 $n$ 列的矩阵，其中 $A_{i,j}$ 是第 $i$ 行 $j$ 列的元素 |       $$\boldsymbol{A} = \begin{pmatrix}\ A_{1,1} & \cdots & A_{1,n} \ \\ \ \vdots & & \vdots \ \\ \ A_{m,1} & \cdots & A_{m,n} \ \end{pmatrix} \in \mathbb{R}^{m \times n} $$       |                                                                                                       |
+| **单位矩阵** |         单位矩阵 $\boldsymbol{I} \in \mathbb{R}^{n\times n}$ 是一个方阵，其对角线上元素为 $1$, 其余元素均为 $0$          |   $$\boldsymbol{I} = \begin{pmatrix} \ 1 & 0 & \cdots & 0 \ \\ \ 0 & \ddots & \ddots & \vdots \ \\ \ \vdots & \ddots & \ddots & 0 \ \\ \ 0 & \cdots & 0 & 1 \  \end{pmatrix}$$<br>   | 对于任意矩阵 $\boldsymbol{A}$, 有 $\boldsymbol{A}\boldsymbol{I}=\boldsymbol{I}\boldsymbol{A}=\boldsymbol{A}$ |
+| **对角矩阵** |         对角矩阵 $\boldsymbol{D} \in \mathbb{R}^{n\times n}$ 是一个方阵，其对角线上元素不为 $0$, 其余元素均为 $0$         | $$\boldsymbol{D} = \begin{pmatrix} \ d_{1} & 0 & \cdots & 0 \ \\ \ 0 & \ddots & \ddots & \vdots \ \\ \ \vdots & \ddots & \ddots & 0 \ \\ \ 0 & \cdots & 0 & d_{n} \  \end{pmatrix}$$ |                        也记 $\boldsymbol{D}$ 为 $\mathrm{diag}(d_1, \dots, d_N)$                         |
 
 ## 矩阵运算
 
-### 向量-向量
+|             |                                                                                                                                                                                                                                                                         形式                                                                                                                                                                                                                                                                         |                                                                            注释                                                                             |
+| ----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| **向量-向量内积** |                                                                                                                                                                                      $$\begin{gathered}\boldsymbol{x} \boldsymbol{y}^T = \sum_{i=1}^n {x_i y_i} \in \mathbb{R},\\ \text{其中 } \boldsymbol{x}, \boldsymbol{y} \in \mathbb{R}^n\end{gathered}$$                                                                                                                                                                                       |                                                                                                                                                           |
+| **向量-向量外积** |                                                                                                                $$\begin{gathered}\boldsymbol{x}^T \boldsymbol{y} = \begin{pmatrix} \ x_1 y_1 & \cdots & x_1 y_n \ \\ \ \vdots & \ddots & \vdots \ \\ \ x_m y_1 & \cdots & x_m y_n \ \\ \end{pmatrix} \in \mathbb{R}^{m \times n}\\ \\ \text{其中 } \boldsymbol{x} \in \mathbb{R}^m, \boldsymbol{y} \in \mathbb{R}^n \end{gathered}$$                                                                                                                 |                                                                                                                                                           |
+| **矩阵-向量**   |                                                                                          $$\begin{aligned} \boldsymbol{A} \boldsymbol{x} &= \begin{pmatrix} \ \boldsymbol{a}_{1,:}^T \boldsymbol{x} \ \\ \ \vdots \ \\ \ \boldsymbol{a}_{m,:}^T \boldsymbol{x} \ \end{pmatrix} \\&= \sum_{i=1}^n {\boldsymbol{a}_{:,i} {x}_i} \in \mathbb{R}^m\\ &\text{其中 } \boldsymbol{A} \in \mathbb{R}^{m \times n}, \boldsymbol{x} \in \mathbb{R}^n \end{aligned}$$                                                                                           |                        其中 $\boldsymbol{a}_{i,:}^T, \boldsymbol{a}_{:,i}$ 分别是 $\boldsymbol{A}$ 的行、列向量，$x_i$ 是 $\boldsymbol{x}$ 的元素。                        |
+| **矩阵-矩阵**   | $$\begin{aligned} \boldsymbol{A} \boldsymbol{B} &=  \begin{pmatrix} \ \boldsymbol{a}_{1,:}^T \boldsymbol{b}_{:,1} & \cdots & \boldsymbol{a}_{1,:}^T \boldsymbol{b}_{:,n} \ \\ \ \vdots & \ddots & \vdots \ \\ \ \boldsymbol{a}_{m,:}^T \boldsymbol{b}_{:,1} & \cdots & \boldsymbol{a}_{m,:}^T \boldsymbol{b}_{:,n} \end{pmatrix} \\ &= \sum_{i=1}^n {\boldsymbol{a}_{:,i} \boldsymbol{b}_{i,:}^T} \in \mathbb{R}^{m \times n} \\ &\text{其中 } \boldsymbol{A} \in \mathbb{R}^{m \times k}, \boldsymbol{B} \in \mathbb{R}^{k\times n} \end{aligned}$$ | 其中 $\boldsymbol{a}_{i,:}^T, \boldsymbol{a}_{:,i}$ 分别是 $\boldsymbol{A}$ 的行、列向量，$\boldsymbol{b}_{i,:}^T, \boldsymbol{b}_{:,i}$ 分别是 $\boldsymbol{B}$ 的行、列向量。 |
 
-存在两种向量-向量乘法：
 
-* 内积: 对于 $\boldsymbol{x}, \boldsymbol{y} \in \mathbb{R}^n$, 我们有： 
-
-$$
-\boxed{\boldsymbol{x} \boldsymbol{y}^T = \sum_{i=1}^n {x_i y_i} \in \mathbb{R}}
-$$
-
-* 外积: 对于 $\boldsymbol{x} \in \mathbb{R}^m, \boldsymbol{y} \in \mathbb{R}^n$, 我们有：
-
-$$
-\boxed{
-	\boldsymbol{x}^T \boldsymbol{y} = \begin{pmatrix}
-		\ x_1 y_1 & \cdots & x_1 y_n \ \\
-		\ \vdots &  & \vdots \ \\
-		\ x_m y_1 & \cdots & x_m y_n \ \\
-	\end{pmatrix} \in \mathbb{R}^{m \times n}
-}
-$$
-
-### 矩阵-向量
-
-矩阵 $\boldsymbol{A} \in \mathbb{R}^{m \times n}$ 和向量 $\boldsymbol{x} \in \mathbb{R}^n$ 的乘积是一个大小为 $\mathbb{R}^m$ 的向量，满足：
-
-$$
-\boxed{
-	\boldsymbol{A} \boldsymbol{x} 
-	 = \begin{pmatrix}
-			\ \boldsymbol{a}_{1,:}^T \boldsymbol{x} \ \\
-			\ \vdots \ \\
-			\ \boldsymbol{a}_{m,:}^T \boldsymbol{x} \
-		\end{pmatrix}
-	 = \sum_{i=1}^n {\boldsymbol{a}_{:,i} \boldsymbol{x}_i} \in \mathbb{R}^m
- }
-$$
-
-其中 $\boldsymbol{a}_{i,:}^T, \boldsymbol{a}_{:,i}$ 分别是 $\boldsymbol{A}$ 的行、列向量，$x_i$ 是 $\boldsymbol{x}$ 的元素。
-
-### 矩阵-矩阵
-
-矩阵 $\boldsymbol{A} \in \mathbb{R}^{m \times p}$ 和矩阵 $\boldsymbol{B} \in \mathbb{R}^{p \times n}$ 的乘积是一个大小为 $\mathbb{R}^{m \times n}$ 的矩阵，满足：
-
-$$
-\boxed{
-	\boldsymbol{A} \boldsymbol{x} 
-	 =  \begin{pmatrix}
-			\ \boldsymbol{a}_{1,:}^T \boldsymbol{b}_{:,1} & \cdots & \boldsymbol{a}_{1,:}^T \boldsymbol{b}_{:,n} \ \\
-			\ \vdots & & \vdots \ \\
-			\ \boldsymbol{a}_{m,:}^T \boldsymbol{b}_{:,1} & \cdots & \boldsymbol{a}_{m,:}^T \boldsymbol{b}_{:,n} \
-		\end{pmatrix}
-	 = \sum_{i=1}^n {\boldsymbol{a}_{:,i} \boldsymbol{b}_{i,:}^T} \in \mathbb{R}^{m \times n}
- }
-$$
-
-其中 $\boldsymbol{a}_{i,:}^T, \boldsymbol{a}_{:,i}$ 分别是 $\boldsymbol{A}$ 的行、列向量，$\boldsymbol{b}_{i,:}^T, \boldsymbol{b}_{:,i}$ 分别是 $\boldsymbol{B}$ 的行、列向量。
-
-### 转置
-
-矩阵 $\boldsymbol{A} \in \mathbb{R}^{m \times n}$ 的转置，记作 $\boldsymbol{A}^T$, 是其中元素沿对角线反转得到的：
-
-$$
-\boxed{
-	\forall i,j, \quad \boldsymbol{A}_{i,j}^T = \boldsymbol{A}_{j,i}
-}
-$$
-
-*注: 对于矩阵 $\boldsymbol{A}, \boldsymbol{B}$, 有 $(\boldsymbol{A}\boldsymbol{B})^T = \boldsymbol{B}^T\boldsymbol{A}^T$.*
-
-### 逆
-
-可逆方阵 $A$ 的逆记作 $A^{-1}$, 是唯一满足下列要求的矩阵：
-
-$$
-\boxed{
-	\boldsymbol{A}\boldsymbol{A}^{-1}=\boldsymbol{A}^{-1}\boldsymbol{A}=\boldsymbol{I}
-}
-$$
-
-*注: 不是所有方阵都是可逆的。同样的，对于矩阵 $\boldsymbol{A}, \boldsymbol{B}$, 有 $(\boldsymbol{A}\boldsymbol{B})^{-1} = \boldsymbol{B}^{-1}\boldsymbol{A}^{-1}$.*
-
-### 迹
-
-方阵 $\boldsymbol{A}$ 的迹，记作 $\mathrm{tr}(\boldsymbol{A})$, 是其对角线元素的和：
-
-$$
-\boxed{
-	\mathrm{tr}(\boldsymbol{A}) = \sum_{i=1}^n A_{i,i}
-}
-$$
-
-*注: 对于矩阵 $\boldsymbol{A}, \boldsymbol{B}$, 有 $\mathrm{tr}(\boldsymbol{A}^T) = \mathrm{tr}(\boldsymbol{A})$ 和 $\mathrm{tr}(\boldsymbol{A}\boldsymbol{B}) = \mathrm{tr}(\boldsymbol{B}\boldsymbol{A})$.*
-
-### 行列式
-
-方阵的行列式，记作 $|\boldsymbol{A}|$ 或者 $\det{\boldsymbol{A}}$, 可以用去掉其第 $i$ 行第 $j$ 列的矩阵 $\boldsymbol{A}_{\backslash i, \backslash j}$ 递归表示：
-
-$$
-\boxed{
-	\det{\boldsymbol{A}} = |\boldsymbol{A}| = 
-		\begin{cases}
-		A_{1,1}, & \text{if } \boldsymbol{A} \in \mathbb{R}^{1\times 1} \\
-		\sum_{j=1}^n {(-1)^{i+j} A_{i,j} |\boldsymbol{A}_{\backslash i, \backslash j}|}, & \text{if } \boldsymbol{A} \in \mathbb{R}^{n\times n}, \ n \ne 1 \\
-		\end{cases}
-}
-$$
-
-*注: $\boldsymbol{A}$ 可逆当且仅当 $|\boldsymbol{A}| \ne 0$. 同样，有 $|\boldsymbol{A}\boldsymbol{B}|=|\boldsymbol{A}||\boldsymbol{B}|$ 和 $\boldsymbol{A^T}=\boldsymbol{A}$.*
+|     |                                                      定义                                                      |                                                      形式                                                      |                                                                                                注释                                                                                                |
+| --- | :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| 转置  |          矩阵 $\boldsymbol{A} \in \mathbb{R}^{m \times n}$ 的转置，记作 $\boldsymbol{A}^T$, 是其中元素沿对角线反转得到的           |                      $$\forall i,j, \  \boldsymbol{A}_{i,j}^T = \boldsymbol{A}_{j,i}$$                       |                                          对于矩阵 $\boldsymbol{A}, \boldsymbol{B}$, 有 $(\boldsymbol{A}\boldsymbol{B})^T = \boldsymbol{B}^T\boldsymbol{A}^T$                                          |
+| 逆   |                                     可逆方阵 $A$ 的逆记作 $A^{-1}$, 是唯一满足下列要求的矩阵                                     |           $$	\boldsymbol{A}\boldsymbol{A}^{-1}=\boldsymbol{A}^{-1}\boldsymbol{A}=\boldsymbol{I}$$            |                             不是所有方阵都可逆<br>同样的，对于矩阵 $\boldsymbol{A}, \boldsymbol{B}$, 有 $(\boldsymbol{A}\boldsymbol{B})^{-1} = \boldsymbol{B}^{-1}\boldsymbol{A}^{-1}$                             |
+| 迹   |                      方阵 $\boldsymbol{A}$ 的迹，记作 $\mathrm{tr}(\boldsymbol{A})$, 是其对角线元素的和                      |                            $$\mathrm{tr}(\boldsymbol{A}) = \sum_{i=1}^n A_{i,i}$$                            | 对于矩阵 $\boldsymbol{A}, \boldsymbol{B}$, 有 $\mathrm{tr}(\boldsymbol{A}^T) = \mathrm{tr}(\boldsymbol{A})$ 和 $\mathrm{tr}(\boldsymbol{A}\boldsymbol{B}) = \mathrm{tr}(\boldsymbol{B}\boldsymbol{A})$ |
+| 行列式 | 方阵的行列式，记作 $\det{\boldsymbol{A}}$, 可以用去掉其第 $i$ 行第 $j$ 列的矩阵 $\boldsymbol{A}_{\backslash i, \backslash j}$ 递归表示 | $$\det{\boldsymbol{A}} = \sum_{j=1}^n {(-1)^{i+j} A_{i,j} \det\boldsymbol{A}_{\backslash i, \backslash j}}$$ |         $\boldsymbol{A}$ 可逆当且仅当 $\det\boldsymbol{A} \ne 0$. 同样，有 $\det(\boldsymbol{A}\boldsymbol{B})=\det\boldsymbol{A}\det\boldsymbol{B}$ 和 $\det\boldsymbol{A^T}=\det\boldsymbol{A}$.          |
 
 ## 矩阵的性质
 
