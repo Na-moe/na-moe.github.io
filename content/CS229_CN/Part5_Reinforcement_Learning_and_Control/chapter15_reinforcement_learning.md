@@ -115,7 +115,7 @@ $$
 
 1: 对于每个状态 $s$, 初始化 $V(s) := 0$.
 
-2: **for** 直到收敛 **执行**
+2: **for** 直到收敛 **do**
 
 3: $\quad$对于每个状态，更新
 
@@ -140,7 +140,7 @@ $$
 
 1: 随机初始化 $\pi$.
 
-2: **for** 直到收敛 **执行**
+2: **for** 直到收敛 **do**
 
 3: $\quad$令 $V := V^\pi$. $\qquad$ *▷ 通常使用线性求解器求解*
 
@@ -321,9 +321,11 @@ $$
 	* 对于 $i = 1, \dots, n$ \{
 		* 对于每个动作 $a \in A$ \{
 			* 采样 $s_1', \cdots, s_k' \sim P_{s^{(i)} a}$ (使用某种 MDP 模型)。
-			* 令 $q(a)=\frac1k \sum_{j=1}^{k} R(s^{(i)}) + \gamma V(s_j')$. // *因此，$q(a)$ 是 $R(s^{i}) + \gamma \mathrm{E}_{s'\sim P_{s^{(i) a}}}[V(s')]$ 的估计值。*
+			* 令 $q(a)=\frac1k \sum_{j=1}^{k} R(s^{(i)}) + \gamma V(s_j')$.
+			* // *因此，$q(a)$ 是 $R(s^{i}) + \gamma \mathrm{E}_{s'\sim P_{s^{(i) a}}}[V(s')]$ 的估计值。*
 		* \}
-		* 令 $y^{(i)} = \max_a q(a)$. // *因此，$y^{(i)}$ 是 $R(s^{i}) + \gamma \max_a \mathrm{E}_{s'\sim P_{s^{(i) a}}}[V(s')]$ 的估计值。*
+		* 令 $y^{(i)} = \max_a q(a)$.
+		* // *因此，$y^{(i)}$ 是 $R(s^{i}) + \gamma \max_a \mathrm{E}_{s'\sim P_{s^{(i) a}}}[V(s')]$ 的估计值。*
 	* \}
 	* // *原始的 (用于离散状态的) 价值迭代算法根据 $V(s^{(i)}) := y^{(i)}$ 更新价值函数。*
 	* // *此算法则希望 $V(s^{(i)}) \approx y^{(i)}$, 可以使用监督学习 (线性回归) 达成这点。*
@@ -367,11 +369,11 @@ $$
 ^algo6
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 6</b> 策略迭代的变体</div>
 
-1: **过程** $\mathrm{VE}(\pi, k)$ $\qquad$ ▷ *用于评估 $V^\pi$*
+1: **procedure** $\mathrm{VE}(\pi, k)$ $\qquad$ ▷ *用于评估 $V^\pi$*
 
 2: $\quad$选项 1: 初始化 $V := 0$; 选项 2: 使用主算法的当前 $V$ 进行初始化。
 
-3: $\quad$**for** $i=0$ **到** $k-1$ **执行**
+3: $\quad$**for** $i=0$ **to** $k-1$ **do**
 
 4: $\quad\quad$对于每个状态 $s$, 令
 
@@ -381,11 +383,11 @@ V(s) := R(s) + \gamma \sum_{s'} P_{s \pi(s)}(s')V(s').\tag{15.12}
 $$
 5: **return** $V$
 
-**需要:** 超参数 $k$.
+**Require:** 超参数 $k$.
 
 6: 随机初始化 $\pi$.
 
-7: **for** 直到收敛 **执行**
+7: **for** 直到收敛 **do**
 
 8: $\quad$令 $V := \mathrm{VE}(\pi, k)$.
 

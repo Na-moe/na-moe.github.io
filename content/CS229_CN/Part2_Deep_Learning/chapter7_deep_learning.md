@@ -98,7 +98,7 @@ $$
 
 2: 随机初始化 $\theta$.
 
-3: **for** $i=1$ **到** $n_\text{iter}$ **执行**
+3: **for** $i=1$ **to** $n_\text{iter}$ **do**
 
 4: $\qquad$从 $\{1, ..., n\}$ 中均匀采样 $j$, 使用下式更新 $\theta$
 
@@ -119,7 +119,7 @@ $$
 
 2: 随机初始化 $\theta$.
 
-3: **for** $i=1$ **到** $n_\text{iter}$ **执行**
+3: **for** $i=1$ **to** $n_\text{iter}$ **do**
 
 4: $\qquad$从 $\{1, ..., n\}$ 中不放回地均匀采样 $B$ 个样本 $j_1, \dots, j_B$, 使用下式更新 $\theta$
 
@@ -867,7 +867,7 @@ $$
 \frac{\partial J}{\partial z^{[r]}} = \mathcal{B}[\ell_{\text{logistic}}, z^{[r]}] (1) = (1/(1 + \exp(-z^{[r]})) - y).\tag{7.76}
 $$
 
-3: **for** $k = r-1$ **到** $0$ **执行**
+3: **for** $k = r-1$ **to** $0$ **do**
 
 4: $\qquad$计算相对于参数 $W^{[k+1]}$ 和 $b^{[k+1]}$ 的梯度：
 
