@@ -2,7 +2,7 @@
 title: 第 11 章 EM 算法
 ---
 
-| [[chapter10_clustering_and_the_k-means_algorithm\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter12_pca\|下一章]] |
+| [[chapter10_clustering_and_the_k-means_algorithm\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter12_principal_components_analysis\|下一章]] |
 | :-----------------------------------------------------: | :-----------------------: | :--------------------: |
 
 本章将讨论用于密度估计的 EM (期望最大化) 算法。
@@ -523,7 +523,7 @@ $$
 
 
 
-| [[chapter10_clustering_and_the_k-means_algorithm\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter12_pca\|下一章]] |
+| [[chapter10_clustering_and_the_k-means_algorithm\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter12_principal_components_analysis\|下一章]] |
 | :-----------------------------------------------------: | :-----------------------: | :--------------------: |
 
 [^1]: 这里的公式与在习题集 1 中高斯判别分析的公式有一些细微差别，首先是因为我们将 $z^{(i)}$ 推广为多项分布而不是伯努利分布，其次是因为这里我们对每个高斯分布使用不同的 $\Sigma_j$.

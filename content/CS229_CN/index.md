@@ -74,7 +74,7 @@ title: CS229 机器学习 课程讲义
 > >   &emsp;║ ╚ [[chapter7_deep_learning#7.4.4 MLP 的反向传播|7.4.4 MLP的反向传播]]  
 > >   &emsp;╚ [[chapter7_deep_learning#7.5 训练样本的向量化|7.5 训练样本的向量化]]  
 
-> [!example]- [[CS229_CN/Part3_generalization_and_regularization/index|第 III 部分 泛化与正则化]]  
+> [!example]- [[CS229_CN/Part3_Generalization_and_Regularization/index|第 III 部分 泛化与正则化]]  
 >   
 > > [!example]- [[chapter8_generalization|第 8 章 泛化]]  
 > > 
@@ -106,13 +106,13 @@ title: CS229 机器学习 课程讲义
 > >   &emsp;╠ [[chapter11_EM_algorithms#11.4 回顾高斯混合模型|11.4 回顾高斯混合模型]]  
 > >   &emsp;╚ [[chapter11_EM_algorithms#11.5 变分推断与变分自编码器 (选读)|11.5 变分推断与变分自编码器 (选读)]]  
 >   
-> > [!example]- [[chapter12_pca|第 12 章 主成分分析]]  
+> > [!example]- [[chapter12_principal_components_analysis|第 12 章 主成分分析]]  
 >   
-> > [!example]- [[chapter13_ica|第 13 章 独立成分分析]]  
+> > [!example]- [[chapter13_independent_components_analysis|第 13 章 独立成分分析]]  
 > > 
-> >   &emsp;╠ [[chapter13_ica#13.1 ICA 的不确定性|13.1 ICA 的不确定性]]  
-> >   &emsp;╠ [[chapter13_ica#13.2 密度与线性变换|13.2 密度与线性变换]]  
-> >   &emsp;╚ [[chapter13_ica#13.3 ICA 算法|13.3 ICA 算法]]  
+> >   &emsp;╠ [[chapter13_independent_components_analysis#13.1 ICA 的不确定性|13.1 ICA 的不确定性]]  
+> >   &emsp;╠ [[chapter13_independent_components_analysis#13.2 密度与线性变换|13.2 密度与线性变换]]  
+> >   &emsp;╚ [[chapter13_independent_components_analysis#13.3 ICA 算法|13.3 ICA 算法]]  
 > 
 > > [!example]- [[chapter14_self-supervised_learning_and_foundation_models|第 14 章 自监督学习与基础模型]]  
 > > 
