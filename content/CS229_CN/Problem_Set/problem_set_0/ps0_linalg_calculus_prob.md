@@ -69,7 +69,7 @@ $$
 
 (a) 假设矩阵 $A \in \mathbb{R}^{n \times n}$ 可对角化，即存在可逆矩阵 $T \in \mathbb{R}^{n \times n}$ 和对角矩阵 $\Lambda = \operatorname{diag}(\lambda_1, \dots, \lambda_n)$, 使得 $A = T \Lambda T^{-1}$. 记 $t^{(i)}$ 为 $T$ 的列向量，即 $T = [t^{(1)} \cdots t^{(n)}]$, 其中 $t^{(i)} \in \mathbb{R}^n$. 证明 $A t^{(i)} = \lambda_i t^{(i)}$, 从而说明 $A$ 的*特征值/特征向量*对为 $(t^{(i)}, \lambda_i)$.
 
-若矩阵 $U \in \mathbb{R}^{n \times n}$ 满足 $U^T U = I$, 则称其为正交矩阵。**谱定理** (可能是线性代数中最重要的定理之一) 指出：若 $A \in \mathbb{R}^{n \times n}$ 是对称矩阵 (即 $A = A^T$ ), 则 $A$ 可*通过实正交矩阵对角化*。即，存在对角矩阵 $\Lambda \in \mathbb{R}^{n \times n}$ 和正交矩阵 $U \in \mathbb{R}^{n \times n}$, 使得 $U^T A U = \Lambda$, 或等价地，
+若矩阵 $U \in \mathbb{R}^{n \times n}$ 满足 $U^T U = I$, 则称其为正交矩阵。**谱定理** (可能是线性代数中最重要的定理之一) 指出：若 $A \in \mathbb{R}^{n \times n}$ 是对称矩阵 (即 $A = A^T$), 则 $A$ 可*通过实正交矩阵对角化*。即，存在对角矩阵 $\Lambda \in \mathbb{R}^{n \times n}$ 和正交矩阵 $U \in \mathbb{R}^{n \times n}$, 使得 $U^T A U = \Lambda$, 或等价地，
 
 $$
 A = U \Lambda U^T.
