@@ -31,6 +31,8 @@ Diederik P Kingma and Jimmy Ba. Adam: A method for stochastic optimization. *arX
 
 Diederik P Kingma and Max Welling. Auto-encoding variational bayes. *arXiv preprint arXiv:1312.6114*, 2013. [🔗](https://arxiv.org/abs/1312.6114) ^kingma2013auto
 
+Yuping Luo, Huazhe Xu, Yuanzhi Li, Yuandong Tian, Trevor Darrell, and Tengyu Ma. Algorithmic framework for model-based deep reinforcement learning with theoretical guarantees. In *International Conference on Learning Representations*, 2018. [🔗](https://openreview.net/forum?id=BJe1E2R5KX) ^luo2018algo
+
 Song Mei, and Andrea Montanari. The generalization error of random features regression: Precise asymptotics and the double descent curve. *Communications on Pure and Applied Mathematics*, 75(4):667–766, 2022. [🔗](https://onlinelibrary.wiley.com/doi/abs/10.1002/cpa.22008) ^mei2022gen
 
 Preetum Nakkiran. More data can hurt for linear regression: Sample-wise double descent. 2019. [🔗](https://arxiv.org/abs/1912.07242) ^nakkiran2019more

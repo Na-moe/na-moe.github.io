@@ -7,7 +7,7 @@ title: 第 15 章 强化学习
 
 现在开始学习强化学习和自适应控制。
 
-监督学习中的算法试图使其输出模仿训练集中的标签 $y$。在这种设置下，对于每个输入 $x$，标签都给出了明确的「正确答案」。然而，对于许多序列决策和控制问题，很难为学习算法提供这种显式监督。例如，如果我们构建了一个四足机器人并试图对其进行编程以使其行走，那么我们其实不知道什么是使其行走的「正确动作」，因此也不知道如何为学习算法提供显式监督以供其模仿。
+监督学习中的算法试图使其输出模仿训练集中的标签 $y$. 在这种设置下，对于每个输入 $x$, 标签都给出了明确的「正确答案」。然而，对于许多序列决策和控制问题，很难为学习算法提供这种显式监督。例如，如果我们构建了一个四足机器人并试图对其进行编程以使其行走，那么我们其实不知道什么是使其行走的「正确动作」，因此也不知道如何为学习算法提供显式监督以供其模仿。
 
 强化学习将转而为算法提供一个奖励函数，该函数指示学习智能体何时表现良好，何时表现不佳。在四足行走示例中，奖励函数可以对机器人向前移动给予正奖励，而对向后移动或摔倒给予负奖励。然后，学习算法的任务就是随着时间推移确定如何选择动作以获得高奖励。
 
@@ -210,16 +210,7 @@ $$
 
 例如，对于 2D 状态 $(s_1, s_2)$, 可以使用网格来离散化状态空间：
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \def\gridsize{8}
-        \draw[step=1, very thick, black] (0,0) grid (\gridsize, \gridsize);
-        \node[below=5pt] at (\gridsize/2, 0) {$S_1$};
-        \node[left=5pt] at (0, \gridsize/2) {$S_2$};
-        \node at (-1, -0.5) {[t]};
-    \end{tikzpicture}
-\end{figure}
+![[discrete_states.svg]]
 
 这里，每个网格单元代表一个独立的离散状态 $\bar{s}$。然后，可以通过一个离散状态 MDP $(\bar{S}, A, \{P_{\bar{s}a}\}, \gamma, R)$ 来近似连续状态 MDP，其中 $\bar{S}$ 是离散状态的集合，$\{P_{\bar{s}a}\}$ 是离散状态上的状态转移概率。然后，可以使用价值迭代或策略迭代来解出离散状态 MDP $(\bar{S}, A, \{P_{\bar{s}a}\}, \gamma, R)$ 中的 $V^*(\bar{s})$ 和 $\pi^*(\bar{s})$. 当实际系统处于某个连续值状态 $s \in S$ 并且需要选择一个动作来执行时，就计算相应的离散化状态 $\bar{s}$, 并执行动作 $\pi^*(\bar{s})$.
 
@@ -253,10 +244,7 @@ $$
 
 为了开发值函数近似算法，我们将假设我们拥有一个用于 MDP 的 **模型 (model)** 或 **模拟器 (simulator)**。非正式地，模拟器是一个黑盒，它接收任何 (连续值) 状态 $s_t$ 和动作 $a_t$ 作为输入，并根据状态转移概率 $P_{s_t a_t}$ 输出下一个状态 $s_{t+1}$ 的采样。
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{figs/simulator.pdf}
-\end{figure}
+![[simulator.svg]]
 
 获取此类模型有多种方法。一种是使用物理模拟。例如，习题集 4 中倒立摆的模拟器是通过使用物理定律计算在给定当前状态 $t$ 和所采取的动作 $a$ 的情况下，小车/杆在时间 $t+1$ 的位置和方向来获得的，前提是已知系统的所有参数，例如杆的长度、杆的质量等。或者，也可以使用现成的物理模拟软件包，该软件包将机械系统的完整物理描述、当前状态 $s_t$ 和动作 $a_t$ 作为输入，并在未来一小段时间内计算出系统的状态 $s_{t+1}$. [^4]
 
@@ -287,7 +275,7 @@ $$
 \underset{A,B}{\arg \min} \sum_{i=1}^n \sum_{t=0}^{T-1} \left\| s_{t+1}^{(i)} - (As_t^{(i)} + Ba_t^{(i)}) \right\|^2.
 $$
 
-也可以使用其他损失函数来学习模型。例如，最近 \cite{luo2018algorithmic} 的工作发现，使用 $\left\| \cdot \right\|_2$ 范数（不带平方）在某些情况下可能有所帮助。
+也可以使用其他损失函数来学习模型。例如，最近 [[reference#^luo2018algo|Luo et al., 2018]] 的工作发现，使用 $\| \cdot \|_2$ 范数 (不带平方) 在某些情况下可能有所帮助。
 
 在学习了 $A$ 和 $B$ 之后，一个选项是构建一个 **确定性 (deterministic)** 模型，其中给定输入 $s_t$ 和 $a_t$, 输出 $s_{t+1}$ 被精确确定。具体来说，总是根据公式 [[chapter15_reinforcement_learning#%eq15-6|(15.6)]] 计算 $s_{t+1}$. 或者，也可以构建一个 **随机 (stochastic)** 模型，其中 $s_{t+1}$ 是输入的随机函数，通过将其建模为：
 
@@ -399,7 +387,7 @@ $$
 
 7: **for** 直到收敛 **执行**
 
-8: $\quad$令 $V := VE(\pi, k)$.
+8: $\quad$令 $V := \mathrm{VE}(\pi, k)$.
 
 9: $\quad$对于每个状态 $s$, 令
 
@@ -412,11 +400,11 @@ $$
     border-top: 1px solid;
 ">
 
-在策略迭代算法 [[chapter15_reinforcement_learning#^algo5|5]] 的第 3 行，通常用线性系统求解器来计算 $V^\pi$. 或者也可以使用迭代贝尔曼更新来评估 $V^\pi$, 这类似于价值迭代，如算法 [[chapter15_reinforcement_learning#^algo6|6]] 中过程 VE($\cdot$) 的第 1 行所示。如果我们在过程 VE 的第 2 行中选择选项 1，那么过程 VE 与价值迭代 (算法 [[chapter15_reinforcement_learning#^algo4|4]]) 的不同之处在其第 4 行：过程 VE 用 $\pi$ 中的动作，而价值迭代则使用贪婪动作。
+在策略迭代算法 [[chapter15_reinforcement_learning#^algo5|5]] 的第 3 行，通常用线性系统求解器来计算 $V^\pi$. 或者也可以使用迭代贝尔曼更新来评估 $V^\pi$, 这类似于价值迭代，如算法 [[chapter15_reinforcement_learning#^algo6|6]] 中过程 $\mathrm{VE}$($\cdot$) 的第 1 行所示。如果我们在过程 $\mathrm{VE}$ 的第 2 行中选择选项 1，那么过程 $\mathrm{VE}$ 与价值迭代 (算法 [[chapter15_reinforcement_learning#^algo4|4]]) 的不同之处在其第 4 行：过程 $\mathrm{VE}$ 用 $\pi$ 中的动作，而价值迭代则使用贪婪动作。
 
-用过程 VE 可以构建算法 [[chapter15_reinforcement_learning#^algo6|6]]，它是策略迭代的一种变体，作为连接策略迭代和价值迭代的中间算法。这里我们在 VE 中选用选项 2，以最大化重用之前所学的知识。可以验证，如果取 $k=1$ 并在算法 [[chapter15_reinforcement_learning#^algo6|6]] 的第 2 行中选用选项 2，那么算法 [[chapter15_reinforcement_learning#^algo6|6]] 在语义上等同于价值迭代 (算法 [[chapter15_reinforcement_learning#^algo4|4]])。换句话说，算法 [[chapter15_reinforcement_learning#^algo6|6]] 和价值迭代交错更新 [[chapter15_reinforcement_learning#^eq15-13|(15.13)]] 和 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]]。算法 [[chapter15_reinforcement_learning#^algo6|6]] 在更新 $k$ 步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 和一步 [[chapter15_reinforcement_learning#^eq15-13|(15.13)]] 之间交替，而价值迭代在更新一步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 和一步 [[chapter15_reinforcement_learning#^eq15-13|(15.13)]] 之间交替。因此，算法 [[chapter15_reinforcement_learning#^algo6|6]] 通常不会比价值迭代更快，因为假设更新 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 和 [[chapter15_reinforcement_learning#^eq15-13|(15.13)]] 效用和耗时相同，那么更新频率的最佳平衡可能只是 $k=1$ 或 $k \approx 1$.
+用过程 $\mathrm{VE}$ 可以构建算法 [[chapter15_reinforcement_learning#^algo6|6]]，它是策略迭代的一种变体，作为连接策略迭代和价值迭代的中间算法。这里我们在 $\mathrm{VE}$ 中选用选项 2，以最大化重用之前所学的知识。可以验证，如果取 $k=1$ 并在算法 [[chapter15_reinforcement_learning#^algo6|6]] 的第 2 行中选用选项 2，那么算法 [[chapter15_reinforcement_learning#^algo6|6]] 在语义上等同于价值迭代 (算法 [[chapter15_reinforcement_learning#^algo4|4]])。换句话说，算法 [[chapter15_reinforcement_learning#^algo6|6]] 和价值迭代交错更新 [[chapter15_reinforcement_learning#^eq15-13|(15.13)]] 和 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]]。算法 [[chapter15_reinforcement_learning#^algo6|6]] 在更新 $k$ 步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 和一步 [[chapter15_reinforcement_learning#^eq15-13|(15.13)]] 之间交替，而价值迭代在更新一步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 和一步 [[chapter15_reinforcement_learning#^eq15-13|(15.13)]] 之间交替。因此，算法 [[chapter15_reinforcement_learning#^algo6|6]] 通常不会比价值迭代更快，因为假设更新 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 和 [[chapter15_reinforcement_learning#^eq15-13|(15.13)]] 效用和耗时相同，那么更新频率的最佳平衡可能只是 $k=1$ 或 $k \approx 1$.
 
-另一方面，如果更新 $k$ 步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 可以比更新一步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] $k$ 次快得多，那么多求几步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 可能有用。这就是策略迭代所利用的，因为线性系统求解器求解 $k=\infty$ 的 VE 比求解较大的 $k$ 的 VE 会快得多。反之，如果不存在这种加速效果，例如当状态空间很大且线性系统求解器也不快时，价值迭代更可取。
+另一方面，如果更新 $k$ 步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 可以比更新一步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] $k$ 次快得多，那么多求几步 [[chapter15_reinforcement_learning#^eq15-12|(15.12)]] 可能有用。这就是策略迭代所利用的，因为线性系统求解器求解 $k=\infty$ 的 $\mathrm{VE}$ 比求解较大的 $k$ 的 $\mathrm{VE}$ 会快得多。反之，如果不存在这种加速效果，例如当状态空间很大且线性系统求解器也不快时，价值迭代更可取。
 
 | [[chapter14_self-supervised_learning_and_foundation_models\|上一章]] | [[CS229_CN/index#目录\|目录]] | [[chapter16_LQR_DDP_and_LQG\|下一章]] |
 | :---------------------------------------------------------------: | :-----------------------: | :--------------------------------: |
