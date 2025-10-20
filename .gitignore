@@ -10,3 +10,5 @@ private/
 .replit
 replit.nix
 .vscode
+
+**/_TOC_*.md
