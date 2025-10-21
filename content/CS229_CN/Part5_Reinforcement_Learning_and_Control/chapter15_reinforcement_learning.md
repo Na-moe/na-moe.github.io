@@ -122,6 +122,7 @@ $$
 $$
 V(s) := R(s) + \max_{a \in A} \gamma \sum_{s'} P_{sa}(s') V(s').
 $$
+
 <hr style="
     border: 0;
     border-top: 1px solid;
@@ -149,6 +150,7 @@ $$
 $$
 \pi(s) := \arg\max_{a \in A} \sum_{s'}P_{s a}(s')V(s').
 $$
+
 <hr style="
     border: 0;
     border-top: 1px solid;
