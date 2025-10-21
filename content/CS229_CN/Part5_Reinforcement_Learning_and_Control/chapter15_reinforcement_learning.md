@@ -220,17 +220,11 @@ $$
 
 为了更好地理解这种表示的局限性，考虑一个*监督学习*问题，将函数拟合到这个数据集：
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{figs/rl_dataset.png}
-\end{figure}
+![[dataset_example.svg|500]]
 
 显然，线性回归可以很好地拟合这个数据集，然而，如果对 $x$ 轴离散化，并使用在每个离散区间内为分段常数的表示，那么我们对数据的拟合将如下所示：
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{figs/rl_dataset_discrete.png}
-\end{figure}
+![[dataset_discrete.svg|500]]
 
 这种分段常数表示对于许多平滑函数来说并不是一个好的表示。它导致输入上的平滑性很差，并且在不同网格单元之间没有泛化能力。使用这种表示，我们需要非常精细的离散化 (非常小的网格单元) 才能获得良好的近似。
 
@@ -299,7 +293,7 @@ $$
 $$
 \begin{align}
     V(s) &:= R(s) + \gamma \max_a \int_{s'} P_{sa}(s')V(s')ds' \tag{15.7} \\
-    &= R(s) + \gamma \max_a \mathrm{E}_{s' \sim P_{sa}} [V(s')] \tag{15.8}
+    &= R(s) + \gamma \max_a \mathbb{E}_{s' \sim P_{sa}} [V(s')] \tag{15.8}
 \end{align}
 $$
 
@@ -313,7 +307,7 @@ $$
 
 这里，$\phi$ 是状态的某种适当的特征映射。
 
-对于具有的有限样本 $n$ 个状态中的每个状态 $s$, 拟合价值迭代将首先计算一个量 $y^{(i)}$, 是 $R(s) + \gamma \max_a \mathrm{E}_{s' \sim P_{sa}} [V(s')]$ 的近似 (公式 [[chapter15_reinforcement_learning#^eq15-8|(15.8)]] 的右侧)。然后将应用监督学习算法，尝试使 $V(s)$ 接近 $R(s) + \gamma \max_a \mathrm{E}_{s' \sim P_{sa}} [V(s')]$ (换句话说，尝试使 $V(s)$ 接近 $y^{(i)}$).
+对于具有的有限样本 $n$ 个状态中的每个状态 $s$, 拟合价值迭代将首先计算一个量 $y^{(i)}$, 是 $R(s) + \gamma \max_a \mathbb{E}_{s' \sim P_{sa}} [V(s')]$ 的近似 (公式 [[chapter15_reinforcement_learning#^eq15-8|(15.8)]] 的右侧)。然后将应用监督学习算法，尝试使 $V(s)$ 接近 $R(s) + \gamma \max_a \mathbb{E}_{s' \sim P_{sa}} [V(s')]$ (换句话说，尝试使 $V(s)$ 接近 $y^{(i)}$).
 
 详细来说，该算法如下：
 
@@ -324,10 +318,10 @@ $$
 		* 对于每个动作 $a \in A$ \{
 			* 采样 $s_1', \cdots, s_k' \sim P_{s^{(i)} a}$ (使用某种 MDP 模型)。
 			* 令 $q(a)=\frac1k \sum_{j=1}^{k} R(s^{(i)}) + \gamma V(s_j')$.
-			* // *因此，$q(a)$ 是 $R(s^{i}) + \gamma \mathrm{E}_{s'\sim P_{s^{(i) a}}}[V(s')]$ 的估计值。*
+			* // *因此，$q(a)$ 是 $R(s^{i}) + \gamma \mathbb{E}_{s'\sim P_{s^{(i) a}}}[V(s')]$ 的估计值。*
 		* \}
 		* 令 $y^{(i)} = \max_a q(a)$.
-		* // *因此，$y^{(i)}$ 是 $R(s^{i}) + \gamma \max_a \mathrm{E}_{s'\sim P_{s^{(i) a}}}[V(s')]$ 的估计值。*
+		* // *因此，$y^{(i)}$ 是 $R(s^{i}) + \gamma \max_a \mathbb{E}_{s'\sim P_{s^{(i) a}}}[V(s')]$ 的估计值。*
 	* \}
 	* // *原始的 (用于离散状态的) 价值迭代算法根据 $V(s^{(i)}) := y^{(i)}$ 更新价值函数。*
 	* // *此算法则希望 $V(s^{(i)}) \approx y^{(i)}$, 可以使用监督学习 (线性回归) 达成这点。*
@@ -342,7 +336,7 @@ $$
 
 ^eq15-9
 $$
-\arg \max_a \mathrm{E}_{s' \sim P_{sa}} [V(s')] \tag{15.9}
+\arg \max_a \mathbb{E}_{s' \sim P_{sa}} [V(s')] \tag{15.9}
 $$
 
 计算/近似此过程类似于拟合价值迭代的内循环，其中对于每个动作，我们从 $P_{sa}$ 中采样 $s'_1, \dots, s'_k$ 来近似期望。(同样，如果模拟器是确定性的，我们可以设置 $k=1$.)
@@ -357,7 +351,7 @@ $$
 
 $$
 \begin{align}
-    \mathrm{E}_{s'}[V(s')] &\approx V(\mathrm{E}_{s'}[s']) \tag{15.10} \\
+    \mathbb{E}_{s'}[V(s')] &\approx V(\mathbb{E}_{s'}[s']) \tag{15.10} \\
     &= V(f(s, a)), \tag{15.11}
 \end{align}
 $$
