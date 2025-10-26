@@ -121,3 +121,25 @@ title: CS229 机器学习 课程讲义
 > >   &emsp;╚ [[chapter14_self-supervised_learning_and_foundation_models#14.3 预训练的大语言模型|14.3 预训练的大语言模型]]  
 > >   &emsp;&emsp;╚ [[chapter14_self-supervised_learning_and_foundation_models#14.3.1 零样本学习与语境学习|14.3.1 零样本学习与语境学习]]  
 
+> [!example]- [[CS229_CN/Part5_Reinforcement_Learning_and_Control/index|第 V 部分 强化学习与控制]]  
+>   
+> > [!example]- [[chapter15_reinforcement_learning|第 15 章 强化学习 ]]  
+> > 
+> >   &emsp;╠ [[chapter15_reinforcement_learning#15.1 马尔可夫决策过程|15.1 马尔可夫决策过程]]  
+> >   &emsp;╠ [[chapter15_reinforcement_learning#15.2 价值迭代与策略迭代|15.2 价值迭代与策略迭代]]  
+> >   &emsp;╠ [[chapter15_reinforcement_learning#15.3 学习 MDP 的模型|15.3 学习 MDP 的模型]]  
+> >   &emsp;╠ [[chapter15_reinforcement_learning#15.4 连续状态 MDP|15.4 连续状态 MDP]]  
+> >   &emsp;║ ╠ [[chapter15_reinforcement_learning#15.4.1 离散化|15.4.1 离散化]]  
+> >   &emsp;║ ╚ [[chapter15_reinforcement_learning#15.4.2 价值函数近似|15.4.2 价值函数近似]]  
+> >   &emsp;╚ [[chapter15_reinforcement_learning#15.5 策略与价值的联系 (选读)|15.5 策略与价值的关系 (选读)]]  
+> 
+> > [!example]- [[chapter16_LQR_DDP_and_LQG|第 16 章 LQR, DDP 和 LQG]]  
+> > 
+> >   &emsp;╠ [[chapter16_LQR_DDP_and_LQG#16.1 有限时间范围的 MDP|16.1 有限时间范围的 MDP]]  
+> >   &emsp;╠ [[chapter16_LQR_DDP_and_LQG#16.2 线性二次调节器 (LQR)|16.2 线性二次调节器 (LQR)]]  
+> >   &emsp;╠ [[chapter16_LQR_DDP_and_LQG#16.3 从非线性动态过程到 LQR|16.3 从非线性动态过程到 LQR]]  
+> >   &emsp;║ ╠ [[chapter16_LQR_DDP_and_LQG#16.3.1 动态过程的线性化|16.3.1 动态过程的线性化]]  
+> >   &emsp;║ ╚ [[chapter16_LQR_DDP_and_LQG#16.3.2 微分动态规划 (DDP)|16.3.2 微分动态规划 (DDP)]]  
+> >   &emsp;╚ [[chapter16_LQR_DDP_and_LQG#16.4 线性二次高斯 (LQG)|16.4 线性二次高斯 (LQG)]]  
+> 
+> > [!example]- [[chapter17_policy_gradient_REINFORCE|第 17 章 策略梯度 (REINFORCE)]]  
