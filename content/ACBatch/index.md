@@ -1,6 +1,8 @@
 ---
-title: "ACBatch: Adaptive and Cooperative Batching for Edge Inference"
+title: ACBatch
 ---
+# Adaptive and Cooperative Batching for Edge Inference
+
 *Ziming Yang*$^1$, Zichuan Zheng$^1$, Liyou Deng$^1$, Shan Zhang$^{1\ 2\ *}$, Zhiyuan Wang$^{1\ 2}$ and Hongbin Luo$^{1\ 2}$ 
 $^1$ School of Computer Science and Engineering, Beihang University, Beijing, China
 
@@ -12,7 +14,7 @@ $^*$ Corresponding author
 
 *Index Terms*—cooperative edge computing, edge inference, batching, traffic steering
 
-## I. INTRODUCTION
+## I. Introduction
 
 Driven by the escalating demand for artificial intelligence (AI), inference has become one of the dominant tasks of edge computing \[[[ACBatch/index#^li2019edge|1]]\]. Specifically, inference involves applying a trained neural network model to new data to generate predictions or insights and is expected in a wide range of practical applications. For example, in the Barcelona smart city project, over 3000 edge devices cooperatively process traffic data from about 100000 cameras to manage traffic flows, reducing congestion and enhancing safety \cite{khan2020edge}. Similarly, in smart manufacturing, real-time edge processing supports automated quality inspections and production line adjustments, thereby improving efficiency and reducing waste \cite{nain2022towards}. Emerging standards such as IEEE P1934 for OpenFog Reference Architecture and ETSI Multi-access Edge Computing (MEC) specifications guide the development and deployment of edge technologies \cite{antonini2019fog, giust2017multi}.
 
@@ -38,22 +40,21 @@ Our main results and key contributions are summarized as follows:
 
 The rest of this paper is organized as follows. Section [[ACBatch/index#II. RELATED WORK|II]] introduces related studies. Section [[ACBatch/index#III. SYSTEM MODEL|III]] describes the system model, and Section [[ACBatch/index#III. SYSTEM MODEL|IV]] formulates the optimization problem. In Section [[ACBatch/index#V. ACBATCH OPTIMIZATION|V]], we present the Dynamic Programming-based Adaptive Batching algorithm for the single-server case. Next, we extend it to the Multi-Server Cooperative Batching algorithm to solve the general multi-server case. Experimental results are shown in Section [[ACBatch/index#VI. PERFORMANCE EVALUATIONS|VI]]. We conclude this paper in Section [[ACBatch/index#VII. CONCLUSION|VII]].
 
-## II. RELATED WORK
+## II. Related Work
 
-## III. SYSTEM MODEL
+## III. System Model
 
-## IV. PROBLEM FORMULATION AND ANALYSIS
+## IV. Problem Formulation and Analysis
 
-## V. ACBATCH OPTIMIZATION
+## V. ACBatch Optimization
 
-## VI. PERFORMANCE EVALUATIONS
+## VI. Performance Evaluations
+## VII. Conclusion
 
-## VII. CONCLUSION
-
-
+In this paper, we propose ACBatch, an innovative framework for cooperative edge inference. Specifically, ACBatch jointly optimizes temporal adaptive batching and spatial cooperative steering to balance the trade-off between batch latency and computational efficiency. The optimization problem exhibits an exponential solution space. We first analyze the sequentiality of single-server batching optimization and thus propose a dynamic programming-based algorithm. This algorithm is then extended to multi-server scenarios through iterative batching and steering optimization. We prove that the algorithm has polynomial time complexity and provides performance guarantees. Real-trace experiments demonstrates that ACBatch has a significant reduction in completion time and latency in comparison to state-of-the-art baselines. Further expeimental results confirm that ACBatch excels in high-load, bursty, and unbalanced edge computing scenarios.
 
 ---
 
-## REFERENCES
+## References
 
 \[1\] E. Li, L. Zeng, Z. Zhou, and X. Chen, “Edge ai: On-demand accelerating deep neural network inference via edge computing,” IEEE Transactions on Wireless Communications, vol. 19, no. 1, pp. 447–457, 2019. ^li2019edge
