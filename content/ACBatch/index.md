@@ -202,6 +202,76 @@ In problem [[ACBatch/index#^p1|(P1)]], the completion time crucially depends on 
 
 We start with the simple single-server case and focus on the optimization of adaptive batching. Then, we extend to the general multi-server case and jointly optimize batching and traffic steering.
 
+### A. Dynamic Programming-based Adaptive Batching
+
+For the single-server case, $\mathcal{M}=\{1\}$, and thus $J_{k,1}=1,\forall k\in\mathcal{K}$. We remove the subscript $m$ for simplification, and the adaptive batching problem can be formulated as [[ACBatch/index#^p2|(P2)]]:
+
+^p2
+$$
+\begin{align}
+  \textbf{(P2) } &\ \min_{\mathcal{K},\mathcal{I}} \max_{k\in\mathcal{K}} e_k \tag{9a}\\
+  \text{s.t. } &\sum_{k\in\mathcal{K}}I_{n,k}=1, \forall n\in\mathcal{N} \tag{9b} \\
+  &K\in [\![1,N]\!] \tag{9c} \\
+  &I_{n,k}\in\{0,1\},\forall n\in\mathcal{N}, k\in\mathcal{K} \tag{9d} \\
+  &1\le \sum_{n\in\mathcal{N}}{I_{n,k}} \le B, \forall k\in\mathcal{K} \tag{9e}
+\end{align}
+$$
+
+This problem still presents an exponential solution space of $\sum_{1\le K\le N}{2^{KN}}$. To efficiently tackle this, (1) we leverage insights into batch sequentiality to significantly reduce the solution space given by Proposition [[ACBatch/index#^prop1|1]]; and (2) we recognize the problem’s optimal substructure, essential for applying dynamic programming. Based on these insights, we develop a dynamic programming-based algorithm that computes the optimal batching scheme for given task arrivals from the solution of sub-problems, ensuring computational efficiency and optimality within the constrained solution space.
+
+**Proposition 1.** *For problem [[ACBatch/index#^p2|(P2)]], there exists an optimal scheme $(\mathcal{K}^*, \mathcal{I}^*)$ which satisfies that $\{ (n_1, k_1, n_2, k_2) \in \mathcal{N} \times \mathcal{K}^* \times \mathcal{N} \times \mathcal{K}^* : I^*_{n_1,k_1} = I^*_{n_2,k_2} = 1, n_1 < n_2, k_1 > k_2 \} = \emptyset$.* ^prop1
+
+*Proof.* There is a sufficient condition to establish the proposition: if there exists an optimal scheme $(\mathcal{K}, \mathcal{I})$ which does not satisfy the condition in Proposition [[ACBatch/index#^prop1|1]], then there also exists an optimal scheme $(\mathcal{K}^*, \mathcal{I}^*)$ satisfying the condition. To construct such an optimal scheme $(\mathcal{K}^*, \mathcal{I}^*)$, we propose to exchange the allocations of $n_1$ and $n_2$ in $(\mathcal{K}, \mathcal{I})$: assign task $n_1$ to batch $k_2$ and task $n_2$ to batch $k_1$, denoted by the superscript $*$ for the related variables post-exchanging. This exchange does not alter the sizes of batches $k_1$ and $k_2$, hence $p_{k_1}^* = p_{k_1}$ and $p_{k_2}^* = p_{k_2}$.
+
+For batch $k_1$, if task $n_1$ is not the last in the batch, the ready time $r_{k_1}$ remains unchanged, and hence $e_{k_1}^* \le e_{k_1}$. If task $n_1$ is the last, then after the swap, task $n_2$ dictates the batch’s end time, which cannot exceed its previous end time because $e_{k_2} \ge t_{n_2}$, hence $e_{k_1}^* \le e_{k_1}$. And for batch $k_2$, because $t_{n_1} < t_{n_2}$, the earliest start time $r_{k_2}^*$ remains unchanged or is earlier, thus $q_{k_2}^* \le q_{k_2}$ and $e_{k_2}^* \le e_{k_2}$.
+
+In both scenarios, the adjusted scheme $(\mathcal{K}^*, \mathcal{I}^*)$ does not increase the processing time of any batch, thereby proving the proposition. $\boxed{}$
+
+Proposition [[ACBatch/index#^prop1|1]] indicates the existence of an optimal solution, where each batch consists of adjacent tasks. Accordingly, the solution space can be reduced from exponential ($\sum_{1\le K\le N}{2^{KN}}$) to combinatorial ($\sum_{1\le K\le N}{\binom{N-1}{K-1}}$) level.
+
+Furthermore, the sequential order provides a crucial insight: the optimal solution to the original problem can be derived from the optimal solutions of its sub-problems, demonstrating the optimal sub-structure of the problem. Define $C_{min}[n]$ as the minimum cost for the subset of tasks $\mathcal{N}_n = \{1, ..., n\}$. Denote by $C[n, b]$ the minimum cost solution when the last batch of the subset of tasks $\mathcal{N}_n$ consists of $b$ tasks. Consequently, $C_{min}[n] = \min_b C[n, b]$, where $C[n, b]$ can be derived from $C_{min}[n-b]$.
+
+This relationship indicates that the optimal solution for $\mathcal{N}$ can be deduced from the optimal solutions of its sub-problems for $\mathcal{N}_n, n\in \{1, ..., N-1\}$. This ensures the feasibility of using dynamic programming to determine the minimum cost for the entire task set. Thus, we propose the Dynamic Programming-based Adaptive Batching (DPAB) algorithm to address [[ACBatch/index#^p2|(P2)]], detailed in Algorithm [[ACBatch/index#^algo1|1]] and visually depicted in Fig. \ref{fig:algo1}. The time complexity of Algorithm [[ACBatch/index#^algo1|1]] is $O(N^2)$, consisting of $O(N)$ for initialization, $O(N^2)$ for dynamic programming, and $O(N)$ for tracing back, where $N$ represents the number of tasks.
+
+^algo1
+<div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>Algorithm 1</b> Dynamic Programming-based Adaptive Batching</div>
+
+**Input:** Arrival times $t[1...N]$ of the tasks, maximum batch size $B$, parallel efficiency function $f$ and computing time per task $c$ of the server;
+
+**Output:** Batch size list $Bs$;
+
+1: $\space$ **Initialize** $C_{\text{min}}[n]\leftarrow +\infty, \forall n\in[1,N]$, $C_{\text{min}}[0]\leftarrow 0$, and $\text{Path}[0]\leftarrow 0$
+
+2: $\space$ **for** $n\in [1,N]$ **do**
+
+3: $\space\quad$ **for** $b\in [1,\min(B, n)]$ **do**
+
+4: $\space\quad\quad$ $C[n,b]\leftarrow\max(t[n], C_{\text{min}}[n-b])+b*c/f(b)$
+
+5: $\space\quad\quad$ **if** $C[n,b]<C_{\text{min}}[n]$ **then**
+
+6: $\space\quad\quad\quad$ $C_{min}[n]\leftarrow C[n,b]$
+
+7: $\space\quad\quad\quad$ $\text{Path}[n]\leftarrow n-b$
+
+8: $\space$ $n \leftarrow N$
+
+9: $\space$ **Declare** $Bs$ an empty list
+
+10:  **while** $n \ne 0$ **do**
+
+11: $\quad$ $Bs.\texttt{append}(n-\mathrm{Path}[n])$
+
+12: $\quad$ $n \leftarrow \mathrm{Path}[n]$
+
+13:  **return** $Bs$
+
+<hr style="
+    border: 0;
+    border-top: 1px solid;
+">
+
+
 ## VI. Performance Evaluations
 
 In this section, we conduct a thorough performance evaluation of ACBatch. First, we compare its real-trace performance against state-of-the-art baselines. Next, ACBatch is assessed under varying arrival rates, burstiness, and spatial aggregation degrees. Furthermore, we investigate our steering method through ablation studies.
