@@ -23,6 +23,7 @@ Batching is a key technological approach to enhance inference computation effici
 As edge servers are rather resource-constrained, computation-efficient batching becomes even more critical when implementing inference applications. However, existing studies on cloud batching often fall short when applied to edge computing, primarily due to the *dynamics* of task arrivals at edge nodes \[[[ACBatch/index#^abbas2017mobile|13]]]. Unlike cloud servers, which experience relatively stable and high-density task arrivals, edge nodes face significantly lower and more sporadic task arrivals due to the spatially constrained coverage. Accordingly, edge servers usually wait for a longer time to form computation-efficient batches, compromising the timeliness of edge computing.
 
 ![[scenario.svg]] ^fig1
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 1: Illustration of an intelligent surveillance system with ACBatch in a smart city.</p>
 
 In this paper, we present an Adaptive and Cooperative Batching (ACBatch) framework to achieve low-latency edge inference. Specifically, we answer the two following key questions:
 
@@ -64,7 +65,7 @@ Our proposed ACBatch framework for edge inference also coordinates dynamic batch
 
 <p style="text-align: center; margin-bottom: .35em; font-size: 0.9em; opacity: 0.8;">TABLE I: Key notations.</p>
 
-|            Symbol            | Description                                               |
+|            Symbol            | Description                                               | ^tab1
 | :--------------------------: | --------------------------------------------------------- |
 |       $\mathcal{M}, M$       | Set and number of edge servers                            |
 |         $\eta_{m,b}$         | Batching efficiency of server $m$ with batch size $b$     |
@@ -78,7 +79,7 @@ Our proposed ACBatch framework for edge inference also coordinates dynamic batch
 |           $m_{k}$            | Processing server of batch $k$                            |
 | $q_{k}, r_{k}, p_{k}, e_{k}$ | Start, ready, processing and end time of batch $k$        |
 |             $k'$             | Previous batch of batch $k$ on server $m_k$               |
- ^tab1
+
 
 In this section, we introduce our measurement-based batch efficiency model. With a detailed task model of an edge inference application, we propose our ACBatch framework and provide an overview.
 
@@ -86,7 +87,10 @@ In this section, we introduce our measurement-based batch efficiency model. With
 
 The time required to process a batch task with batch size $b$ on a specific server $m$ is represented by $c_{m,b}$. The batching efficiency can thus be given by $\eta_{m,b} = { b c_{m,1}}/{c_{m,b}}$, which is platform-dependent and varies with different batch sizes \[[[ACBatch/index#^nvidia2018ai|9]]].
 
-We illustrate the measurement of batching efficiency across different hardware platforms \[[[ACBatch/index#^nvidia2018ai|9]], [[ACBatch/index#^nvidia2020jetson|11]]] and popular neural networks \[[[ACBatch/index#^he2016deep|20]], [[ACBatch/index#^simonyan2014very|21]], [[ACBatch/index#^szegedy2015going|22]]] in Fig. \ref{fig:batch eff}. Note that the maximum permissible batch sizes on different platforms are constrained by memory limitations and the neural networks adopted. For example, in our measurement, the maximum batch size on the NVIDIA Tesla V100 is about 128, whereas, on the NVIDIA Jetson AGX Xavier, it is limited to 32 or 16.  
+We illustrate the measurement of batching efficiency across different hardware platforms \[[[ACBatch/index#^nvidia2018ai|9]], [[ACBatch/index#^nvidia2020jetson|11]]] and popular neural networks \[[[ACBatch/index#^he2016deep|20]], [[ACBatch/index#^simonyan2014very|21]], [[ACBatch/index#^szegedy2015going|22]]] in [[ACBatch/index#^fig2|Fig. 2]]. Note that the maximum permissible batch sizes on different platforms are constrained by memory limitations and the neural networks adopted. For example, in our measurement, the maximum batch size on the NVIDIA Tesla V100 is about 128, whereas, on the NVIDIA Jetson AGX Xavier, it is limited to 32 or 16.  
+
+![[batch_eff.png|500]] ^fig2
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 2: Batch efficiency measurements on different hardware and neural networks.</p>
 
 To quantify the computational efficiency of batching, we model the relationship between batching efficiency and batch sizes by fitting the measurement results. We find that batching efficiency $\eta_{m,b}$ sub-linearly increases with batch size $b$ and can be well represented by the following general form:
 
@@ -97,11 +101,9 @@ $$
 
 where $\alpha_m$ and $\theta_m$ are platform-specific parameters influenced by the utilized hardware and software. The parameter $\theta_m$ is generally associated with the hardware capability to handle small-scale matrix operations \[[[ACBatch/index#^nvidia2018ai|9]]]. Conversely, $\alpha_m$ is often related to the general efficiency of software execution \[[[ACBatch/index#^nvidia2022tensorrt|23]]]. As shown in [[ACBatch/index#^tab2|Table II]], our batch efficiency model achieves at least $0.983$ of goodness of fit, indicating the effectiveness of our model.
 
-![[batch_eff.png|500]]
-
 <p style="text-align: center; margin-bottom: .35em; font-size: 0.9em; opacity: 0.8;">TABLE II: Parameter values and the corresponding goodness of fit R<sup>2</sup> for the batch efficiency model.</p>
 
-|     Hardware      | Neural Network | $\alpha$ | $\theta$ | $R^2$ |
+|     Hardware      | Neural Network | $\alpha$ | $\theta$ | $R^2$ | ^tab2
 | :---------------: | :------------: | :------: | :------: | :---: |
 |                   |    ResNet50    |  2.117   |  -0.601  | 0.997 |
 |    Tesla V100     |     VGG19      |  0.518   |  1.243   | 0.983 |
@@ -109,7 +111,7 @@ where $\alpha_m$ and $\theta_m$ are platform-specific parameters influenced by t
 |                   |    ResNet50    |  0.203   |  1.308   | 0.992 |
 | Jetson AGX Xavier |     VGG19      |  0.434   |  1.128   | 0.994 |
 |                   |   GoogLeNet    |  0.179   |  1.266   | 0.983 |
- ^tab2
+
 
 ### B. Task Model
 
@@ -177,7 +179,7 @@ The optimization problem can be formulated as [[ACBatch/index#^p1|(P1)]]:
 ^p1
 $$
 \begin{align}
-  \textbf{(P1) } &\ \min_{\mathcal{K},\mathcal{I},\mathcal{J}} \max_{k\in\mathcal{K}} e_k  \tag{8a}\\
+  \textbf{(P1) } &\ \min_{\mathcal{K},\mathcal{I},\mathcal{J}} \max_{k\in\mathcal{K}} e_k \tag{8a}\\
   \text{s.t. } &\sum_{k\in\mathcal{K}}I_{n,k}=1, \forall n\in\mathcal{N} \tag{8b} \\
   &\sum_{m\in\mathcal{M}}J_{k,m}=1, \forall k\in\mathcal{K} \tag{8c} \\
   &K\in [\![1,N]\!] \tag{8d} \\
