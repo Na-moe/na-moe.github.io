@@ -94,14 +94,10 @@ $$
 ^algo1
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 1</b> 随机梯度下降</div>
 
-1: 超参数: 学习率 $\alpha$, 总迭代次数 $n_\text{iter}$.
-
-2: 随机初始化 $\theta$.
-
-3: **for** $i=1$ **to** $n_\text{iter}$ **do**
-
-4: $\qquad$从 $\{1, ..., n\}$ 中均匀采样 $j$, 使用下式更新 $\theta$
-
+1: 超参数: 学习率 $\alpha$, 总迭代次数 $n_\text{iter}$.  
+2: 随机初始化 $\theta$.  
+3: **for** $i=1$ **to** $n_\text{iter}$ **do**  
+4: $\qquad$从 $\{1, ..., n\}$ 中均匀采样 $j$, 使用下式更新 $\theta$  
 $$
 \theta := \theta - \alpha \nabla_\theta J^{(j)}(\theta) \tag{7.9}
 $$
@@ -115,14 +111,10 @@ $$
 ^algo2
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 2</b> 小批量随机梯度下降</div>
 
-1: 超参数: 学习率 $\alpha$, 批量大小 $B$, 迭代次数 $n_\text{iter}$.
-
-2: 随机初始化 $\theta$.
-
-3: **for** $i=1$ **to** $n_\text{iter}$ **do**
-
-4: $\qquad$从 $\{1, ..., n\}$ 中不放回地均匀采样 $B$ 个样本 $j_1, \dots, j_B$, 使用下式更新 $\theta$
-
+1: 超参数: 学习率 $\alpha$, 批量大小 $B$, 迭代次数 $n_\text{iter}$.  
+2: 随机初始化 $\theta$.  
+3: **for** $i=1$ **to** $n_\text{iter}$ **do**  
+4: $\qquad$从 $\{1, ..., n\}$ 中不放回地均匀采样 $B$ 个样本 $j_1, \dots, j_B$, 使用下式更新 $\theta$  
 $$
 \theta := \theta - \frac{\alpha}{B} \sum_{k=1}^B \nabla_\theta J^{(j_k)}(\theta) \tag{7.10}
 $$
@@ -859,18 +851,14 @@ $$
 ^algo3
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 3</b> 多层神经网络的反向传播算法</div>
 
-1: **前向过程:** 使用公式 [[chapter7_deep_learning#^eq7-72|(7.72)]] 计算出 $a^{[k]}$, $z^{[k]}$, and $J$ 的值并存储下来。
-
-2: **反向过程:** 计算 $J$ 相对于 $z^{[r]}$ 的梯度：
-
+1: **前向过程:** 使用公式 [[chapter7_deep_learning#^eq7-72|(7.72)]] 计算出 $a^{[k]}$, $z^{[k]}$, and $J$ 的值并存储下来。  
+2: **反向过程:** 计算 $J$ 相对于 $z^{[r]}$ 的梯度：  
 $$
 \frac{\partial J}{\partial z^{[r]}} = \mathcal{B}[\ell_{\text{logistic}}, z^{[r]}] (1) = (1/(1 + \exp(-z^{[r]})) - y).\tag{7.76}
 $$
 
-3: **for** $k = r-1$ **to** $0$ **do**
-
-4: $\qquad$计算相对于参数 $W^{[k+1]}$ 和 $b^{[k+1]}$ 的梯度：
-
+3: **for** $k = r-1$ **to** $0$ **do**  
+4: $\qquad$计算相对于参数 $W^{[k+1]}$ 和 $b^{[k+1]}$ 的梯度：  
 $$
 \begin{align}
 	\frac{\partial J}{\partial W^{[k+1]}} 
@@ -882,8 +870,7 @@ $$
 \end{align}\\
 $$
 
-5: $\qquad$若 $k \ge 1$, 计算相对于 $z^{[k]}$ 和 $a^{[k]}$ 的梯度：
-
+5: $\qquad$若 $k \ge 1$, 计算相对于 $z^{[k]}$ 和 $a^{[k]}$ 的梯度：  
 $$
 \begin{align}
 	\frac{\partial J}{\partial a^{[k]}} 
