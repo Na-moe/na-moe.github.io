@@ -113,12 +113,9 @@ $$
 ^algo4
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 4</b> 价值迭代</div>
 
-1: 对于每个状态 $s$, 初始化 $V(s) := 0$.
-
-2: **for** 直到收敛 **do**
-
-3: $\quad$对于每个状态，更新
-
+1: 对于每个状态 $s$, 初始化 $V(s) := 0$.  
+2: **for** 直到收敛 **do**  
+3: $\quad$对于每个状态，更新  
 $$
 V(s) := R(s) + \max_{a \in A} \gamma \sum_{s'} P_{sa}(s') V(s').
 $$
@@ -139,14 +136,10 @@ $$
 ^algo5
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 5</b> 策略迭代</div>
 
-1: 随机初始化 $\pi$.
-
-2: **for** 直到收敛 **do**
-
-3: $\quad$令 $V := V^\pi$. $\qquad$ *▷ 通常使用线性求解器求解*
-
-4: $\quad$对于每个状态 $s$, 令
-
+1: 随机初始化 $\pi$.  
+2: **for** 直到收敛 **do**  
+3: $\quad$令 $V := V^\pi$. $\qquad$ *▷ 通常使用线性求解器求解*  
+4: $\quad$对于每个状态 $s$, 令  
 $$
 \pi(s) := \arg\max_{a \in A} \sum_{s'}P_{s a}(s')V(s').
 $$
@@ -365,30 +358,21 @@ $$
 ^algo6
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 6</b> 策略迭代的变体</div>
 
-1: **procedure** $\mathrm{VE}(\pi, k)$ $\qquad$ ▷ *用于评估 $V^\pi$*
-
-2: $\quad$选项 1: 初始化 $V := 0$; 选项 2: 使用主算法的当前 $V$ 进行初始化。
-
-3: $\quad$**for** $i=0$ **to** $k-1$ **do**
-
-4: $\quad\quad$对于每个状态 $s$, 令
-
+1: **procedure** $\mathrm{VE}(\pi, k)$ $\qquad$ ▷ *用于评估 $V^\pi$*  
+2: $\quad$选项 1: 初始化 $V := 0$; 选项 2: 使用主算法的当前 $V$ 进行初始化。  
+3: $\quad$**for** $i=0$ **to** $k-1$ **do**   
+4: $\quad\quad$对于每个状态 $s$, 令  
 ^eq15-12
 $$
 V(s) := R(s) + \gamma \sum_{s'} P_{s \pi(s)}(s')V(s').\tag{15.12}
 $$
 5: **return** $V$
 
-**Require:** 超参数 $k$.
-
-6: 随机初始化 $\pi$.
-
-7: **for** 直到收敛 **do**
-
-8: $\quad$令 $V := \mathrm{VE}(\pi, k)$.
-
-9: $\quad$对于每个状态 $s$, 令
-
+**Require:** 超参数 $k$.  
+6: 随机初始化 $\pi$.  
+7: **for** 直到收敛 **do**  
+8: $\quad$令 $V := \mathrm{VE}(\pi, k)$.  
+9: $\quad$对于每个状态 $s$, 令  
 ^eq15-13
 $$
 \pi(s) := \arg\max_{a \in A} \sum_{s'}P_{s a}(s')V(s').\tag{15.13}

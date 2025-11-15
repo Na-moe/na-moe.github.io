@@ -143,18 +143,14 @@ $$
 ^algo7
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 7</b> 带基线的策略梯度</div>
 
-1: **for** $i=1, \cdots$ **do**
-
-2: $\quad$通过执行当前策略，收集一组轨迹。简记 $\sum_{j\ge t}^{T-1}\gamma^{j-t} R(s_j,a_j)$ 为 $R_{\ge t}$.
-
-3: $\quad$通过最小化下式，找到一个函数 $B$ 以拟合基线
-
+1: **for** $i=1, \cdots$ **do**  
+2: $\quad$通过执行当前策略，收集一组轨迹。简记 $\sum_{j\ge t}^{T-1}\gamma^{j-t} R(s_j,a_j)$ 为 $R_{\ge t}$.  
+3: $\quad$通过最小化下式，找到一个函数 $B$ 以拟合基线  
 $$
 \sum_\tau \sum_t (R_{\ge t} - B(s_t))^2 \tag{17.12}
 $$
 
-4: $\quad$ 根据梯度估计来更新策略参数 $\theta$：
-
+4: $\quad$ 根据梯度估计来更新策略参数 $\theta$：  
 ^eq17-13
 $$
 \sum_\tau \sum_t \nabla_\theta \log \pi_\theta(a_t|s_t) \cdot (R_{\ge t} - B(s_t)) \tag{17.13}
