@@ -65,7 +65,7 @@ Our proposed ACBatch framework for edge inference also coordinates dynamic batch
 
 <p style="text-align: center; margin-bottom: .35em; font-size: 0.9em; opacity: 0.8;">TABLE I: Key notations.</p>
 
-|            Symbol            | Description                                               | ^tab1
+|            Symbol            | Description                                               |
 | :--------------------------: | --------------------------------------------------------- |
 |       $\mathcal{M}, M$       | Set and number of edge servers                            |
 |         $\eta_{m,b}$         | Batching efficiency of server $m$ with batch size $b$     |
@@ -103,7 +103,7 @@ where $\alpha_m$ and $\theta_m$ are platform-specific parameters influenced by t
 
 <p style="text-align: center; margin-bottom: .35em; font-size: 0.9em; opacity: 0.8;">TABLE II: Parameter values and the corresponding goodness of fit R<sup>2</sup> for the batch efficiency model.</p>
 
-|     Hardware      | Neural Network | $\alpha$ | $\theta$ | $R^2$ | ^tab2
+|     Hardware      | Neural Network | $\alpha$ | $\theta$ | $R^2$ |
 | :---------------: | :------------: | :------: | :------: | :---: |
 |                   |    ResNet50    |  2.117   |  -0.601  | 0.997 |
 |    Tesla V100     |     VGG19      |  0.518   |  1.243   | 0.983 |
@@ -112,6 +112,7 @@ where $\alpha_m$ and $\theta_m$ are platform-specific parameters influenced by t
 | Jetson AGX Xavier |     VGG19      |  0.434   |  1.128   | 0.994 |
 |                   |   GoogLeNet    |  0.179   |  1.266   | 0.983 |
 
+^tab2
 
 ### B. Task Model
 
