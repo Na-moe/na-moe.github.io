@@ -1,10 +1,8 @@
 ---
-title: Richard Sutton — Father of RL thinks LLMs are a dead end
+title: Richard Sutton — 强化学习之父：LLM 是条死胡同
 ---
 [Richard Sutton — 强化学习之父：LLM 是条死胡同](https://www.dwarkesh.com/p/richard-sutton)
 
-> 
->
 > “没有与世界的交互与长期奖励，就没有真正的学习。”
 
 **TL;DR**
