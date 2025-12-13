@@ -7,6 +7,7 @@ export interface Options {
   bibliographyFile: string | string[]
   suppressBibliography: boolean
   linkCitations: boolean
+  showTooltips: boolean
   csl: string
 }
 
@@ -14,6 +15,7 @@ const defaultOptions: Options = {
   bibliographyFile: "./bibliography.bib",
   suppressBibliography: false,
   linkCitations: false,
+  showTooltips: true,
   csl: "apa",
 }
 
@@ -31,6 +33,7 @@ export const Citations: QuartzTransformerPlugin<Partial<Options>> = (userOpts) =
           bibliography: opts.bibliographyFile,
           suppressBibliography: opts.suppressBibliography,
           linkCitations: opts.linkCitations,
+          showTooltips: opts.showTooltips,
           csl: opts.csl,
           lang: ctx.cfg.configuration.locale ?? "en-US",
         },

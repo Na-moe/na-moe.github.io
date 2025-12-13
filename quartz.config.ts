@@ -70,7 +70,10 @@ const config: QuartzConfig = {
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
       Plugin.FigureCaptions(),
-      Plugin.Citations({ bibliographyFile: "./content/ACBatch/ref.bib" }),
+      Plugin.Citations({ 
+        bibliographyFile: "./content/ACBatch/ref.bib",
+        csl: "./quartz/styles/ieee.csl",
+      }),
     ],
     filters: [Plugin.RemoveDrafts()],
     emitters: [
