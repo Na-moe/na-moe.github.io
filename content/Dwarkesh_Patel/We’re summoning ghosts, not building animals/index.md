@@ -1,11 +1,12 @@
 ---
 title: Andrej Karpathy — 我们在召唤幽灵，而非制造动物
+date: 2025-10-18
 ---
 [Andrej Karpathy — 我们在召唤幽灵，而非制造动物](https://www.dwarkesh.com/p/andrej-karpathy)
 
 > "The problems are tractable, but they're still difficult"
 > 
-> "这些问题虽然可解，但仍很棘手。"
+> 「这些问题虽然可解，但仍很棘手。」
 
 **TL;DR**
 

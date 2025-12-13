@@ -1,9 +1,12 @@
 ---
-title: Richard Sutton — 强化学习之父：LLM 是条死胡同
+title: Richard Sutton — 强化学习之父：大语言模型是条死胡同
+date: 2025-09-26
 ---
-[Richard Sutton — 强化学习之父：LLM 是条死胡同](https://www.dwarkesh.com/p/richard-sutton)
+[Richard Sutton — 强化学习之父：大语言模型是条死胡同](https://www.dwarkesh.com/p/richard-sutton)
 
-> “没有与世界的交互与长期奖励，就没有真正的学习。”
+> "LLMs aren’t Bitter-Lesson-pilled"
+>
+> 「大语言模型尚未真正领会《苦涩的教训》」
 
 **TL;DR**
 
