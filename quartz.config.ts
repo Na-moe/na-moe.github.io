@@ -73,6 +73,7 @@ const config: QuartzConfig = {
       Plugin.Citations({ 
         bibliographyFile: "./content/ACBatch/ref.bib",
         csl: "./quartz/styles/ieee.csl",
+        linkCitations: true,
       }),
     ],
     filters: [Plugin.RemoveDrafts()],
