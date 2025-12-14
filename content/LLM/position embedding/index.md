@@ -53,15 +53,10 @@ title: 位置编码
 > >   &emsp;╠ [[sec3_rel_pe#相对位置编码变体 —— T5|相对位置编码变体 —— T5]]  
 > >   &emsp;╚ [[sec3_rel_pe#相对位置编码变体 —— DeBERTa|相对位置编码变体 —— DeBERTa]]  
 >   
-> > [!example]-  [[chapter4_generative_learning_algorithms|第 4 章 生成式学习算法]]  
+> > [!example]-  [[sec4_rope1|第 4 节 旋转位置编码]]  
 > > 
-> >   &emsp;╠ [[chapter4_generative_learning_algorithms#4.1 高斯判别分析|4.1 高斯判别分析]]  
-> >   &emsp;║ ╠ [[chapter4_generative_learning_algorithms#4.1.1 多元正态分布|4.1.1 多元正态分布]]  
-> >   &emsp;║ ╠ [[chapter4_generative_learning_algorithms#4.1.2 高斯判别分析模型|4.1.2 高斯判别分析模型]]  
-> >   &emsp;║ ╚ [[chapter4_generative_learning_algorithms#4.1.3 讨论：GDA 与逻辑回归|4.1.3 讨论：GDA 与逻辑回归]]  
-> >   &emsp;╚ [[chapter4_generative_learning_algorithms#4.2 朴素贝叶斯 (选读)|4.2 朴素贝叶斯 (选读)]]  
-> >   &emsp;&emsp;&nbsp;╠ [[chapter4_generative_learning_algorithms#4.2.1 拉普拉斯平滑|4.2.1 拉普拉斯平滑]]  
-> >   &emsp;&emsp;&nbsp;╚ [[chapter4_generative_learning_algorithms#4.2.2 文本分类的事件模型|4.2.2 文本分类的事件模型]]  
+> >   &emsp;╠ [[sec4_rope1#第一性原理推导 RoPE|第一性原理推导 RoPE]]  
+> >   &emsp;╚ [[sec4_rope1#RoPE 的远程衰减|RoPE 的远程衰减]]  
 >   
 > > [!example]-  [[chapter5_kernel_methods|第 5 章 核方法]]  
 > > 

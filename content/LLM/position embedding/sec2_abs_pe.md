@@ -117,11 +117,11 @@ $$
 我们利用复数的指数形式来表示，即设
 
 $$
-\begin{align}
+\begin{aligned}
   \boldsymbol{p}_i &= r_i\mathrm{e}^{\mathrm{i} \phi_i}, \\
   \boldsymbol{p}_j^* &= r_j\mathrm{e}^{-\mathrm{i} \phi_j}, \\
   \boldsymbol{q}_{i-j} &= t_{i-j}\mathrm{e}^{\mathrm{i} \psi_{i-j}},
-\end{align}
+\end{aligned}
 $$
 
 则有：
@@ -211,9 +211,9 @@ $$
 $$
 \begin{aligned}
 \boldsymbol{p}_i^\top \boldsymbol{\mathcal{H}} \boldsymbol{p}_j
-&= \sum_{i=1}^{d / 2} \mathcal{H}_{2i, 2i} \cos i \theta_i \cos j \theta_i + \mathcal{H}_{2i+1, 2i+1} \sin i \theta_i \sin j \theta_i \\
-&= \sum_{i=1}^{d / 2} \frac{1}{2} (\mathcal{H}_{2i, 2i} + \mathcal{H}_{2i+1, 2i+1}) \cos(i-j) \theta_i \\
-& \quad + \sum_{i=1}^{d / 2} \frac{1}{2} (\mathcal{H}_{2i, 2i} - \mathcal{H}_{2i+1, 2i+1}) \cos(m+n) \theta_i
+&= \sum_{k=1}^{d / 2} \mathcal{H}_{2i, 2i} \cos i \theta_k \cos j \theta_k + \mathcal{H}_{2i+1, 2i+1} \sin i \theta_k \sin j \theta_k \\
+&= \sum_{i=1}^{d / 2} \frac{1}{2} (\mathcal{H}_{2i, 2i} + \mathcal{H}_{2i+1, 2i+1}) \cos(i-j) \theta_k \\
+& \quad + \sum_{i=1}^{d / 2} \frac{1}{2} (\mathcal{H}_{2i, 2i} - \mathcal{H}_{2i+1, 2i+1}) \cos(m+n) \theta_k
 \end{aligned}
 $$
 
@@ -222,10 +222,10 @@ $$
 而只考虑第一项，远程衰减则仍然存在：
 
 $$
-\sum_{i=1}^{d / 2} \frac{1}{2} (\mathcal{H}_{2i, 2i} + \mathcal{H}_{2i+1, 2i+1}) \cos(i-j) \theta_i \sim \int_0^1 h_t \mathrm{e}^{\mathrm{i} (i-j) \theta_t} \, \mathrm{d}t
+\sum_{i=1}^{d / 2} \frac{1}{2} (\mathcal{H}_{2i, 2i} + \mathcal{H}_{2i+1, 2i+1}) \cos(i-j) \theta_k \sim \int_0^1 h_t \mathrm{e}^{\mathrm{i} (i-j) \theta_t} \, \mathrm{d}t
 $$
 
-该积分在容易满足的条件下，可以有 $\lvert i-j \rvert \to \infty$ 时积分值趋于0的性质。
+该积分在容易满足的条件下，可以有 $\lvert i-j \rvert \to \infty$ 时积分值趋于 0 的性质。
 
 而如果 $\boldsymbol{\mathcal{H}}$ 不是对角阵，则这些性质很难得到，我们只能寄希望于 $\boldsymbol{\mathcal{H}}$ 的对角线部分占了主导，这样上述性质可以近似保留。而这意味着嵌入向量任意维度之间相关性较小，这在直觉上是可以满足的。
 
