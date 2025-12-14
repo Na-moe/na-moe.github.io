@@ -41,23 +41,23 @@ $$
 
 事实上，在 LLM 时代，不添加位置编码（即 NoPE）也可以起到打破置换不变性的效果。
 
-现在的 LLM 都是 Causal Attention，形式如下
+现在的 LLM 都是 Causal Attention，形式如下：
 
 $$
 \boldsymbol{y}_{i} = f(\boldsymbol{q}_{i}; \boldsymbol{x}_{1}, \cdots, \boldsymbol{x}_{L}) = \frac{{\sum_{j \leq i} \mathrm{e}^{ \boldsymbol{q_{i} \cdot \boldsymbol{k}_{j}} } \boldsymbol{v}_{j}}}{\sum_{j \leq i} \mathrm{e}^{ \boldsymbol{q}_{i} \cdot \boldsymbol{k}_{j}} }.
 $$
 
-相比双向 Attention 的求和上限是整个序列长度 $L$, Causal Attention 变为了当前 token 所在的位置 $i$.
+相比双向 Attention, 求和上限从序列长度 $L$ 变为了当前 token 所在的位置 $i$.
 
 这使得 $\boldsymbol{y}_{1}, \cdots, \boldsymbol{y}_{L}$ 的结果依赖于 $\boldsymbol{x}_{1}, \cdots, \boldsymbol{x}_{L}$ 的顺序。
 
-### NoPE 因果注意力编码位置到模长
+### Causal NoPE 编码位置到模长
 
 进一步地，我们分析一下 Causal Attention 是通过什么机制来实现位置编码的效果的。
 
-不妨通过一个极度简化的例子进行分析：Causal Attention 相当于对 $\left\{ \boldsymbol{v}_{i} \right\}$ 的加权求和。
+我们知道 Causal Attention 相当于对 $\left\{ \boldsymbol{v}_{i} \right\}$ 的加权求和。
 
-我们可以先尝试最简单的加权形式，即均匀加权，也即考虑这样的权重矩阵：
+先尝试最简单的加权形式，即均匀加权，也即考虑这样的权重矩阵：
 
 $$
 \begin{pmatrix}
@@ -77,11 +77,11 @@ $$
 假设 $\boldsymbol{v}_{j}$ 是 $\mathrm{i.i.d} \sim \mathcal{N}\left( 0, \sigma^{2} \right)$ ，那么就有：
 
 $$
-\frac{1}{d}\sum_{k=1}^{d}{y_{i,k}} \approx \mathbb{E}\left[ y_{i,k} \right] = \mathbb{E} \left[ \frac{1}{i} \sum_{j\leq i} v_{j,k} \right] = \frac{1}{i} \sum_{j\leq i} \mathbb{E}\left[ v_{j,k} \right] = 0,  
+\frac{1}{d}\sum_{k=1}^{d}{y_{i,k}} \approx \mathbb{E}\!\left[ y_{i,k} \right] = \mathbb{E}\! \left[ \frac{1}{i} \sum_{j\leq i} v_{j,k} \right] = \frac{1}{i} \sum_{j\leq i} \mathbb{E}\!\left[ v_{j,k} \right] = 0,  
 $$
 
 $$
-\frac{1}{d}\sum_{k=1}^{d}{y_{i,k}^2} \approx \mathbb{E}\left[ y_{i,k}^2 \right] = \mathbb{E} \left[ \frac{1}{i} \sum_{j\leq i} v_{j,k}^2 \right] = \frac{1}{i} \sum_{j\leq i} \mathbb{E}\left[ v_{j,k}^2 \right] = \frac{\sigma^2}{i},  
+\frac{1}{d}\sum_{k=1}^{d}{y_{i,k}^2} \approx \mathbb{E}\!\left[ y_{i,k}^2 \right] = \mathbb{E}\! \left[ \frac{1}{i} \sum_{j\leq i} v_{j,k}^2 \right] = \frac{1}{i} \sum_{j\leq i} \mathbb{E}\!\left[ v_{j,k}^2 \right] = \frac{\sigma^2}{i},  
 $$
 
 $$

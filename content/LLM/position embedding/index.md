@@ -25,6 +25,7 @@ title: 位置编码
 | $\boldsymbol{R}_{i,j}$                                       | $\mathbb{R}^{d}$                   | 位置 $i$ 相对于位置 $j$ 的位置编码                                      |
 | $\boldsymbol{W}_{R}$                                         | $\mathbb{R}^{d\times d}$           | $\boldsymbol{R}$ 的参数矩阵                                      |
 | $\tilde{\mathbb{\Lambda}}(\cdot)$                            | $\mathbb{R}^{n} \mapsto (0,1]^{n}$ | $\mathrm{softmax}$ 函数                                       |
+| $\mathfrak{Re}[\cdot], \mathfrak{Im}[\cdot]$                 | $\mathbb{C} \mapsto \mathbb{R}$    | 取实部/虚部                                                      |
 
 ## 目录
 
@@ -34,7 +35,7 @@ title: 位置编码
 > > 
 > >   &emsp;╠ [[sec1_why_pe#置换不变性|置换不变性]]  
 > >   &emsp;╚ [[sec1_why_pe#最简单的位置编码 —— NoPE|最简单的位置编码 —— NoPE]]  
-> >   &emsp;&emsp;&nbsp;╠ [[sec1_why_pe#NoPE 因果注意力编码位置到模长|NoPE 因果注意力编码位置到模长]]  
+> >   &emsp;&emsp;&nbsp;╠ [[sec1_why_pe#Causal NoPE 编码位置到模长|Causal NoPE 编码位置到模长]]  
 > >   &emsp;&emsp;&nbsp;╚ [[sec1_why_pe#NoPE 有何不足|NoPE 有何不足]]  
 >   
 > > [!example]-  [[sec2_abs_pe|第 2 节 绝对位置编码]]  
