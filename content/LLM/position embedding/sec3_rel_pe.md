@@ -2,9 +2,7 @@
 title: 第 3 节 相对位置编码
 ---
 | [[sec2_abs_pe\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope1\|下一节]] |
-| :-----------: | ------------------------------ | ------------------ |
-
----
+| :-----------: | :----------------------------: | :----------------: |
 
 绝对位置编码的主要问题是，其只建模了绝对位置的关系，但是现实中自然语言更多关注词元之间相对位置的关系。因此，有许多相对位置编码被提出，本节将从 $\boldsymbol{q}_i \boldsymbol{k}_j^\top$ 的展开式开始，介绍一系列相对位置编码：Rel.PE、XLNet 式、T5 式和 DeBERTa 式。
 
@@ -39,11 +37,11 @@ $$
 
 ## 经典相对位置编码 —— Rel.PE
 
-相对位置编码起源于 Google 的论文《Self-Attention with Relative Position epresentations》，一般认为是从绝对位置编码中启发得到的：
+相对位置编码起源于 Google 的论文 [Self-Attention with Relative Position epresentations](https://arxiv.org/abs/1803.02155)，一般认为是从绝对位置编码中启发得到的：
 
 $$
 \begin{cases}
-  \boldsymbol{y}_i = \sum_j \mathrm{softmax}_j\big(\boldsymbol{q}_i \boldsymbol{k}_j^\top\big) \boldsymbol{v}_j \\
+  \boldsymbol{y}_i = \sum_j \tilde{\mathbb{\Lambda}}_j\big(\boldsymbol{q}_i \boldsymbol{k}_j^\top\big) \boldsymbol{v}_j \\
   \boldsymbol{q}_i = (\boldsymbol{x}_i + \boldsymbol{p}_i) \boldsymbol{W}_q \\
   \boldsymbol{k}_j = (\boldsymbol{x}_j + \boldsymbol{p}_j) \boldsymbol{W}_k \\
   \boldsymbol{v}_j = (\boldsymbol{x}_j + \boldsymbol{p}_j) \boldsymbol{W}_v
@@ -91,7 +89,7 @@ def rel_pe( # apply to x
 
 ## 相对位置编码变体 —— XLNet
 
-XLNet 式位置编码来源自 [Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context](https://arxiv.org/abs/1901.02860)，不过更广为人知则是到 [XLNet]("https://arxiv.org/abs/1906.08237") 模型超过Bert之后，因此被称为 XLNet 式位置编码。
+XLNet 式位置编码来源自 [Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context](https://arxiv.org/abs/1901.02860)，不过更广为人知则是到 [XLNet](https://arxiv.org/abs/1906.08237) 模型超过Bert之后，因此被称为 XLNet 式位置编码。
 
 XLNet 式位置编码源于对于 $\boldsymbol{q}_i \boldsymbol{k}_j^\top$ 的完全展开：
 
@@ -201,4 +199,4 @@ def deberta_pe(
 ---
 
 | [[sec2_abs_pe\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope1\|下一节]] |
-| :-----------: | ------------------------------ | ------------------ |
+| :-----------: | :----------------------------: | :----------------: |
