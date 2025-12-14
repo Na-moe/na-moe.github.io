@@ -61,13 +61,17 @@ def sin_pe( # apply to x
 
 对于不带因果掩码的模型，$f$ 是全对称的，即对于任意 $i,j$ 都有：
 
-$$ f(\cdots, \boldsymbol{x}_i, \cdots, \boldsymbol{x}_j, \cdots) = f(\cdots, \boldsymbol{x}_j, \cdots, \boldsymbol{x}_i, \cdots) $$
+$$
+f(\cdots, \boldsymbol{x}_i, \cdots, \boldsymbol{x}_j, \cdots) = f(\cdots, \boldsymbol{x}_j, \cdots, \boldsymbol{x}_i, \cdots)
+$$
 
 这也是其不能识别位置的主要原因。
 
 而我们希望通过位置编码打破这种对称性：
 
-$$ \tilde{f}(\cdots, \boldsymbol{x}_i, \cdots, \boldsymbol{x}_j, \cdots) = f(\cdots, \boldsymbol{x}_i + \boldsymbol{p}_i, \cdots, \boldsymbol{x}_j + \boldsymbol{p}_j, \cdots) $$
+$$
+\tilde{f}(\cdots, \boldsymbol{x}_i, \cdots, \boldsymbol{x}_j, \cdots) = f(\cdots, \boldsymbol{x}_i + \boldsymbol{p}_i, \cdots, \boldsymbol{x}_j + \boldsymbol{p}_j, \cdots)
+$$
 
 为了简化，我们先只考虑 $i,j$ 这两个位置的情况，将位置编码视为扰动项，泰勒展开到二阶：
 
@@ -90,19 +94,25 @@ $$
 
 即存在某个函数 $g$，使得：
 
-$$ \langle \boldsymbol{p}_i, \boldsymbol{p}_j \rangle = g(i-j) $$
+$$
+\langle \boldsymbol{p}_i, \boldsymbol{p}_j \rangle = g(i-j)
+$$
 
 其中 $\boldsymbol{p}_i, \boldsymbol{p}_j$ 是 $d$ 维向量，我们先从 $d=2$ 的情形入手：
 
 对于二维向量，我们将其视为复数，即将 $(x, y)$ 视为复数 $x+ \mathrm{i}y$，因此有：
 
-$$ \langle \boldsymbol{p}_i, \boldsymbol{p}_j \rangle = \mathfrak{Re}\!\left[ \boldsymbol{p}_i \boldsymbol{p}_j^* \right]  $$
+$$
+\langle \boldsymbol{p}_i, \boldsymbol{p}_j \rangle = \mathfrak{Re}\!\left[ \boldsymbol{p}_i \boldsymbol{p}_j^* \right]
+$$
 
 其中 $\boldsymbol{p}_j^*$ 是 $\boldsymbol{p}_j$ 的共轭复数。
 
 为了满足 $\langle \boldsymbol{p}_i, \boldsymbol{p}_j \rangle = g(i-j)$，我们可以假设存在复数 $\boldsymbol{q}_{i-j}$ 使得：
 
-$$ \boldsymbol{p}_i \boldsymbol{p}_j^* = \boldsymbol{q}_{i-j} $$
+$$
+\boldsymbol{p}_i \boldsymbol{p}_j^* = \boldsymbol{q}_{i-j}
+$$
 
 我们利用复数的指数形式来表示，即设
 
