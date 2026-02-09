@@ -8,8 +8,8 @@ title: 位置编码
 之后我们会介绍一些基于 RoPE 的改进：
 
 * 增强长文本扩展性的 YaRN；
-* 在 VO 上也进行位置编码的 VO-RoPE
-* 只在部分维度上应用 RoPE 的 $\partial$-RoPE。
+* 在 VO 上也进行位置编码的 VO-RoPE；
+* 只在部分维度上应用 RoPE 的 $\partial$-RoPE.
 
 为了一致性，我们对符号做如下约定：
 
@@ -24,8 +24,8 @@ title: 位置编码
 | $\boldsymbol{p}_{i}$                                         | $\mathbb{R}^{d}$                   | 位置 $i$ 的位置编码                                                |
 | $\boldsymbol{R}_{i,j}$                                       | $\mathbb{R}^{d}$                   | 位置 $i$ 相对于位置 $j$ 的位置编码                                      |
 | $\boldsymbol{W}_{R}$                                         | $\mathbb{R}^{d\times d}$           | $\boldsymbol{R}$ 的参数矩阵                                      |
-| $\tilde{\mathbb{\Lambda}}(\cdot)$                            | $\mathbb{R}^{n} \mapsto (0,1]^{n}$ | $\mathrm{softmax}$ 函数                                       |
-| $\mathfrak{Re}[\cdot], \mathfrak{Im}[\cdot]$                 | $\mathbb{C} \mapsto \mathbb{R}$    | 取实部/虚部                                                      |
+| $\tilde{\mathbb{\Lambda}}(\cdot)$                            | $\mathbb{R}^{n} \mapsto (0,1)^{n}$ | $\mathrm{softmax}$ 函数                                       |
+| $\mathfrak{Re}[\cdot]$                                       | $\mathbb{C} \mapsto \mathbb{R}$    | 取实部                                                         |
 
 ## 目录
 
