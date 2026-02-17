@@ -1,198 +1,127 @@
 ---
 title: 第 4 节 旋转位置编码-2
 ---
-| [[sec3_rel_pe\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope1\|下一节]] |
-| :-----------: | :----------------------------: | :----------------: |
 
-## 第一性原理推导 RoPE
+| [[sec4_rope1\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope3\|下一节]] |
+| :-----------------: | :----------------------------------: | :----------------------: |
 
-首先明确我们的目标：
-1. 给 $\boldsymbol{q}, \boldsymbol{k}$ 添加上绝对位置编码；
-2. 使 $\boldsymbol{q}\boldsymbol{k}^\top$ 的结果带有相对位置信息。
+在 [[sec4_rope1\|上一节]] 中，我们介绍了标准的 [[sec4_rope1\|RoPE]]，它对所有维度施加旋转。然而，全量旋转是否总是最优？本节我们将探讨 **Partial RoPE（$\partial$-RoPE）**——一种仅在部分维度上应用旋转的编码策略，它不仅在效果上优于全量 RoPE，更是 MLA（Multi-head Latent Attention）等高效架构的关键技术。
 
-对于目标 1，我们假设通过函数 $\boldsymbol{f}: \mathbb{R}^{d} \times [\![1, L]\!] \mapsto \mathbb{R}^{d}$ 编码绝对位置，即：
+## 动机：语义与位置的平衡
 
-$$
-\tilde{\boldsymbol{q}}_{i} = \boldsymbol{f}\!\left( \boldsymbol{q}, i \right), \  \tilde{\boldsymbol{k}}_{j} = \boldsymbol{f}\!\left( \boldsymbol{k}, j \right).
-$$
+### 完全 RoPE 的局限
 
-为了达成目标 2，我们希望 $\langle \tilde{\boldsymbol{q}}_{i}, \tilde{\boldsymbol{k}}_{j} \rangle = g\!\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right)$, 其中 $g$ 是标量函数。
-
-可以假设一些初始条件帮助求解，设 $\boldsymbol{f}\!\left( \boldsymbol{q}, 0 \right) = \boldsymbol{q}, \boldsymbol{f}\!\left( \boldsymbol{k}, 0 \right)=\boldsymbol{k}$.
-
-类似于 [[sec2_abs_pe#Sin.PE 的简化分析|Sin.PE]] 中的操作，先考虑二维情形，我们有：
+标准 [[sec4_rope1\|RoPE]] 的表达式（参见 [[sec4_rope1#RoPE 矩阵形式\|公式 (1)]]）为：
 
 $$
-\mathfrak{Re}\!\left[ \boldsymbol{f}\!\left( \boldsymbol{q}, i \right) \boldsymbol{f}^*\!\left( \boldsymbol{k}, j \right) \right] = g\!\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right).
+\boldsymbol{q}_i = \boldsymbol{x}_i\boldsymbol{W}_q\boldsymbol{\mathcal{R}}_i, \quad \boldsymbol{k}_j = \boldsymbol{x}_j\boldsymbol{W}_k\boldsymbol{\mathcal{R}}_j.
 $$
 
-不妨设存在复数 $\boldsymbol{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right)$ 满足 $\boldsymbol{f}\!\left( \boldsymbol{q}, i \right) \boldsymbol{f}^*\!\left( \boldsymbol{k}, j \right) = \boldsymbol{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right)$, 指数形式表示为：
+这种「全维度参与」的设计虽然保证了位置信息的完整注入，但也可能带来一个问题：**过度强调位置可能干扰语义信息的表达**。
+
+从 [[kexue.fm/10122\|RoPE 底数选择原则]] 的「语义聚合」视角来看，我们希望当 $\boldsymbol{k}$ 与 $\boldsymbol{q}$ 语义相近时，无论距离多远，注意力都应该较大。这要求：
 
 $$
-\begin{aligned}
-\boldsymbol{f}\!\left( \boldsymbol{q}, i \right) &= R_{f}\!\left( \boldsymbol{q}, i \right) \mathrm{e}^{ \mathrm{i} \Theta_{f}\left( \boldsymbol{q}, i \right)  } \\
-\boldsymbol{f}\!\left( \boldsymbol{k}, j \right) &= R_{f}\!\left( \boldsymbol{k}, j \right)\mathrm{e}^{ \mathrm{i} \Theta_{f}\left( \boldsymbol{k}, j \right)  } \\
-\boldsymbol{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right) &= R_{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right)\mathrm{e}^{ \mathrm{i} \Theta_{g}\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right)  }
-\end{aligned}
+\sum_{m=0}^{d/2-1} \cos (i-j)\theta_m \geq 0.
 $$
 
-可得方程组：
+有趣的是，如果我们**让部分维度不旋转**（即 $\theta=0$，$\cos(0)=1$），上述不等式将更容易满足。
 
+## Partial-RoPE 的定义
+
+### 形式化表达
+
+$\partial$-RoPE 将维度分为两部分：
+
+> - **旋转部分**（$d_r$ 维）：应用标准 RoPE；
+> - **固定部分**（$d_c$ 维）：不施加位置编码（NoPE）。
+
+^eq1
 $$
-\begin{cases}
-  R_{f}\!\left( \boldsymbol{q}, i \right) R_{f}\!\left( \boldsymbol{k}, j \right) = R_{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right) \\
-  \Theta_{f}\!\left( \boldsymbol{q}, i \right) - \Theta_{f}\!\left( \boldsymbol{k}, j \right) = \Theta_{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, i-j \right)
-\end{cases}
-$$
-
-* 对于第一个方程，带入 $j=i$ 得到：
-	* $R_{f}\!\left( \boldsymbol{q}, i \right) R_{f}\!\left( \boldsymbol{k}, i \right) = R_{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, 0 \right) = R_{f}\!\left( \boldsymbol{q}, 0 \right) R_{f}\!\left( \boldsymbol{k}, 0 \right) = \lVert \boldsymbol{q} \rVert \lVert \boldsymbol{k} \rVert$
-	* 因此可以设 $\boxed{R_{f}\!\left( \boldsymbol{q}, i \right) = \lVert \boldsymbol{q} \rVert, R_{f}\!\left( \boldsymbol{k}, j \right) = \lVert \boldsymbol{k} \rVert}$, 即模长不依赖于位置；
-* 对于第二个方程，同样带入 $j=i$ 得到：
-	* $\Theta_{f}\!\left( \boldsymbol{q}, i \right) - \Theta_{f}\!\left( \boldsymbol{k}, i \right) = \Theta_{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, 0 \right) = \Theta(\boldsymbol{q}) - \Theta \!\left( \boldsymbol{k} \right)$, 其中 $\Theta \!\left( \boldsymbol{q} \right), \Theta \!\left( \boldsymbol{k} \right)$ 是 $\boldsymbol{q}, \boldsymbol{k}$ 本身的角度；
-	* 整理得 $\Theta_{f}\!\left( \boldsymbol{q}, i \right) - \Theta \!\left( \boldsymbol{q} \right) = \Theta_{f}\!\left( \boldsymbol{k}, i \right) - \Theta \!\left( \boldsymbol{k} \right)$, 所以 $\Theta_{f}\!\left( \boldsymbol{q}, i \right) - \Theta \!\left( \boldsymbol{q} \right)$ 应该是一个和 $i$ 有关，和 $\boldsymbol{q}$ 无关的函数，记为 $\varphi\!\left( i \right)$；
-* 对于第二个方程，再带入 $j=i-1$, 整理得到：
-	* $\varphi \!\left( i \right) - \varphi \!\left( i-1 \right) = \underbrace{ \Theta_{g}\!\left( \boldsymbol{q}, \boldsymbol{k}, 1 \right) + \Theta \!\left( \boldsymbol{q} \right) - \Theta \!\left( \boldsymbol{k} \right) }_{ \theta }$；
-	* 所以 $\left\{ \varphi \!\left( i \right) \right\}$ 是等差数列，通解为 $\varphi \!\left( i \right) = i\theta$；
-	* 因此 $\boxed{\Theta_{f}\!\left( \boldsymbol{q},  i \right) = \Theta \!\left( \boldsymbol{q} \right) + i\theta}$.
-
-综上，我们得到 $\boldsymbol{f}$：
-
-$$
-\begin{aligned}
-  \boldsymbol{f}\!\left( \boldsymbol{q}, i \right) &= \lVert \boldsymbol{q} \rVert \mathrm{e}^{ \mathrm{i} \left( \Theta \left( \boldsymbol{q} \right) + i\theta \right)  }  =\boldsymbol{q}\mathrm{e}^{ \mathrm{i}i\theta } \\
-  &= \begin{pmatrix}
-    \ \cos i\theta & -\sin i\theta \ \\
-    \ \sin i\theta & \cos i\theta
-  \end{pmatrix} \begin{pmatrix}
-    \ q_{1} \ \\
-    \ q_{2} \
-  \end{pmatrix}
-\end{aligned}
-
+\boldsymbol{q}_i = \left[\boldsymbol{x}_i\boldsymbol{W}_{qc},\; \boldsymbol{x}_i\boldsymbol{W}_{qr}\boldsymbol{\mathcal{R}}_i\right], \tag{1}
 $$
 
-由于内积线性可加，因此可以扩展到任意偶数维度：
-
+^eq2
 $$
-\boldsymbol{f}\!\left( \boldsymbol{q}, i \right) = \underbrace{ \begin{pmatrix}
-  \ \cos i\theta_{1} & -\sin i\theta_{1} & 0 & 0 & \cdots  & 0 & 0 \ \\
-  \ \sin i\theta_{1} & \cos i\theta_{1} & 0 & 0 & \cdots  & 0 & 0 \ \\
-  \ 0 & 0 & \cos i\theta_{2} & -\sin i\theta_{2} & \cdots  & 0 & 0 \ \\
-  \ 0 & 0 & \sin i\theta_{2} & \cos i\theta_{2} & \cdots  & 0 & 0 \ \\ 
-  \ \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \ \\
-  \ 0 & 0 & 0 & 0 & \cdots  & \cos i\theta_{\frac{d}{2}} & -\sin i\theta_{\frac{d}{2}} \ \\
-  \ 0 & 0 & 0 & 0 & \cdots  & \cos i\theta_{\frac{d}{2}} & -\sin i\theta_{\frac{d}{2}} \ \\
-\end{pmatrix} }_{ \boldsymbol{\mathcal{R}}_{i} }
-\begin{pmatrix}
-  \ q_{1} \ \\
-  \ q_{2} \ \\
-  \ q_{3} \ \\
-  \ q_{4} \ \\
-  \ \vdots \ \\
-  \ q_{d-1} \ \\
-  \ q_{d} \
-\end{pmatrix}
+\boldsymbol{k}_j = \left[\boldsymbol{x}_j\boldsymbol{W}_{kc},\; \boldsymbol{x}_j\boldsymbol{W}_{kr}\boldsymbol{\mathcal{R}}_j\right]. \tag{2}
 $$
 
-值得指出的是，$\boldsymbol{\mathcal{R}}_{i}$ 是一个正交矩阵，它不会改变向量的模长，因此通常来说它不会改变原模型的稳定性。
-
-一个高效的实现方式是：
+内积分解为：
 
 $$
-
-\begin{pmatrix}
-  \ q_{1} \ \\
-  \ q_{2} \ \\
-  \ q_{3} \ \\
-  \ q_{4} \ \\
-  \ \vdots \ \\
-  \ q_{d-1} \ \\
-  \ q_{d} \
-\end{pmatrix} \otimes
-\begin{pmatrix}
-  \ \cos i\theta_{1} \ \\
-  \ \cos i\theta_{1} \ \\
-  \ \cos i\theta_{2} \ \\
-  \ \cos i\theta_{2} \ \\
-  \ \vdots \ \\
-  \ \cos i\theta_{\frac{d}{2}} \ \\
-  \ \cos i\theta_{\frac{d}{2}} \
-\end{pmatrix} +
-\begin{pmatrix}
-  \ q_{2} \ \\
-  \ -q_{1} \ \\
-  \ q_{4} \ \\
-  \ -q_{3} \ \\
-  \ \vdots \ \\
-  \ q_{d} \ \\
-  \ -q_{d-1} \
-\end{pmatrix} \otimes
-\begin{pmatrix}
-  \ \sin i\theta_{1} \ \\
-  \ \sin i\theta_{1} \ \\
-  \ \sin i\theta_{2} \ \\
-  \ \sin i\theta_{2} \ \\
-  \ \vdots \ \\
-  \ \sin i\theta_{\frac{d}{2}} \ \\
-  \ \sin i\theta_{\frac{d}{2}} \
-\end{pmatrix}
+\boldsymbol{q}_i^\top\boldsymbol{k}_j = \underbrace{\boldsymbol{x}_i\boldsymbol{W}_{qc}\boldsymbol{W}_{kc}^\top\boldsymbol{x}_j^\top}_{\text{语义项}} + \underbrace{(\boldsymbol{x}_i\boldsymbol{W}_{qr})^\top\boldsymbol{\mathcal{R}}_{j-i}(\boldsymbol{x}_j\boldsymbol{W}_{kr})}_{\text{位置项}}.
 $$
 
-```python
-def rope(
-	x: Tensor['seq_len', 'd'],
-	freq: float = 10000.0,
-) -> Tensor['seq_len', 'd']:
-	seq_len, d = x.shape
-	
-	pos = torch.arange(
-		seq_len, dtype=float, device=x.device
-	)[:, None]
-	theta = torch.exp(
-		math.log(freq) * -torch.arange(0, d, 2)/d
-	)[None, :]
-	
-	cos = torch.cos(pos * theta)
-	sin = torch.sin(pos * theta)
-	
-	evens = x[:, 0::2]
-	odds  = x[:, 1::2]
-	
-	pe = evens * cos + odds * cos - evens * sin + odd * cos
-	return pe
-```
+这实现了**显式的语义-位置解耦**。
 
-## RoPE 的远程衰减
+## 与 MLA 的结合
 
-$(\boldsymbol{\mathcal{R}}_{i}\boldsymbol{q}_{i})^\top(\boldsymbol{\mathcal{R}}_{j}\boldsymbol{k}_{j})$ 的结果同样具有远程衰减性。
-
-证明如下：
+$\partial$-RoPE 的价值在 MLA 中得到了充分体现。MLA 通过低秩投影压缩 KV Cache，但标准 RoPE 会阻碍矩阵合并：
 
 $$
-(\boldsymbol{\mathcal{R}}_{i}\boldsymbol{q}_{i})^\top(\boldsymbol{\mathcal{R}}_{j}\boldsymbol{k}_{j}) = \mathfrak{Re}\!\left[ \sum_{k=1}^{d/2} \boldsymbol{q}_{\left[ 2k-1:2k \right] } \boldsymbol{k}^*_{\left[ 2k-1:2k \right] } \mathrm{e}^{ \mathrm{i} \left( i-j \right)\theta_{k}  } \right] 
+\boldsymbol{q}_i^\top\boldsymbol{k}_j = \boldsymbol{x}_i\boldsymbol{W}_q\boldsymbol{\mathcal{R}}_{i-j}\boldsymbol{W}_k^\top\boldsymbol{c}_j^\top,
 $$
 
-记 $h_{k}=\boldsymbol{q}_{\left[ 2k-1:2k \right] } \boldsymbol{k}^*_{\left[ 2k-1:2k \right]}, S_{n}=\sum_{k=1}^{n-1} \mathrm{e}^{ \mathrm{i}\left( i-j \right)\theta_{k} }$, 约定 $h_{d/2+1}=0, S_{0}=0$, 由 Abel 分部求和法：
+其中 $\boldsymbol{\mathcal{R}}_{i-j}$ 与位置相关，无法合并为固定矩阵。
 
-$$
-\sum_{k=1}^{d/2} \boldsymbol{q}_{\left[ 2k-1:2k \right] } \boldsymbol{k}^*_{\left[ 2k-1:2k \right] } \mathrm{e}^{ \mathrm{i} \left( i-j \right)\theta_{k} } = \sum_{k=1}^{d/2} h_{k} \left( S_{k+1} - S_{k} \right) = - \sum_{k=1}^{d/2} S_{k+1} \left( h_{k+1} - h_{k} \right) 
-$$
+采用 $\partial$-RoPE 后，无旋转部分可以吸收到投影矩阵中（对比 [[sec4_rope1#高效实现\|标准 RoPE]] 的形式）：
 
-所以：
-
+^eq3
 $$
-\begin{aligned}
-  \left| \sum_{k=1}^{d/2} \boldsymbol{q}_{\left[ 2k-1:2k \right] } \boldsymbol{k}^*_{\left[ 2k-1:2k \right] } \mathrm{e}^{ \mathrm{i} \left( i-j \right)\theta_{k} } \right| &= \left|  \sum_{k=1}^{d/2} S_{k+1} \left( h_{k+1} - h_{k} \right)  \right| \\
-  &\leq \sum_{k=1}^{d/2} \left| S_{k+1} \right| \left| h_{k+1} - h_{k} \right| \\
-  &\leq \left( {\max_{k} \left| h_{k+1} - h_{k} \right|} \right)  \sum_{k=1}^{d/2} \left| S_{k+1} \right|
-\end{aligned}
+\boldsymbol{q}_i = \left[\boldsymbol{x}_i\boldsymbol{W}_{qc},\; \boldsymbol{x}_i\boldsymbol{W}_{qr}\boldsymbol{\mathcal{R}}_i\right], \quad \boldsymbol{k}_j = \left[\boldsymbol{c}_j\boldsymbol{W}_{kc},\; \boldsymbol{x}_j\boldsymbol{W}_{kr}\boldsymbol{\mathcal{R}}_j\right]. \tag{3}
 $$
 
-因此可以通过考察 $\sum_{k=1}^{d/2} \left| S_{k+1} \right|=\sum_{k=1}^{d/2}\left| \sum_{m=1}^k \mathrm{e}^{ \mathrm{i} \left( i-j \right) \theta_{m} } \right|$ 的随着相对距离的变化情况来作为原式远程衰减性的体现，绘图如下：
+这使得 MLA 在推理时可以保持 KV Cache 的压缩优势。
 
-![[rope_attenuation.png]]
+## 实验验证
 
+在约 1B 参数的模型上对比（KV Cache 固定为 512）：
 
-| [[sec3_rel_pe\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope1\|下一节]] |
-| :-----------: | :----------------------------: | :----------------: |
+| 配置 | Loss | 备注 |
+| :--- | :--: | :--- |
+| GQA2-128 | 2.750 | $d_k=128$，标准 RoPE |
+| GQA1-256 | 2.720 | $d_k=256$，标准 RoPE |
+| **GQA1-256-PR** | **2.711** | **$d_k=256$，$\partial$-RoPE** |
+| MLA | 2.721 | $d_c=128, d_r=64$ |
+
+结果排序：
+
+$$
+\text{GQA2-128} < \text{MLA} \lesssim \text{GQA1-256} < \text{GQA1-256-PR}.
+$$
+
+这表明：**增大 head_dims 收益显著，而 $\partial$-RoPE 能带来额外增益**。
+
+## 理论意义
+
+### 底数约束的放宽
+
+RoPE 底数 $b$ 需满足：
+
+$$
+\sum_{i=0}^{d/2-1} \cos m\theta_i \geq 0, \quad m \in [0, L-1].
+$$
+
+采用 $\partial$-RoPE 后变为：
+
+$$
+d_c + \sum_{i=0}^{d_r/2-1} \cos m\theta_i \geq 0.
+$$
+
+由于 $d_c > 0$，这一不等式**自动满足**，从根本上放宽了底数与训练长度的耦合。
+
+### 维度分配建议
+
+| 方法 | $d_c$（固定） | $d_r$（旋转） | 比例 |
+| :--- | :-----------: | :-----------: | :--: |
+| MLA-V2 | 128 | 64 | 2:1 |
+| MLA-256 | 192 | 64 | 3:1 |
+
+实践上，旋转比例 $1/4 \sim 1/3$ 是较好的选择。
+
+## 小结
+
+$\partial$-RoPE 作为 [[sec4_rope1\|RoPE]] 的改进版本，通过在部分维度上保持固定，实现了语义与位置的显式解耦。它不仅在实验中优于全量 [[sec4_rope1\|RoPE]]，更是 [[kexue.fm/10091\|MLA]] 等高效架构的关键技术。在 [[sec4_rope3\|下一节]] 中，我们将探讨另一种 RoPE 变体——[[sec4_rope3\|VO-RoPE]]，它通过 Value 和 Output 的旋转提供了不同的实现视角。
+
+| [[sec4_rope1\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope3\|下一节]] |
+| :-----------------: | :----------------------------------: | :----------------------: |

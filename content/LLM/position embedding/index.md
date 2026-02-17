@@ -3,13 +3,13 @@ title: 位置编码
 ---
 在位置编码的这系列博客中，我们将简要介绍位置编码的发展历史。
 
-从为什么需要位置编码开始，到中间一系列位置编码的探索，最后到「现代位置编码」 RoPE。
+从为什么需要位置编码开始，到中间一系列位置编码的探索，最后到「现代位置编码」RoPE 及其改进。
 
-之后我们会介绍一些基于 RoPE 的改进：
+之后我们将深入探讨 RoPE 的一些变种：
 
-* 增强长文本扩展性的 YaRN；
-* 在 VO 上也进行位置编码的 VO-RoPE；
-* 只在部分维度上应用 RoPE 的 $\partial$-RoPE.
+* **Partial RoPE**（$\partial$-RoPE）：只在部分维度上应用旋转，实现语义与位置的解耦；
+* **VO-RoPE**：在 Value 和 Output 上施加旋转，提供第二类实现视角；
+* **YaRN**：基于「转圈视角」的长度外推方法，实现高频外推、低频内插。
 
 为了一致性，我们对符号做如下约定：
 
@@ -55,24 +55,7 @@ title: 位置编码
 >   
 > > [!example]-  [[sec4_rope1|第 4 节 旋转位置编码]]  
 > > 
-> >   &emsp;╠ [[sec4_rope1#第一性原理推导 RoPE|第一性原理推导 RoPE]]  
-> >   &emsp;╚ [[sec4_rope1#RoPE 的远程衰减|RoPE 的远程衰减]]  
->   
-> > [!example]-  [[chapter5_kernel_methods|第 5 章 核方法]]  
-> > 
-> >   &emsp;╠ [[chapter5_kernel_methods#5.1 特征映射|5.1 特征映射]]  
-> >   &emsp;╠ [[chapter5_kernel_methods#5.2 特征的最小均方|5.2 特征的最小均方]]  
-> >   &emsp;╠ [[chapter5_kernel_methods#5.3 使用核技巧的最小均方|5.3 使用核技巧的最小均方]]  
-> >   &emsp;╚ [[chapter5_kernel_methods#5.4 核的性质|5.4 核的性质]]  
->   
-> > [!example]-  [[chapter6_support_vector_machines|第 6 章 支持向量机]]  
-> > 
-> >   &emsp;╠ [[chapter6_support_vector_machines#6.1 间隔：直觉|6.1 间隔：直觉]]  
-> >   &emsp;╠ [[chapter6_support_vector_machines#6.2 符号 (选读)|6.2 符号 (选读)]]  
-> >   &emsp;╠ [[chapter6_support_vector_machines#6.3 函数间隔与几何间隔 (选读)|6.3 函数间隔与几何间隔 (选读)]]  
-> >   &emsp;╠ [[chapter6_support_vector_machines#6.4 最优间隔分类器 (选读)|6.4 最优间隔分类器 (选读)]]  
-> >   &emsp;╠ [[chapter6_support_vector_machines#6.5 拉格朗日对偶 (选读)|6.5 拉格朗日对偶 (选读)]]  
-> >   &emsp;╠ [[chapter6_support_vector_machines#6.6 最优间隔分类器：对偶形式 (选读)|6.6 最优间隔分类器：对偶形式 (选读)]]  
-> >   &emsp;╠ [[chapter6_support_vector_machines#6.7 正则化与非线性可分情况 (选读)|6.7 正则化与非线性可分情况 (选读)]]  
-> >   &emsp;╚ [[chapter6_support_vector_machines#6.8 SMO 算法 (选读)|6.8 SMO 算法 (选读)]]  
-
+> >   &emsp;╠ [[sec4_rope1|4.1 RoPE 基础]]  
+> >   &emsp;╠ [[sec4_rope2|4.2 Partial RoPE]]  
+> >   &emsp;╠ [[sec4_rope3|4.3 VO-RoPE]]  
+> >   &emsp;╚ [[sec4_rope4|4.4 YaRN 长度外推]]  
