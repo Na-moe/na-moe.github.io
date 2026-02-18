@@ -11,10 +11,10 @@ title: 第 4 节 旋转位置编码-3
 
 ### 直接加在 V 上的问题
 
-回顾 [[sec3_rel_pe\|Attention]] 的基本形式（参见 [[sec4_rope1\|RoPE 一节]] 的背景）：
+回顾 Attention 的基本形式（参见 [[sec4_rope1\|RoPE 一节]] 的背景）：
 
 $$
-\boldsymbol{o}_{i} = \sum_{j} a_{i,j}\boldsymbol{v}_{j}, \quad a_{i,j} = \text{softmax}(\boldsymbol{q}_{i}^{\top}\boldsymbol{k}_{j}).
+\boldsymbol{o}_{i} = \sum_{j} a_{i,j}\boldsymbol{v}_{j}, \quad a_{i,j} = \tilde{\Lambda}(\boldsymbol{q}_{i}^{\top}\boldsymbol{k}_{j}).
 $$
 
 若直接将 RoPE 加在 $\boldsymbol{v}_{j}$ 上：
@@ -40,7 +40,7 @@ $$
 \boldsymbol{o}_{i} = \sum_{j} a_{i,j} \boldsymbol{\mathcal{R}}_{j-i}\boldsymbol{v}_{j}.
 $$
 
-输出再次变成**相对位置编码**的形式！这种在 Value 和 Output 上施加 RoPE 的方法称为 **VO-RoPE**（或「第二类旋转位置编码」），以区别于 [[sec4_rope1\|第一类的 QK-RoPE]]。
+输出再次变成**相对位置编码**的形式！这种在 Value 和 Output 上施加 RoPE 的方法称为 **VO-RoPE**（或「第二类旋转位置编码」），以区别于第一类的 QK-RoPE。
 
 ## 实验对比
 
@@ -71,13 +71,13 @@ $$
 \boldsymbol{o}_{i} = \sum_{j} a_{i,j}\boldsymbol{c}_{j}, \quad \boldsymbol{c}_{j} = \boldsymbol{x}_j\boldsymbol{W}_c.
 $$
 
-若用 [[sec4_rope1\|QK-RoPE]]：
+若用QK-RoPE：
 - Value 不加 RoPE → K、V 不完全共享，KV Cache 翻倍；
 - Value 加 RoPE → 失去相对位置特性。
 
 ### VO-RoPE 的解决方案
 
-利用 [[sec4_rope3\|VO-RoPE]]（回想 [[sec4_rope1#相对位置的内积\|第一节]] 中旋转矩阵的性质），可以在保持 K、V 共享的同时实现相对位置编码：
+利用VO-RoPE（回想 [[sec4_rope1#相对位置的内积\|第一节]] 中旋转矩阵的性质），可以在保持 K、V 共享的同时实现相对位置编码：
 
 ^eq2
 $$
@@ -105,7 +105,7 @@ VO-RoPE 通过 Value 和 Output 的双重旋转实现了相对位置编码：
 3. **应用独特**：在 MLA 等 K、V 共享场景中具有不可替代的价值；
 4. **理论意义**：连接 Attention 与复线性 RNN。
 
-在 [[sec4_rope4\|下一节]] 中，我们将探讨 [[sec4_rope1\|RoPE]] 在实际应用中的一个重要问题——[[sec4_rope4\|长度外推]]，介绍 YaRN 这一基于「转圈视角」的高效方法。
+在 [[sec4_rope4\|下一节]] 中，我们将探讨 RoPE 在实际应用中的一个重要问题——长度外推，介绍 YaRN 这一基于「转圈视角」的高效方法。
 
 | [[sec4_rope2\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope4\|下一节]] |
 | :-----------------: | :----------------------------------: | :----------------------: |

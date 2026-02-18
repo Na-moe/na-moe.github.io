@@ -5,13 +5,13 @@ title: 第 4 节 旋转位置编码-2
 | [[sec4_rope1\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope3\|下一节]] |
 | :-----------------: | :----------------------------------: | :----------------------: |
 
-在 [[sec4_rope1\|上一节]] 中，我们介绍了标准的 [[sec4_rope1\|RoPE]]，它对所有维度施加旋转。然而，全量旋转是否总是最优？本节我们将探讨 **Partial RoPE（$\partial$-RoPE）**——一种仅在部分维度上应用旋转的编码策略，它不仅在效果上优于全量 RoPE，更是 MLA（Multi-head Latent Attention）等高效架构的关键技术。
+在 [[sec4_rope1\|上一节]] 中，我们介绍了标准的 RoPE，它对所有维度施加旋转。然而，全量旋转是否总是最优？本节我们将探讨 **Partial RoPE（$\partial$-RoPE）**——一种仅在部分维度上应用旋转的编码策略，它不仅在效果上优于全量 RoPE，更是 MLA（Multi-head Latent Attention）等高效架构的关键技术。
 
 ## 动机：语义与位置的平衡
 
 ### 完全 RoPE 的局限
 
-标准 [[sec4_rope1\|RoPE]] 的表达式（参见 [[sec4_rope1#RoPE 矩阵形式\|公式 (1)]]）为：
+标准 RoPE 的表达式（参见 [[sec4_rope1#RoPE 矩阵形式\|公式 (1)]]）为：
 
 $$
 \boldsymbol{q}_i = \boldsymbol{x}_i\boldsymbol{W}_q\boldsymbol{\mathcal{R}}_i, \quad \boldsymbol{k}_j = \boldsymbol{x}_j\boldsymbol{W}_k\boldsymbol{\mathcal{R}}_j.
@@ -19,7 +19,7 @@ $$
 
 这种「全维度参与」的设计虽然保证了位置信息的完整注入，但也可能带来一个问题：**过度强调位置可能干扰语义信息的表达**。
 
-从 [[kexue.fm/10122\|RoPE 底数选择原则]] 的「语义聚合」视角来看，我们希望当 $\boldsymbol{k}$ 与 $\boldsymbol{q}$ 语义相近时，无论距离多远，注意力都应该较大。这要求：
+从「语义聚合」视角来看，我们希望当 $\boldsymbol{k}$ 与 $\boldsymbol{q}$ 语义相近时，无论距离多远，注意力都应该较大。这要求：
 
 $$
 \sum_{m=0}^{d/2-1} \cos (i-j)\theta_m \geq 0.
@@ -121,7 +121,7 @@ $$
 
 ## 小结
 
-$\partial$-RoPE 作为 [[sec4_rope1\|RoPE]] 的改进版本，通过在部分维度上保持固定，实现了语义与位置的显式解耦。它不仅在实验中优于全量 [[sec4_rope1\|RoPE]]，更是 [[kexue.fm/10091\|MLA]] 等高效架构的关键技术。在 [[sec4_rope3\|下一节]] 中，我们将探讨另一种 RoPE 变体——[[sec4_rope3\|VO-RoPE]]，它通过 Value 和 Output 的旋转提供了不同的实现视角。
+$\partial$-RoPE 作为 RoPE 的改进版本，通过在部分维度上保持固定，实现了语义与位置的显式解耦。它不仅在实验中优于全量 RoPE，更是 MLA 等高效架构的关键技术。在 [[sec4_rope3\|下一节]] 中，我们将探讨另一种 RoPE 变体——VO-RoPE，它通过 Value 和 Output 的旋转提供了不同的实现视角。
 
 | [[sec4_rope1\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope3\|下一节]] |
 | :-----------------: | :----------------------------------: | :----------------------: |
