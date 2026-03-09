@@ -50,7 +50,7 @@ Some studies (e.g., \[[[ACBatch/index#^nvidia2018ai|9]]]) focus on static batchi
 
 ### B. Dynamic Batching
 
-Some studies \[[[ACBatch/index#^zhang2022batch|14]], [[ACBatch/index#^ali2020batch|15]], [[ACBatch/index#^lu2018crowdvision|16]]] investigate dynamically adjusting batch size under dynamic workloads based on different levels of task arrival information. In the absence of any prior information about task arrivals, Zhang et al. in \[[[ACBatch/index#^zhang2022batch|14]]] utilize a reinforcement learning approach to predict future task arrival patterns and adjust batch sizes accordingly. When task arrival patterns can be determined, such as Poisson processes and Markov processes, Ali et al. in \[[[ACBatch/index#^ali2020batch|15]]] model the probability distribution of latency concerning batch size and search for optimal batch sizes to minimize latency or cost. When accurate arrival times are known, Lu et al. in \[[[ACBatch/index#^lu2018crowdvision|16]]] develop a SplitShift method for batch allocation. However, they greedily split batches to minimize waiting time, which achieves a sub-optimal trade-off between computational efficiency and waiting time and damages the overall performance.
+Some studies \[[[ACBatch/index#^zhang2022batch|14]], [[ACBatch/index#^ali2020batch|15]], [[ACBatch/index#^lu2018crowdvision|16]]] investigate dynamically adjusting batch size under dynamic workloads based on different levels of task arrival information. In the absence of any prior information about task arrivals, Zhang et al. in \[[[ACBatch/index#^zhang2022batch|14]]] utilize a reinforcement learning approach to predict future task arrival patterns and adjust batch sizes accordingly. When task arrival patterns can be determined, such as Poisson processes and Markov processes, Ali et al. in \[[[ACBatch/index#^ali2020batch|15]]\] model the probability distribution of latency concerning batch size and search for optimal batch sizes to minimize latency or cost. When accurate arrival times are known, Lu et al. in \[[[ACBatch/index#^lu2018crowdvision|16]]\] develop a SplitShift method for batch allocation. However, they greedily split batches to minimize waiting time, which achieves a sub-optimal trade-off between computational efficiency and waiting time and damages the overall performance.
 
 ### C. Batching with Task Steering
 
@@ -157,9 +157,9 @@ The previous batch $k'$ corresponds to the batch with the largest ready time tha
 $$
 \text{clip}(k_1, k) =
   \begin{cases}
-    J_{k_1,m_k} r_{k_1}, & \text{if } J_{k_1,m_k} r_{k_1} < r_k \\
+    J_{k_1,m_k} r_{k_1}, & \text{if } J_{k_1,m_k} r_{k_1} < r_k, \\
     0, & \text{otherwise.}
-  \end{cases}. \tag{6}
+  \end{cases} \tag{6}
 $$
 
 For batch $k_1$, if it is processed on server $m_k$ and its ready time is less than $r_k$, there is $\text{clip}(k_1, k) > 0$. Therefore, $k'$ is the batch with the largest $\text{clip}(k_1, k)$, given by:
@@ -307,8 +307,8 @@ The proposed algorithm is summarized in [[ACBatch/index#^algo2|Algorithm 2]], an
 13: $\quad\quad$ Accept the opinion with minimal cost  
 14: $\quad\quad$ Update $Bs, As$  
 15: $\quad$ Conduct $\texttt{DPAB}$ on each server  
-16: $\quad$ **if** no gains from $\texttt{DPAB}$ **then**
-17: $\quad\quad$ $batch\_flag \leftarrow \textbf{false}$
+16: $\quad$ **if** no gains from $\texttt{DPAB}$ **then**  
+17: $\quad\quad$ $batch\_flag \leftarrow \textbf{false}$  
 18: **return** $Bs, As$
 
 <hr style="
@@ -350,6 +350,7 @@ In this section, we conduct a thorough performance evaluation of ACBatch. First,
 |     2      | Jetson AGX Xavier |                       \[10, 0, 10, 15\] |
 |     3      | Jetson AGX Xavier |                       \[10, 10, 0, 15\] |
 |     4      | Jetson AGX Xavier |                       \[15, 15, 15, 0\] |
+
 ^tab3
 
 ### A. Experiments Setup
@@ -367,7 +368,7 @@ The following baselines are selected from recent literature because they take bo
 
 ### B. Real-trace Performance Comparison
 
-![[real_trace.png]]^fig5
+![[real_trace.png|500]]^fig5
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 5: Real-trace task arrivals of each time slot.</p>
 
 We evaluate the real-trace performance of ACBatch using a task arrival dataset obtained from real-world traces \[[[ACBatch/index#^weng2022mlaas|29]]], as depicted in [[ACBatch/index#^fig5|Fig. 5]]. In this evaluation, each time slot is set to 4000 milliseconds, and the task arrivals within each time slot are treated as a separate input task sequence for one experiment.
@@ -378,12 +379,12 @@ In Fig. \ref{fig:rtexps}\subref{fig:rt_completion}, ACBatch demonstrates the sho
 
 We explore the effects of different task arrival patterns via a series of experiments. In these experiments, tasks follow Poisson arrival patterns. Unless specified otherwise, a number of 800 tasks are uniformly distributed across the four servers with an arrival rate ($\lambda$) of 100 tasks per second. We conduct the experiments 40 times and gather the results.
 
-![[arrival_rate.png]]^fig8
+![[arrival_rate.png|500]]^fig8
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 8: Completion time versus arrival rates.</p>
 
 [[ACBatch/index#^fig8|Fig. 8]] depicts the impact of arrival rates, which vary from 25 to 200 tasks per second. ACBatch achieves the lowest completion time at all arrival rates. At arrival rates under 100 tasks per second, ACBatch maintains a stable performance of approximately 30ms, demonstrating that ACBatch effectively utilizes batching to enhance efficiency. At arrival rates exceeding 100 tasks per second, the completion time for ACBatch increases slowly with the arrival rates.
 
-![[burstiness.png]]^fig9
+![[burstiness.png|500]]^fig9
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 9: Completion time versus burstiness.</p>
 
 [[ACBatch/index#^fig9|Fig. 9]] illustrates the impact of burstiness, which ranges from 20\% to 90\%. Burstiness is quantified as the ratio of tasks arriving in the final 20\% of the time period. The desired burstiness levels are achieved by varying the arrival rates during the initial 80\% of the time period and the last 20\%. ACBatch consistently delivers the best performance across all burstiness levels, though completion time rises as burstiness increases. Notably, ACBatch produces comparable results under conditions of 200 tasks per second (240.92ms) and 50\% burstiness (302.80ms), despite the latter scenario averaging 100 tasks per second. This indicates that burstiness has a more significant impact on ACBatch’s performance.
@@ -399,12 +400,12 @@ In conclusion, ACBatch excels under diverse arrival patterns, notably outperform
 
 Following the experimental settings outlined in Section [[ACBatch/index#C. Impact of Task Arrival Patterns|6.3]], we investigate the impact of steering on server workloads and evaluate its effectiveness in balancing waiting time with computational efficiency.
 
-![[workload.png]]^fig11
+![[workload.png|500]]^fig11
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 11: Server workloads before and after steering.</p>
 
 [[ACBatch/index#^fig11|Fig. 11]] contrasts the workloads of edge servers before and after steering. We split the task arrival period into 10 equal time slots and normalize the workload values by dividing the number of tasks by computational efficiency. The results visually confirm that our steering method effectively matches appropriate workloads with edge servers.
 
-![[tradeoff.png]]^fig12
+![[tradeoff.png|500]]^fig12
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 12: Trade-off between waiting time and computational efficiency across different arrival rates (smaller markers indicate lower arrival rates).</p>
 
 [[ACBatch/index#^fig12|Fig. 12]] compares ACBatch, ACBatch without steering, and the baseline EdgeBatch across varying arrival rates from 50 to 150 tasks per second. At higher arrival rates, ACBatch enhances computational efficiency to 1.24 times with an increase in waiting time by only 0.11 times, compared to the variation without steering. Notably, at lower arrival rates, ACBatch employs a significantly different strategy compared to the baseline EdgeBatch. ACBatch generally maintains lower waiting times, albeit at the cost of some efficiency. In contrast, EdgeBatch focuses on enhancing efficiency, which results in considerably longer waiting times. This disparity in strategy and the performance comparison highlights that ACBatch effectively balances waiting time with computational efficiency.
