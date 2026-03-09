@@ -10,7 +10,8 @@ $^2$ Zhongguancun Laboratory, Beijing, China
 
 $^*$ Corresponding author
 
-*Abstract: Batching is a key technique in deep learning inference that enhances computational efficiency. Although widely applied in the cloud, batching may suffer from longer batch latency at edge servers due to highly dynamic task arrivals. In this paper, we propose an Adaptive and Cooperative Batching (ACBatch) framework for edge inference, wherein temporal adaptive batching and spatial task steering are jointly devised to balance the trade-off between batch latency and computational efficiency. To this end, a batch efficiency model is built to quantify the relationship between computational efficiency and batch size based on empirical measurements across diverse computing platforms and mainstream neural networks. Then, an optimization problem is formulated to minimize the completion time of a task sequence under ACBatch. For the simplified single-server case, the problem exhibits an optimal substructure and is solved by our proposed Dynamic Programming-based Adaptive Batching algorithm. For the general multi-server case, the optimization of ACBatch is proved NP-hard, and we propose the Multi-Server Cooperative Batching algorithm by iteratively optimizing batching and steering. Real-trace experiments show that ACBatch achieves an average improvement of 89.17\% in completion time and 76.52\% in latency compared to state-of-the-art methods.*
+> [!abstract] 
+> *Batching is a key technique in deep learning inference that enhances computational efficiency. Although widely applied in the cloud, batching may suffer from longer batch latency at edge servers due to highly dynamic task arrivals. In this paper, we propose an Adaptive and Cooperative Batching (ACBatch) framework for edge inference, wherein temporal adaptive batching and spatial task steering are jointly devised to balance the trade-off between batch latency and computational efficiency. To this end, a batch efficiency model is built to quantify the relationship between computational efficiency and batch size based on empirical measurements across diverse computing platforms and mainstream neural networks. Then, an optimization problem is formulated to minimize the completion time of a task sequence under ACBatch. For the simplified single-server case, the problem exhibits an optimal substructure and is solved by our proposed Dynamic Programming-based Adaptive Batching algorithm. For the general multi-server case, the optimization of ACBatch is proved NP-hard, and we propose the Multi-Server Cooperative Batching algorithm by iteratively optimizing batching and steering. Real-trace experiments show that ACBatch achieves an average improvement of 89.17\% in completion time and 76.52\% in latency compared to state-of-the-art methods.*
 
 *Index Terms*—cooperative edge computing, edge inference, batching, traffic steering
 
@@ -22,18 +23,16 @@ Batching is a key technological approach to enhance inference computation effici
 
 As edge servers are rather resource-constrained, computation-efficient batching becomes even more critical when implementing inference applications. However, existing studies on cloud batching often fall short when applied to edge computing, primarily due to the *dynamics* of task arrivals at edge nodes \[[[ACBatch/index#^abbas2017mobile|13]]]. Unlike cloud servers, which experience relatively stable and high-density task arrivals, edge nodes face significantly lower and more sporadic task arrivals due to the spatially constrained coverage. Accordingly, edge servers usually wait for a longer time to form computation-efficient batches, compromising the timeliness of edge computing.
 
-![[scenario.svg]] ^fig1
+![[scenario.svg|500]] ^fig1
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 1: Illustration of an intelligent surveillance system with ACBatch in a smart city.</p>
 
 In this paper, we present an Adaptive and Cooperative Batching (ACBatch) framework to achieve low-latency edge inference. Specifically, we answer the two following key questions:
 
-**Question 1.** *How to balance computational efficiency and batch waiting time over dynamic task arrivals?*
+> [!question]- **Question 1.** *How to balance computational efficiency and batch waiting time over dynamic task arrivals?*
+> An effective strategy involves optimizing the completion time of dynamic task arrival sequences through the adaptive adjustment of batch sizes. Therefore, it is essential to quantify the relationship among batch size, computational efficiency, and batch waiting time. To this end, we measure batch efficiency across diverse computing platforms and popular edge inference neural networks. The results show that batch efficiency increases sub-linearly with batch size. We introduce a general model to describe this relationship quantitatively. Furthermore, we observe a sequential correlation between tasks and batches on batch size optimization and thus propose the Dynamic Programming-based Adaptive Batching (DPAB) algorithm to minimize the completion time of a task sequence with low complexity. DPAB mainly provides a solution to fit the traffic dynamics in the temporal domain. Additionally, the multi-access of edge servers motivates us to rethink the problem in the spatial domain, which leads to the second question.
 
-An effective strategy involves optimizing the completion time of dynamic task arrival sequences through the adaptive adjustment of batch sizes. Therefore, it is essential to quantify the relationship among batch size, computational efficiency, and batch waiting time. To this end, we measure batch efficiency across diverse computing platforms and popular edge inference neural networks. The results show that batch efficiency increases sub-linearly with batch size. We introduce a general model to describe this relationship quantitatively. Furthermore, we observe a sequential correlation between tasks and batches on batch size optimization and thus propose the Dynamic Programming-based Adaptive Batching (DPAB) algorithm to minimize the completion time of a task sequence with low complexity. DPAB mainly provides a solution to fit the traffic dynamics in the temporal domain. Additionally, the multi-access of edge servers motivates us to rethink the problem in the spatial domain, which leads to the second question.
-
-**Question 2.** *How to mitigate the influence of traffic dynamics and enhance the overall performance from the network aspect?*
-
-By leveraging the multi-access technologies, a mobile user can be flexibly steered to other surrounding access points and edge servers for service. Thus, we can steer and concentrate the closely arrived tasks at specific edge servers, whereby the waiting time for batching at each edge server can be reduced without compromising computation efficiency. Following this idea, we jointly optimize adaptive batching and cooperative traffic steering to enhance the performance of ACBatch. The formulated problem is proved to be NP-hard, and we propose a heuristic algorithm named Multi-Server Cooperative Batching (MSCB) to solve the problem.
+> [!question]- **Question 2.** *How to mitigate the influence of traffic dynamics and enhance the overall performance from the network aspect?*
+> By leveraging the multi-access technologies, a mobile user can be flexibly steered to other surrounding access points and edge servers for service. Thus, we can steer and concentrate the closely arrived tasks at specific edge servers, whereby the waiting time for batching at each edge server can be reduced without compromising computation efficiency. Following this idea, we jointly optimize adaptive batching and cooperative traffic steering to enhance the performance of ACBatch. The formulated problem is proved to be NP-hard, and we propose a heuristic algorithm named Multi-Server Cooperative Batching (MSCB) to solve the problem.
 
 Our main results and key contributions are summarized as follows:
 
@@ -51,7 +50,7 @@ Some studies (e.g., \[[[ACBatch/index#^nvidia2018ai|9]]]) focus on static batchi
 
 ### B. Dynamic Batching
 
-Some studies \[[[ACBatch/index#^zhang2022batch|14]], [[ACBatch/index#^ali2020batch|15]], [[ACBatch/index#^lu2018crowdvision|16]]] investigate dynamically adjusting batch size under dynamic workloads based on different levels of task arrival information. In the absence of any prior information about task arrivals, Zhang et al. in \[[[ACBatch/index#^zhang2022batch|14]]] utilize a reinforcement learning approach to predict future task arrival patterns and adjust batch sizes accordingly. When task arrival patterns can be determined, such as Poisson processes and Markov processes, Ali et al. in \[[[ACBatch/index#^ali2020batch|15]]] model the probability distribution of latency concerning batch size and search for optimal batch sizes to minimize latency or cost. When accurate arrival times are known, Lu et al. in \[[[ACBatch/index#^lu2018crowdvision|16]]] develop a Split-Shift method for batch allocation. However, they greedily split batches to minimize waiting time, which achieves a sub-optimal trade-off between computational efficiency and waiting time and damages the overall performance.
+Some studies \[[[ACBatch/index#^zhang2022batch|14]], [[ACBatch/index#^ali2020batch|15]], [[ACBatch/index#^lu2018crowdvision|16]]] investigate dynamically adjusting batch size under dynamic workloads based on different levels of task arrival information. In the absence of any prior information about task arrivals, Zhang et al. in \[[[ACBatch/index#^zhang2022batch|14]]] utilize a reinforcement learning approach to predict future task arrival patterns and adjust batch sizes accordingly. When task arrival patterns can be determined, such as Poisson processes and Markov processes, Ali et al. in \[[[ACBatch/index#^ali2020batch|15]]] model the probability distribution of latency concerning batch size and search for optimal batch sizes to minimize latency or cost. When accurate arrival times are known, Lu et al. in \[[[ACBatch/index#^lu2018crowdvision|16]]] develop a SplitShift method for batch allocation. However, they greedily split batches to minimize waiting time, which achieves a sub-optimal trade-off between computational efficiency and waiting time and damages the overall performance.
 
 ### C. Batching with Task Steering
 
@@ -221,17 +220,22 @@ This problem still presents an exponential solution space of $\sum_{1\le K\le N}
 
 **Proposition 1.** *For problem [[ACBatch/index#^p2|(P2)]], there exists an optimal scheme $(\mathcal{K}^*, \mathcal{I}^*)$ which satisfies that $\{ (n_1, k_1, n_2, k_2) \in \mathcal{N} \times \mathcal{K}^* \times \mathcal{N} \times \mathcal{K}^* : I^*_{n_1,k_1} = I^*_{n_2,k_2} = 1, n_1 < n_2, k_1 > k_2 \} = \emptyset$.* ^prop1
 
-*Proof.* There is a sufficient condition to establish the proposition: if there exists an optimal scheme $(\mathcal{K}, \mathcal{I})$ which does not satisfy the condition in [[ACBatch/index#^prop1|Proposition 1]], then there also exists an optimal scheme $(\mathcal{K}^*, \mathcal{I}^*)$ satisfying the condition. To construct such an optimal scheme $(\mathcal{K}^*, \mathcal{I}^*)$, we propose to exchange the allocations of $n_1$ and $n_2$ in $(\mathcal{K}, \mathcal{I})$: assign task $n_1$ to batch $k_2$ and task $n_2$ to batch $k_1$, denoted by the superscript $*$ for the related variables post-exchanging. This exchange does not alter the sizes of batches $k_1$ and $k_2$, hence $p_{k_1}^* = p_{k_1}$ and $p_{k_2}^* = p_{k_2}$.
-
-For batch $k_1$, if task $n_1$ is not the last in the batch, the ready time $r_{k_1}$ remains unchanged, and hence $e_{k_1}^* \le e_{k_1}$. If task $n_1$ is the last, then after the swap, task $n_2$ dictates the batch’s end time, which cannot exceed its previous end time because $e_{k_2} \ge t_{n_2}$, hence $e_{k_1}^* \le e_{k_1}$. And for batch $k_2$, because $t_{n_1} < t_{n_2}$, the earliest start time $r_{k_2}^*$ remains unchanged or is earlier, thus $q_{k_2}^* \le q_{k_2}$ and $e_{k_2}^* \le e_{k_2}$.
-
-In both scenarios, the adjusted scheme $(\mathcal{K}^*, \mathcal{I}^*)$ does not increase the processing time of any batch, thereby proving the proposition. $\boxed{}$
+> [!Proof]- 
+> There is a sufficient condition to establish the proposition: if there exists an optimal scheme $(\mathcal{K}, \mathcal{I})$ which does not satisfy the condition in [[ACBatch/index#^prop1|Proposition 1]], then there also exists an optimal scheme $(\mathcal{K}^*, \mathcal{I}^*)$ satisfying the condition. To construct such an optimal scheme $(\mathcal{K}^*, \mathcal{I}^*)$, we propose to exchange the allocations of $n_1$ and $n_2$ in $(\mathcal{K}, \mathcal{I})$: assign task $n_1$ to batch $k_2$ and task $n_2$ to batch $k_1$, denoted by the superscript $*$ for the related variables post-exchanging. This exchange does not alter the sizes of batches $k_1$ and $k_2$, hence $p_{k_1}^* = p_{k_1}$ and $p_{k_2}^* = p_{k_2}$.
+> 
+> For batch $k_1$, if task $n_1$ is not the last in the batch, the ready time $r_{k_1}$ remains unchanged, and hence $e_{k_1}^* \le e_{k_1}$. If task $n_1$ is the last, then after the swap, task $n_2$ dictates the batch’s end time, which cannot exceed its previous end time because $e_{k_2} \ge t_{n_2}$, hence $e_{k_1}^* \le e_{k_1}$. And for batch $k_2$, because $t_{n_1} < t_{n_2}$, the earliest start time $r_{k_2}^*$ remains unchanged or is earlier, thus $q_{k_2}^* \le q_{k_2}$ and $e_{k_2}^* \le e_{k_2}$. 
+> 
+> In both scenarios, the adjusted scheme $(\mathcal{K}^*, \mathcal{I}^*)$ does not increase the processing time of any batch, thereby proving the proposition. <span style="float: right;">▯</span>
 
 [[ACBatch/index#^prop1|Proposition 1]] indicates the existence of an optimal solution, where each batch consists of adjacent tasks. Accordingly, the solution space can be reduced from exponential ($\sum_{1\le K\le N}{2^{KN}}$) to combinatorial ($\sum_{1\le K\le N}{\binom{N-1}{K-1}}$) level.
 
 Furthermore, the sequential order provides a crucial insight: the optimal solution to the original problem can be derived from the optimal solutions of its sub-problems, demonstrating the optimal sub-structure of the problem. Define $C_{min}[n]$ as the minimum cost for the subset of tasks $\mathcal{N}_n = \{1, ..., n\}$. Denote by $C[n, b]$ the minimum cost solution when the last batch of the subset of tasks $\mathcal{N}_n$ consists of $b$ tasks. Consequently, $C_{min}[n] = \min_b C[n, b]$, where $C[n, b]$ can be derived from $C_{min}[n-b]$.
 
-This relationship indicates that the optimal solution for $\mathcal{N}$ can be deduced from the optimal solutions of its sub-problems for $\mathcal{N}_n, n\in \{1, ..., N-1\}$. This ensures the feasibility of using dynamic programming to determine the minimum cost for the entire task set. Thus, we propose the Dynamic Programming-based Adaptive Batching (DPAB) algorithm to address [[ACBatch/index#^p2|(P2)]], detailed in [[ACBatch/index#^algo1|Algorithm 1]] and visually depicted in Fig. \ref{fig:algo1}. The time complexity of [[ACBatch/index#^algo1|Algorithm 1]] is $O(N^2)$, consisting of $O(N)$ for initialization, $O(N^2)$ for dynamic programming, and $O(N)$ for tracing back, where $N$ represents the number of tasks.
+![[algo1.svg|500]]
+ ^fig4
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 4: Example of the DPAB algorithm when N=3. To get the minimal cost of the whole task set Cₘᵢₙ[3], we can compare all C[3,b] for b ranging from 1 to 3. Meanwhile, C[3,b] can be deduced from Cₘᵢₙ[3-b], and the corresponding optimal solution is red-boxed in the figure.</p>
+
+This relationship indicates that the optimal solution for $\mathcal{N}$ can be deduced from the optimal solutions of its sub-problems for $\mathcal{N}_n, n\in \{1, ..., N-1\}$. This ensures the feasibility of using dynamic programming to determine the minimum cost for the entire task set. Thus, we propose the Dynamic Programming-based Adaptive Batching (DPAB) algorithm to address [[ACBatch/index#^p2|(P2)]], detailed in [[ACBatch/index#^algo1|Algorithm 1]] and visually depicted in [[ACBatch/index#^fig4|Fig. 4]]. The time complexity of [[ACBatch/index#^algo1|Algorithm 1]] is $O(N^2)$, consisting of $O(N)$ for initialization, $O(N^2)$ for dynamic programming, and $O(N)$ for tracing back, where $N$ represents the number of tasks.
 
 ^algo1
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>Algorithm 1</b> Dynamic Programming-based Adaptive Batching</div>
@@ -274,12 +278,43 @@ $$
 
 where $\mathcal{N}^{(k)}$ is the set of all tasks $n$ satisfying $I_{n,k}=1$ and $n^\text{k\_last} = \arg\max_{n\in\mathcal{N}^{(k)}} (t_n+\tau_{s_n,m^\text{src}})$ denotes the last task of $\mathcal{N}^{(k)}$. Denote by $C^\text{src}_n$ the completion time of the source server after steering task $n$ to the destination.
 
-*Proof.* For a batch $k$ including tasks $\{i-b+1,...,i\}$ with batch size of $b$, we denote steering $i$ and $j$ ($i-b<j<i$) with superscripts $^{(i)}$ and $^{(j)}$. We observe that $r_k^{(i)}=t_{i-1}<r_k^{(j)}=t_{i}$ and $p_k^{(i)}=\eta_{b-1}(b-1)c=p_k^{(j)}$. Therefore, $q_k^{(i)}\le q_k^{(j)}$ and consequently, $e_k^{(i)}\le e_k^{(j)}$. Since subsequent batches remain unchanged, the completion time after steering task $i$ is not longer than for $j$, i.e., $C^\text{src}_{i} \le C^\text{src}_j$, thereby proving the proposition. $\boxed{}$
+> [!Proof]-
+> 
+> For a batch $k$ including tasks $\{i-b+1,...,i\}$ with batch size of $b$, we denote steering $i$ and $j$ ($i-b<j<i$) with superscripts $^{(i)}$ and $^{(j)}$. We observe that $r_k^{(i)}=t_{i-1}<r_k^{(j)}=t_{i}$ and $p_k^{(i)}=\eta_{b-1}(b-1)c=p_k^{(j)}$. Therefore, $q_k^{(i)}\le q_k^{(j)}$ and consequently, $e_k^{(i)}\le e_k^{(j)}$. Since subsequent batches remain unchanged, the completion time after steering task $i$ is not longer than for $j$, i.e., $C^\text{src}_{i} \le C^\text{src}_j$, thereby proving the proposition. <span style="float: right;">▯</span>
 
 This approach ensures that a maximum of $K$ tasks are considered for steering, where $K$ represents the total number of batches.
 
-The proposed algorithm is summarized in Algorithm \ref{algo2:mscb}, and its time complexity is $O(TN^2)$ across $T$ iterations, composed of the following parts. Evaluating the steering candidates is $O(3KN)$, considering $3$ potential options---(1) creating a new batch; (2) joining the previous batch; (3) joining subsequent---for up to $K$ tasks, each requiring $O(N)$ time. Both the initial batching and subsequent re-batching processes involve a complexity of $O(N^2)$, with $N$ representing the total number of tasks.
+The proposed algorithm is summarized in [[ACBatch/index#^algo2|Algorithm 2]], and its time complexity is $O(TN^2)$ across $T$ iterations, composed of the following parts. Evaluating the steering candidates is $O(3KN)$, considering $3$ potential options---(1) creating a new batch; (2) joining the previous batch; (3) joining subsequent---for up to $K$ tasks, each requiring $O(N)$ time. Both the initial batching and subsequent re-batching processes involve a complexity of $O(N^2)$, with $N$ representing the total number of tasks.
 
+^algo2
+<div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>Algorithm 2</b> Multi-Server Cooperative Batching</div>
+
+**Input:** Arrival times $t[1...N]$ and arrived edge server $s[1...N]$ of the tasks, edge servers $E[1...M]$, transmission cost matrix $\tau[1...M][1...M]$;
+**Output:** Batch size lists $Bs$ of each server, Server number which each task is assigned $As$;
+
+1: $\space$ **Initialize** $Costs$ as the cost list of each server  
+2: $\space$ $batch\_flag \leftarrow \textbf{true}$   
+3:   **while** $batch\_flag$ **do**  
+4: $\space\quad$ $min\_cost \leftarrow \min(Costs)$  
+5: $\space\quad$ $src \leftarrow \arg\min(Costs)$  
+6: $\space\quad$ Let $Cand$ contain the last task of each batch on $src$  
+7: $\space\quad$ Iterate from $Cand$, try steering to other servers  
+8: $\space\quad$ Compare the cost of $3$ opinions:  
+9: $\space\quad\quad$ 1. creating a new batch  
+10: $\quad\!\quad$ 2. joining the previous one  
+11: $\quad\!\quad$ 3. joining the next one  
+12: $\quad$ **if** minimal cost of these opinions $< min\_cost$ **then**  
+13: $\quad\quad$ Accept the opinion with minimal cost  
+14: $\quad\quad$ Update $Bs, As$  
+15: $\quad$ Conduct $\texttt{DPAB}$ on each server  
+16: $\quad$ **if** no gains from $\texttt{DPAB}$ **then**
+17: $\quad\quad$ $batch\_flag \leftarrow \textbf{false}$
+18: **return** $Bs, As$
+
+<hr style="
+    border: 0;
+    border-top: 1px solid;
+">
 
 
 We analyze the performance guarantee of MSCB in [[ACBatch/index#^prop3|Proposition 3]].
@@ -292,19 +327,87 @@ $$
 
 where $\max_k\hat{e}_k$ represents the results by MSCB, and $\max_ke_k^*$ the optimal. Denote by $\epsilon$ the length of the continuous batch including the last batch, and $B$ the maximum batch size.
 
-*Proof.* Consider the last steering step, with a potential re-batching after, thus setting the performance lower bound for MSCB. The completion time is the maximum of either the source or destination server’s completion time.
-
-Let the identical servers share the same computing time $c$. The continuous $\epsilon$ batches create a period of at most $\epsilon\eta_{B}Bc$ before steering. Steering a task from the source leads to an upper limit of  $\hat{e}_\text{src}$, reducing size by one for a batch among $\epsilon$: $\hat{e}_\text{src}\le t_{n}+(\epsilon-1)\eta_{B}Bc+\eta_{B-1}(B-1)c$. While receiving a task at the destination leads to an upper limit of $\hat{e}_\text{dst}$, adding a new batch: $\hat{e}_\text{dst}\le t_n+\epsilon\eta_{B}Bc+c$.
-
-Furthermore, the steering is accepted when the performance improves. Then we have, $\max_k\hat{e}_k\le\min(t_n+\epsilon\eta_{B}Bc, \max(\hat{e}_\text{src}, \hat{e}_\text{dst}))=t_n+\epsilon\eta_{B}Bc$.
-
-For the optimal scenario, the earliest start for the last batch is at $t_n$, with a minimum processing time $c$ (size $1$ for the last batch), i.e., $\max_ke_k^*\ge t_n+c$.
-
-Hence, the proposition is proved. $\boxed{}$
+> [!Proof.]-
+> Consider the last steering step, with a potential re-batching after, thus setting the performance lower bound for MSCB. The completion time is the maximum of either the source or destination server’s completion time.
+> 
+> Let the identical servers share the same computing time $c$. The continuous $\epsilon$ batches create a period of at most $\epsilon\eta_{B}Bc$ before steering. Steering a task from the source leads to an upper limit of  $\hat{e}_\text{src}$, reducing size by one for a batch among $\epsilon$: $\hat{e}_\text{src}\le t_{n}+(\epsilon-1)\eta_{B}Bc+\eta_{B-1}(B-1)c$. While receiving a task at the destination leads to an upper limit of $\hat{e}_\text{dst}$, adding a new batch: $\hat{e}_\text{dst}\le t_n+\epsilon\eta_{B}Bc+c$.
+> 
+> Furthermore, the steering is accepted when the performance improves. Then we have, $\max_k\hat{e}_k\le\min(t_n+\epsilon\eta_{B}Bc, \max(\hat{e}_\text{src}, \hat{e}_\text{dst}))=t_n+\epsilon\eta_{B}Bc$.
+> 
+> For the optimal scenario, the earliest start for the last batch is at $t_n$, with a minimum processing time $c$ (size $1$ for the last batch), i.e., $\max_ke_k^*\ge t_n+c$.
+> 
+> Hence, the proposition is proved. <span style="float: right;">▯</span>
 
 ## VI. Performance Evaluations
 
 In this section, we conduct a thorough performance evaluation of ACBatch. First, we compare its real-trace performance against state-of-the-art baselines. Next, ACBatch is assessed under varying arrival rates, burstiness, and spatial aggregation degrees. Furthermore, we investigate our steering method through ablation studies.
+
+<p style="text-align: center; margin-bottom: .35em; font-size: 0.9em; opacity: 0.8;">TABLE III: Specifications of edge servers.</p>
+
+| Server No. |       Type        | Transmission Latency<br>to Servers (ms) |
+| :--------: | :---------------: | --------------------------------------: |
+|     1      |    Tesla V100     |                       \[0, 10, 10, 15\] |
+|     2      | Jetson AGX Xavier |                       \[10, 0, 10, 15\] |
+|     3      | Jetson AGX Xavier |                       \[10, 10, 0, 15\] |
+|     4      | Jetson AGX Xavier |                       \[15, 15, 15, 0\] |
+^tab3
+
+### A. Experiments Setup
+
+Our evaluation focuses on a prevalent edge inference application: image classification. For this purpose, we employ ResNet50 \[[[ACBatch/index#^he2016deep|20]]], a widely recognized image classification model. The task requests are sourced from the ImageNet-22K dataset \[[[ACBatch/index#^deng2009imagenet|27]]] with an image resolution of 224×224×3, simulating real-world images captured by cameras.
+
+The evaluation is set in a cooperative edge computing environment comprising four edge servers, tabulated in [[ACBatch/index#^tab3|Table 3]]. These servers are outfitted with popular edge processors, namely the NVIDIA Jetson AGX Xavier and the NVIDIA Tesla V100. We set a series of typical values reported in \[[[ACBatch/index#^cai2021latency|28]]] to simulate the network transmission latency among the edge servers.
+
+The evaluation metric—completion time—is calculated as the difference between the end time and the arrival time of the last task within the input task sequence to avoid the impact of randomness in task arrivals. The input task sequence will be detailed in the following subsections.
+
+The following baselines are selected from recent literature because they take both batching and traffic steering into consideration.
+
+* **EdgeBatch**\[[[ACBatch/index#^zhang2019edgebatch|19]]]: a collaborative intelligent edge computing framework consisting of a stochastic task batching mechanism and a dynamic task offloading scheme. Consistent with their bootstrapping phase, we initiate the batching parameters with a 100-time-slot setup.
+* **SplitShift**\[[[ACBatch/index#^lu2018crowdvision|16]]]: a batching and offloading scheme designed to balance local processing time and communication latency. Note that SplitShift offloads tasks to the cloud. To maintain consistency in our experiments that include SplitShift, the offloading latency to the cloud is standardized at 50 microseconds.
+
+### B. Real-trace Performance Comparison
+
+![[real_trace.png]]^fig5
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 5: Real-trace task arrivals of each time slot.</p>
+
+We evaluate the real-trace performance of ACBatch using a task arrival dataset obtained from real-world traces \[[[ACBatch/index#^weng2022mlaas|29]]], as depicted in [[ACBatch/index#^fig5|Fig. 5]]. In this evaluation, each time slot is set to 4000 milliseconds, and the task arrivals within each time slot are treated as a separate input task sequence for one experiment.
+
+In Fig. \ref{fig:rtexps}\subref{fig:rt_completion}, ACBatch demonstrates the shortest completion time and latency relative to the baseline approaches. Specifically, ACBatch exhibits a significant reduction in completion time by 89.17\% on average compared to EdgeBatch. Although ACBatch is not explicitly designed to optimize latency, it also shows a substantial improvement in latency performance, achieving an improvement of 76.52\% in latency compared to SplitShift, as shown in Fig. \ref{fig:rtexps}\subref{fig:rt_latency}. Fig. \ref{fig:rt_ovhd} shows that the runtime overhead of ACBatch is moderate, remaining below 10 milliseconds even in large-scale scenarios with over 1000 task arrivals, demonstrating its suitability for real-time inference applications. These results underscore the effectiveness of ACBatch in handling dynamic, real-world task arrivals.
+
+### C. Impact of Task Arrival Patterns
+
+We explore the effects of different task arrival patterns via a series of experiments. In these experiments, tasks follow Poisson arrival patterns. Unless specified otherwise, a number of 800 tasks are uniformly distributed across the four servers with an arrival rate ($\lambda$) of 100 tasks per second. We conduct the experiments 40 times and gather the results.
+
+![[arrival_rate.png]]^fig8
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 8: Completion time versus arrival rates.</p>
+
+[[ACBatch/index#^fig8|Fig. 8]] depicts the impact of arrival rates, which vary from 25 to 200 tasks per second. ACBatch achieves the lowest completion time at all arrival rates. At arrival rates under 100 tasks per second, ACBatch maintains a stable performance of approximately 30ms, demonstrating that ACBatch effectively utilizes batching to enhance efficiency. At arrival rates exceeding 100 tasks per second, the completion time for ACBatch increases slowly with the arrival rates.
+
+![[burstiness.png]]^fig9
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 9: Completion time versus burstiness.</p>
+
+[[ACBatch/index#^fig9|Fig. 9]] illustrates the impact of burstiness, which ranges from 20\% to 90\%. Burstiness is quantified as the ratio of tasks arriving in the final 20\% of the time period. The desired burstiness levels are achieved by varying the arrival rates during the initial 80\% of the time period and the last 20\%. ACBatch consistently delivers the best performance across all burstiness levels, though completion time rises as burstiness increases. Notably, ACBatch produces comparable results under conditions of 200 tasks per second (240.92ms) and 50\% burstiness (302.80ms), despite the latter scenario averaging 100 tasks per second. This indicates that burstiness has a more significant impact on ACBatch’s performance.
+
+![[aggregation.png]]^fig10
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 10: Completion time versus spatial aggregation degrees.</p>
+
+[[ACBatch/index#^fig10|Fig. 10]] shows the impact of spatial aggregation, spanning from 25.0\% to 87.5\%. Spatial aggregation is defined as the proportion of tasks arriving on a specific server, with the remainder distributed uniformly across other servers. [[ACBatch/index#^fig10|Fig. 10(a)]] and [[ACBatch/index#^fig10|Fig. 10(b)]] show the performance of Server 1 (Tesla V100) and Server 2 (Jetson AGX Xavier) under varying aggregation degrees. ACBatch consistently outperforms other approaches across all aggregation degrees on both servers. On Server 1, the completion time initially decreases and then increases with higher aggregation, indicating that assigning more tasks to a more efficient server up to its capacity improves performance.
+
+In conclusion, ACBatch excels under diverse arrival patterns, notably outperforming state-of-the-art methods in high-load, bursty, and unbalanced edge computing scenarios.
+
+### D. Impact of Steering
+
+Following the experimental settings outlined in Section [[ACBatch/index#C. Impact of Task Arrival Patterns|6.3]], we investigate the impact of steering on server workloads and evaluate its effectiveness in balancing waiting time with computational efficiency.
+
+![[workload.png]]^fig11
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 11: Server workloads before and after steering.</p>
+
+[[ACBatch/index#^fig11|Fig. 11]] contrasts the workloads of edge servers before and after steering. We split the task arrival period into 10 equal time slots and normalize the workload values by dividing the number of tasks by computational efficiency. The results visually confirm that our steering method effectively matches appropriate workloads with edge servers.
+
+![[tradeoff.png]]^fig12
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 12: Trade-off between waiting time and computational efficiency across different arrival rates (smaller markers indicate lower arrival rates).</p>
+
+[[ACBatch/index#^fig12|Fig. 12]] compares ACBatch, ACBatch without steering, and the baseline EdgeBatch across varying arrival rates from 50 to 150 tasks per second. At higher arrival rates, ACBatch enhances computational efficiency to 1.24 times with an increase in waiting time by only 0.11 times, compared to the variation without steering. Notably, at lower arrival rates, ACBatch employs a significantly different strategy compared to the baseline EdgeBatch. ACBatch generally maintains lower waiting times, albeit at the cost of some efficiency. In contrast, EdgeBatch focuses on enhancing efficiency, which results in considerably longer waiting times. This disparity in strategy and the performance comparison highlights that ACBatch effectively balances waiting time with computational efficiency.
 
 ## VII. Conclusion
 
