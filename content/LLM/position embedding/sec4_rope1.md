@@ -1,5 +1,5 @@
 ---
-title: 第 4 节 旋转位置编码-1
+title: 第 4.1 节 旋转位置编码-1
 ---
 
 | [[sec3_rel_pe\|上一节]] | [[LLM/position embedding/index\|目录]] | [[sec4_rope2\|下一节]] |
