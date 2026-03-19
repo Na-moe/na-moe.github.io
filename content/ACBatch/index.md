@@ -294,7 +294,7 @@ The proposed algorithm is summarized in [[ACBatch/index#^algo2|Algorithm 2]], an
 
 1: $\space$ **Initialize** $Costs$ as the cost list of each server  
 2: $\space$ $batch\_flag \leftarrow \textbf{true}$   
-3:   **while** $batch\_flag$ **do**  
+3: $\space$ **while** $batch\_flag$ **do**  
 4: $\space\quad$ $min\_cost \leftarrow \min(Costs)$  
 5: $\space\quad$ $src \leftarrow \arg\min(Costs)$  
 6: $\space\quad$ Let $Cand$ contain the last task of each batch on $src$  
@@ -309,7 +309,7 @@ The proposed algorithm is summarized in [[ACBatch/index#^algo2|Algorithm 2]], an
 15: $\quad$ Conduct $\texttt{DPAB}$ on each server  
 16: $\quad$ **if** no gains from $\texttt{DPAB}$ **then**  
 17: $\quad\quad$ $batch\_flag \leftarrow \textbf{false}$  
-18: **return** $Bs, As$
+18: $\space$ **return** $Bs, As$
 
 <hr style="
     border: 0;
