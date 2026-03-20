@@ -7,6 +7,7 @@
     font-weight: normal;
     font-display: swap;
     src: url("/static/fonts/LXGWWenKaiGBLite-Medium.woff2") format("woff2");
+    unicode-range: U+2F00-FFFF;
 }
 
 @font-face {
@@ -15,6 +16,7 @@
     font-weight: normal;
     font-display: swap;
     src: url("/static/fonts/LXGWBrightGB-MediumItalic.woff2") format("woff2");
+    unicode-range: U+2F00-FFFF;
 }
 
 @font-face {
@@ -23,6 +25,7 @@
     font-weight: bold;
     font-display: swap;
     src: url("/static/fonts/LXGWZhenKaiGB-Regular.woff2") format("woff2");
+    unicode-range: U+2F00-FFFF;
 }
 
 @font-face {
@@ -31,6 +34,7 @@
     font-weight: bold;
     font-display: swap;
     src: url("/static/fonts/LXGWZhenKaiGB-Regular.woff2") format("woff2");
+    unicode-range: U+2F00-FFFF;
 }
 
 @font-face {
@@ -38,7 +42,8 @@
     font-style: normal;
     font-weight: normal;
     font-display: swap;
-    src: url("/static/fonts/LXGWWenKaiGBLite-Meidum.woff2") format("woff2");
+    src: url("/static/fonts/ZhaoHuaSC.woff2") format("woff2");
+    unicode-range: U+2F00-FFFF;
 }
 
 @font-face {
@@ -46,7 +51,8 @@
     font-style: normal;
     font-weight: bold;
     font-display: swap;
-    src: url("/static/fonts/LXGWZhenKaiGB-Regular.woff2") format("woff2");
+    src: url("/static/fonts/ZhaoHuaSC.woff2") format("woff2");
+    unicode-range: U+2F00-FFFF;
 }
 
 @font-face {
@@ -55,6 +61,7 @@
     font-weight: normal;
     font-display: swap;
     src: url("/static/fonts/LXGWWenKaiMonoGBLite-Medium.woff2") format("woff2");
+    unicode-range: U+2F00-FFFF;
 }
 
 @font-face {
