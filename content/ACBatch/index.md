@@ -404,12 +404,13 @@ In conclusion, ACBatch excels under diverse arrival patterns, notably outperform
 
 Following the experimental settings outlined in Section [[ACBatch/index#C. Impact of Task Arrival Patterns|6.3]], we investigate the impact of steering on server workloads and evaluate its effectiveness in balancing waiting time with computational efficiency.
 
-![[workload.png|500]]^fig11
+![[workload.png|500]] 
+^fig11
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 11: Server workloads before and after steering.</p>
 
 [[ACBatch/index#^fig11|Fig. 11]] contrasts the workloads of edge servers before and after steering. We split the task arrival period into 10 equal time slots and normalize the workload values by dividing the number of tasks by computational efficiency. The results visually confirm that our steering method effectively matches appropriate workloads with edge servers.
 
-![[tradeoff.png|500]]^fig12
+![[tradeoff.png|500]] ^fig12
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 12: Trade-off between waiting time and computational efficiency across different arrival rates (smaller markers indicate lower arrival rates).</p>
 
 [[ACBatch/index#^fig12|Fig. 12]] compares ACBatch, ACBatch without steering, and the baseline EdgeBatch across varying arrival rates from 50 to 150 tasks per second. At higher arrival rates, ACBatch enhances computational efficiency to 1.24 times with an increase in waiting time by only 0.11 times, compared to the variation without steering. Notably, at lower arrival rates, ACBatch employs a significantly different strategy compared to the baseline EdgeBatch. ACBatch generally maintains lower waiting times, albeit at the cost of some efficiency. In contrast, EdgeBatch focuses on enhancing efficiency, which results in considerably longer waiting times. This disparity in strategy and the performance comparison highlights that ACBatch effectively balances waiting time with computational efficiency.
