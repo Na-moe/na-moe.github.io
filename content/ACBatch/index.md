@@ -88,7 +88,8 @@ The time required to process a batch task with batch size $b$ on a specific serv
 
 We illustrate the measurement of batching efficiency across different hardware platforms \[[[ACBatch/index#^nvidia2018ai|9]], [[ACBatch/index#^nvidia2020jetson|11]]] and popular neural networks \[[[ACBatch/index#^he2016deep|20]], [[ACBatch/index#^simonyan2014very|21]], [[ACBatch/index#^szegedy2015going|22]]] in [[ACBatch/index#^fig2|Fig. 2]]. Note that the maximum permissible batch sizes on different platforms are constrained by memory limitations and the neural networks adopted. For example, in our measurement, the maximum batch size on the NVIDIA Tesla V100 is about 128, whereas, on the NVIDIA Jetson AGX Xavier, it is limited to 32 or 16.  
 
-![[batch_eff.png|500]] ^fig2
+![[batch_eff.png|500]] 
+^fig2
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 2: Batch efficiency measurements on different hardware and neural networks.</p>
 
 To quantify the computational efficiency of batching, we model the relationship between batching efficiency and batch sizes by fitting the measurement results. We find that batching efficiency $\eta_{m,b}$ sub-linearly increases with batch size $b$ and can be well represented by the following general form:
@@ -120,6 +121,7 @@ The application of edge inference for traffic image classification in a smart ci
 ### C. ACBatch Framework
 
 ![[framework.svg]] ^fig3
+<p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 3: Overview of the ACBatch Framework.</p>
 
 We illustrate the ACBatch framework in [[ACBatch/index#^fig3|Fig. 3]], detailing its three integral components: (1) Task Pooling: Tasks of all edge servers are reorganized into a sequence based on their arrival times, providing a comprehensive timeline view; (2) Adaptive Batching: The task sequence is adaptively grouped into $K$ batches based on their arrival times and associated server nodes; (3) Cooperative Steering: Batched are allocated to servers considering each server’s service capabilities, whereby the task distribution are spatially reshaped to form more efficient batches with larger size or lower waiting time.
 
@@ -231,8 +233,7 @@ This problem still presents an exponential solution space of $\sum_{1\le K\le N}
 
 Furthermore, the sequential order provides a crucial insight: the optimal solution to the original problem can be derived from the optimal solutions of its sub-problems, demonstrating the optimal sub-structure of the problem. Define $C_{min}[n]$ as the minimum cost for the subset of tasks $\mathcal{N}_n = \{1, ..., n\}$. Denote by $C[n, b]$ the minimum cost solution when the last batch of the subset of tasks $\mathcal{N}_n$ consists of $b$ tasks. Consequently, $C_{min}[n] = \min_b C[n, b]$, where $C[n, b]$ can be derived from $C_{min}[n-b]$.
 
-![[algo1.svg|500]]
- ^fig4
+![[algo1.svg|500]] ^fig4
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 4: Example of the DPAB algorithm when N=3. To get the minimal cost of the whole task set Cₘᵢₙ[3], we can compare all C[3,b] for b ranging from 1 to 3. Meanwhile, C[3,b] can be deduced from Cₘᵢₙ[3-b], and the corresponding optimal solution is red-boxed in the figure.</p>
 
 This relationship indicates that the optimal solution for $\mathcal{N}$ can be deduced from the optimal solutions of its sub-problems for $\mathcal{N}_n, n\in \{1, ..., N-1\}$. This ensures the feasibility of using dynamic programming to determine the minimum cost for the entire task set. Thus, we propose the Dynamic Programming-based Adaptive Batching (DPAB) algorithm to address [[ACBatch/index#^p2|(P2)]], detailed in [[ACBatch/index#^algo1|Algorithm 1]] and visually depicted in [[ACBatch/index#^fig4|Fig. 4]]. The time complexity of [[ACBatch/index#^algo1|Algorithm 1]] is $O(N^2)$, consisting of $O(N)$ for initialization, $O(N^2)$ for dynamic programming, and $O(N)$ for tracing back, where $N$ represents the number of tasks.
@@ -368,7 +369,8 @@ The following baselines are selected from recent literature because they take bo
 
 ### B. Real-trace Performance Comparison
 
-![[real_trace.png|500]]^fig5
+![[real_trace.png|500]] 
+^fig5
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 5: Real-trace task arrivals of each time slot.</p>
 
 We evaluate the real-trace performance of ACBatch using a task arrival dataset obtained from real-world traces \[[[ACBatch/index#^weng2022mlaas|29]]], as depicted in [[ACBatch/index#^fig5|Fig. 5]]. In this evaluation, each time slot is set to 4000 milliseconds, and the task arrivals within each time slot are treated as a separate input task sequence for one experiment.
@@ -379,17 +381,19 @@ In Fig. \ref{fig:rtexps}\subref{fig:rt_completion}, ACBatch demonstrates the sho
 
 We explore the effects of different task arrival patterns via a series of experiments. In these experiments, tasks follow Poisson arrival patterns. Unless specified otherwise, a number of 800 tasks are uniformly distributed across the four servers with an arrival rate ($\lambda$) of 100 tasks per second. We conduct the experiments 40 times and gather the results.
 
-![[arrival_rate.png|500]]^fig8
+![[arrival_rate.png|500]] 
+^fig8
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 8: Completion time versus arrival rates.</p>
 
 [[ACBatch/index#^fig8|Fig. 8]] depicts the impact of arrival rates, which vary from 25 to 200 tasks per second. ACBatch achieves the lowest completion time at all arrival rates. At arrival rates under 100 tasks per second, ACBatch maintains a stable performance of approximately 30ms, demonstrating that ACBatch effectively utilizes batching to enhance efficiency. At arrival rates exceeding 100 tasks per second, the completion time for ACBatch increases slowly with the arrival rates.
 
-![[burstiness.png|500]]^fig9
+![[burstiness.png|500]] 
+^fig9
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 9: Completion time versus burstiness.</p>
 
 [[ACBatch/index#^fig9|Fig. 9]] illustrates the impact of burstiness, which ranges from 20\% to 90\%. Burstiness is quantified as the ratio of tasks arriving in the final 20\% of the time period. The desired burstiness levels are achieved by varying the arrival rates during the initial 80\% of the time period and the last 20\%. ACBatch consistently delivers the best performance across all burstiness levels, though completion time rises as burstiness increases. Notably, ACBatch produces comparable results under conditions of 200 tasks per second (240.92ms) and 50\% burstiness (302.80ms), despite the latter scenario averaging 100 tasks per second. This indicates that burstiness has a more significant impact on ACBatch’s performance.
 
-![[aggregation.png]]^fig10
+![[aggregation.png]] ^fig10
 <p style="text-align: center; margin-top: .35em; font-size: 0.9em; opacity: 0.8;">Fig. 10: Completion time versus spatial aggregation degrees.</p>
 
 [[ACBatch/index#^fig10|Fig. 10]] shows the impact of spatial aggregation, spanning from 25.0\% to 87.5\%. Spatial aggregation is defined as the proportion of tasks arriving on a specific server, with the remainder distributed uniformly across other servers. [[ACBatch/index#^fig10|Fig. 10(a)]] and [[ACBatch/index#^fig10|Fig. 10(b)]] show the performance of Server 1 (Tesla V100) and Server 2 (Jetson AGX Xavier) under varying aggregation degrees. ACBatch consistently outperforms other approaches across all aggregation degrees on both servers. On Server 1, the completion time initially decreases and then increases with higher aggregation, indicating that assigning more tasks to a more efficient server up to its capacity improves performance.
