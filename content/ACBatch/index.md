@@ -239,7 +239,7 @@ Furthermore, the sequential order provides a crucial insight: the optimal soluti
 This relationship indicates that the optimal solution for $\mathcal{N}$ can be deduced from the optimal solutions of its sub-problems for $\mathcal{N}_n, n\in \{1, ..., N-1\}$. This ensures the feasibility of using dynamic programming to determine the minimum cost for the entire task set. Thus, we propose the Dynamic Programming-based Adaptive Batching (DPAB) algorithm to address [[ACBatch/index#^p2|(P2)]], detailed in [[ACBatch/index#^algo1|Algorithm 1]] and visually depicted in [[ACBatch/index#^fig4|Fig. 4]]. The time complexity of [[ACBatch/index#^algo1|Algorithm 1]] is $O(N^2)$, consisting of $O(N)$ for initialization, $O(N^2)$ for dynamic programming, and $O(N)$ for tracing back, where $N$ represents the number of tasks.
 
 ^algo1
-<div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>Algorithm 1</b> Dynamic Programming-based Adaptive Batching</div>
+<div style="border-top: 2px solid; border-bottom: 1px solid; margin-top: .35em;"> <b>Algorithm 1</b> Dynamic Programming-based Adaptive Batching</div>
 
 **Input:** Arrival times $t[1...N]$ of the tasks, maximum batch size $B$, parallel efficiency function $f$ and computing time per task $c$ of the server;  
 **Output:** Batch size list $Bs$;
@@ -256,12 +256,8 @@ This relationship indicates that the optimal solution for $\mathcal{N}$ can be d
 10:  **while** $n \ne 0$ **do**  
 11: $\quad$ $Bs.\texttt{append}(n-\mathrm{Path}[n])$  
 12: $\quad$ $n \leftarrow \mathrm{Path}[n]$  
-13:  **return** $Bs$
-
-<hr style="
-    border: 0;
-    border-top: 1px solid;
-">
+13:  **return** $Bs$  
+<hr style="border: 0; border-top: 1px solid; margin-top: .5em">
 
 ### B. Multi-Server Cooperative Batching
 
@@ -288,9 +284,9 @@ This approach ensures that a maximum of $K$ tasks are considered for steering, w
 The proposed algorithm is summarized in [[ACBatch/index#^algo2|Algorithm 2]], and its time complexity is $O(TN^2)$ across $T$ iterations, composed of the following parts. Evaluating the steering candidates is $O(3KN)$, considering $3$ potential options---(1) creating a new batch; (2) joining the previous batch; (3) joining subsequent---for up to $K$ tasks, each requiring $O(N)$ time. Both the initial batching and subsequent re-batching processes involve a complexity of $O(N^2)$, with $N$ representing the total number of tasks.
 
 ^algo2
-<div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>Algorithm 2</b> Multi-Server Cooperative Batching</div>
+<p style="border-top: 2px solid; border-bottom: 1px solid; margin-bottom: .35em;"> <b>Algorithm 2</b> Multi-Server Cooperative Batching</p>
 
-**Input:** Arrival times $t[1...N]$ and arrived edge server $s[1...N]$ of the tasks, edge servers $E[1...M]$, transmission cost matrix $\tau[1...M][1...M]$;
+**Input:** Arrival times $t[1...N]$ and arrived edge server $s[1...N]$ of the tasks, edge servers $E[1...M]$, transmission cost matrix $\tau[1...M][1...M]$;  
 **Output:** Batch size lists $Bs$ of each server, Server number which each task is assigned $As$;
 
 1: $\space$ **Initialize** $Costs$ as the cost list of each server  
@@ -310,13 +306,8 @@ The proposed algorithm is summarized in [[ACBatch/index#^algo2|Algorithm 2]], an
 15: $\quad$ Conduct $\texttt{DPAB}$ on each server  
 16: $\quad$ **if** no gains from $\texttt{DPAB}$ **then**  
 17: $\quad\quad$ $batch\_flag \leftarrow \textbf{false}$  
-18: $\space$ **return** $Bs, As$
-
-<hr style="
-    border: 0;
-    border-top: 1px solid;
-">
-
+18: $\space$ **return** $Bs, As$  
+<hr style="border: 0; border-top: 1px solid; margin-top: .5em">
 
 We analyze the performance guarantee of MSCB in [[ACBatch/index#^prop3|Proposition 3]].
 
