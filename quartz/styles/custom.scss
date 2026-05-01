@@ -169,3 +169,18 @@ figcaption {
     line-height: 1.0 !important;
     font: normal 1.0em KaTeX_Main,Iowan-old-style !important;
 }
+
+article em.mixed-emphasis {
+  font-style: normal;
+}
+
+article .em-zh {
+  font-style: normal;
+  text-emphasis: dot;
+  text-emphasis-position: under right;
+}
+
+article .em-en {
+  font-style: italic;
+  text-emphasis: none;
+}
