@@ -1,3 +1,6 @@
+---
+title: 计算机视觉中的苦涩教训
+---
 自然语言处理领域已经由（Next Token Prediction 的）大模型包打一切，[[The_Bitter_Lesson|苦涩的教训]]也一再应验。[Vincent Sitzmann](https://www.vincentsitzmann.com/) 站在 2026 年这个时间节点，给出了他对于计算机视觉领域的「苦涩的教训」式的思考。
 
 > [!note]- 计算机视觉中的苦涩教训
