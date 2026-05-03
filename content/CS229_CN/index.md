@@ -1,5 +1,5 @@
 ---
-title: CS229 机器学习 课程讲义
+title: CS229 机器学习
 ---
 作者：Andrew Ng and Tengyu Ma；最近更新：2023 年 6 月 11 日 [(PDF)](https://cs229.stanford.edu/main_notes.pdf)
 

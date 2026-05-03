@@ -12,7 +12,7 @@ $$
 V^*(s) = R(s) + \max_{a \in A}\gamma \sum_{s' \in S} P_{sa}(s')V^*(s')
 $$
 
-回想一下，从最优价值函数中能恢复最优策略$\pi^*$, 如下所示：
+回想一下，从最优价值函数中能恢复最优策略 $\pi^*$, 如下所示：
 
 $$
 \pi^*(s) = \operatorname*{argmax}_{a \in A} \sum_{s' \in S} P_{sa}(s')V^*(s')

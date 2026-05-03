@@ -8,7 +8,7 @@ title: 第 I 部分 监督学习
         align-items: center;
         background: rgba(0, 0, 0, 0.0);
     ">
-        <div style="
+        <div class="cover", style="
             font-size: 36px;
             text-align: center;
         ">
