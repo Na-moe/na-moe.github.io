@@ -136,12 +136,6 @@
     unicode-range: U+0000-2EFF;
 }
 
-@font-face {
-    font-family: "STIX-Two-Math";
-    font-display: swap;
-    src: url("/static/fonts/STIXTwoMath-Regular.woff2") format("woff2");
-}
-
 html {
     font-size: 18px;
 }
@@ -173,7 +167,7 @@ figcaption {
 
 .katex {
     line-height: 1.0 !important;
-    font: normal 1.0em STIX-Two-Math,KaTeX_Main,Iowan-old-style !important;
+    font: normal 1.0em KaTeX_Main,Iowan-old-style !important;
 }
 
 article em.mixed-emphasis {
@@ -189,4 +183,12 @@ article .em-zh {
 article .em-en {
   font-style: italic;
   text-emphasis: none;
+}
+
+article .cover {
+    font-family: "Alegreya SC", serif !important;
+}
+
+article .thead {
+    font-family: "Iowan-old-style", serif !important;
 }
