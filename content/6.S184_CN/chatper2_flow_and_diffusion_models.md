@@ -55,15 +55,15 @@ $$
 > [!example] **例 1（线性向量场）**  
 > 考虑一个简单的向量场 $u_t(x)$，它是 $x$ 的线性函数：对 $\theta > 0$，$u_t(x) = -\theta x$。函数
 > 
-> $$\begin{equation}
-> \psi_t(x_0) = \exp(-\theta t) x_0 \tag{3}
-> \end{equation}$$
+> $$
+> \begin{equation}\psi_t(x_0) = \exp(-\theta t) x_0 \tag{3}\end{equation}
+> $$
 > 
 > 定义了一个流 $\psi$，它是式 [[chatper2_flow_and_diffusion_models#^eq2|(2)]] 中常微分方程的解。验证如下：$\psi_0(x_0) = x_0$，并且
 > 
-> $$ \begin{aligned}
-> \frac{\mathrm{d}}{\mathrm{d}t}\psi_t(x_0)&\overset{(3)}{=} \frac{\mathrm{d}}{\mathrm{d}t} \big( \exp(-\theta t) x_0 \big) \\&\overset{(i)}{=} -\theta \exp(-\theta t) x_0 \\&\overset{(3)}{=} -\theta \psi_t(x_0) = u_t(\psi_t(x_0)),
-> \end{aligned}$$
+> $$ 
+> \begin{aligned}\frac{\mathrm{d}}{\mathrm{d}t}\psi_t(x_0)&\overset{(3)}{=} \frac{\mathrm{d}}{\mathrm{d}t} \big( \exp(-\theta t) x_0 \big) \\&\overset{(i)}{=} -\theta \exp(-\theta t) x_0 \\&\overset{(3)}{=} -\theta \psi_t(x_0) = u_t(\psi_t(x_0)),\end{aligned}
+> $$
 > 
 > 其中步骤 $(i)$ 应用了链式法则。图 3 直观展示了该流以指数速度收敛到 $0$。
 
@@ -194,9 +194,9 @@ $$
 > [!example] **例 2（Ornstein–Uhlenbeck 过程）**  
 > 考虑常数扩散系数 $\sigma_t = \sigma \ge 0$ 和常数线性漂移项 $u_t(x) = -\theta x$，对于 $\theta > 0$，得到如下 SDE：
 > 
-> $$\begin{equation}
-> \mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \tag{8} 
-> \end{equation}$$
+> $$
+> \begin{equation}\mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \tag{8} \end{equation}
+> $$
 > 
 > 上述 SDE 的解 $(X_t)_{0\le t\le 1}$ 称为 **Ornstein–Uhlenbeck 过程**，简称 OU 过程。图 3 对其进行了可视化。向量场 $-\theta x$ 将过程推回中心 $0$，因为漂移项始终指向与当前位置相反的方向；扩散系数 $\sigma$ 则持续注入更多噪声。若模拟该过程直至 $t \to \infty$，它将收敛到高斯分布 $\mathcal{N}\!\left(0, \sigma^2/(2\theta)\right)$。注意， $\sigma = 0$ 时，得到一个线性向量场所定义的流，该流已在式 [[chatper2_flow_and_diffusion_models#^eq3|(3)]] 中讨论过。
 
@@ -251,15 +251,15 @@ $$
 > 
 > 在本文中，**扩散模型**由参数为 $\theta$ 的神经网络 $u_t^\theta$ 和固定的扩散系数 $\sigma_t$ 组成，该神经网络用于参数化向量场：
 > 
-> $$\begin{aligned}
-> \text{神经网络：} &\quad u^\theta : \mathbb{R}^d \times [0,1] \to \mathbb{R}^d, \quad (x,t) \mapsto u_t^\theta(x), \quad \text{参数为 } \theta \\\text{固定项：} &\quad \sigma_t : [0,1] \to [0,\infty), \quad t \mapsto \sigma_t
-> \end{aligned}$$
+> $$
+> \begin{aligned}\text{神经网络：} &\quad u^\theta : \mathbb{R}^d \times [0,1] \to \mathbb{R}^d, \quad (x,t) \mapsto u_t^\theta(x), \quad \text{参数为 } \theta \\\text{固定项：} &\quad \sigma_t : [0,1] \to [0,\infty), \quad t \mapsto \sigma_t\end{aligned}
+> $$
 > 
 > 从 SDE 模型获取样本（即生成对象）的流程如下：
 > 
-> $$\begin{aligned}
-> \text{初始化：} &\quad X_0 \sim p_\text{init} &\blacktriangleright \text{从高斯分布这类简单分布初始化}\\\text{模拟：} &\quad \mathrm{d}X_t = u_t^\theta(X_t)\,\mathrm{d}t + \sigma_t\,\mathrm{d}W_t &\blacktriangleright \text{从 0 到 1 模拟 SDE}\\\text{目标：} &\quad X_1 \sim p_\text{data} &\blacktriangleright \text{使 } X_1 \text{ 服从分布 } p_\text{data}
-> \end{aligned}$$
+> $$
+> \begin{aligned}\text{初始化：} &\quad X_0 \sim p_\text{init} &\blacktriangleright \text{从高斯分布这类简单分布初始化}\\\text{模拟：} &\quad \mathrm{d}X_t = u_t^\theta(X_t)\,\mathrm{d}t + \sigma_t\,\mathrm{d}W_t &\blacktriangleright \text{从 0 到 1 模拟 SDE}\\\text{目标：} &\quad X_1 \sim p_\text{data} &\blacktriangleright \text{使 } X_1 \text{ 服从分布 } p_\text{data}\end{aligned}
+> $$
 > 
 > $\sigma_t = 0$ 的扩散模型即为**流模型**。
 
