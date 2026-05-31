@@ -160,7 +160,7 @@ $$
 \end{align*}
 $$
 
-其中 $R_t(h)$ 是对小量 $h$ 可忽略的函数，即 $\lim_{h\to 0} R_t(h) = 0$。
+其中 $R_t(h)$ 是对小量 $h$ 可忽略的函数，即 $\lim_{h\to 0} R_t(h) = 0$，步骤 $(i)$ 应用了导数的定义。
 
 上述推导重申了一个已知事实：ODE 轨迹 $(X_t)_{0\le t\le 1}$ 在每个时间步长沿方向 $u_t(X_t)$ 迈出一小步。现在修改最后一个等式以引入随机性：SDE 轨迹 $(X_t)_{0\le t\le 1}$ 在每一步既沿 $u_t(X_t)$ 移动，又叠加来自布朗运动的随机扰动：
 
@@ -189,13 +189,13 @@ $$
 > [!example] **例 2（Ornstein–Uhlenbeck 过程）**  
 > 考虑常数扩散系数 $\sigma_t = \sigma \ge 0$ 和常数线性漂移项 $u_t(x) = -\theta x$，对于 $\theta > 0$，得到如下 SDE：
 > 
-> $$ dX_t = -\theta X_t dt + \sigma dW_t. \tag{8} $$
+> $$ \mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \tag{8} $$
 > 
-> 上述 SDE 的解 $(X_t)_{0\le t\le 1}$ 称为 Ornstein–Uhlenbeck 过程，简称 OU 过程。图 3 对其进行了可视化。向量场 $-\theta x$ 将过程推回中心 $0$，因为漂移项始终指向与当前位置相反的方向；扩散系数 $\sigma$ 则持续注入更多噪声。若模拟该过程直至 $t \to \infty$，它将收敛到高斯分布 $\mathcal{N}\!\left(0, \sigma^2/(2\theta)\right)$。注意， $\sigma = 0$ 时，得到一个线性向量场所定义的流，该流已在式 [[chatper2_flow_and_diffusion_models#^eq3|(3)]] 中讨论过。
+> 上述 SDE 的解 $(X_t)_{0\le t\le 1}$ 称为 **Ornstein–Uhlenbeck 过程**，简称 OU 过程。图 3 对其进行了可视化。向量场 $-\theta x$ 将过程推回中心 $0$，因为漂移项始终指向与当前位置相反的方向；扩散系数 $\sigma$ 则持续注入更多噪声。若模拟该过程直至 $t \to \infty$，它将收敛到高斯分布 $\mathcal{N}\!\left(0, \sigma^2/(2\theta)\right)$。注意， $\sigma = 0$ 时，得到一个线性向量场所定义的流，该流已在式 [[chatper2_flow_and_diffusion_models#^eq3|(3)]] 中讨论过。
 
 ### 模拟随机微分方程
 
-若仍对 SDE 的抽象定义感到困惑，不必担心。通过回答下面这个问题，可以获得更直观的理解：如何模拟一个 SDE？最简单的模拟方法称为 Euler–Maruyama 法，它对 SDE 的作用正如 Euler 法对 ODE 的作用。采用 Euler–Maruyama 法，初始化 $X_0 = x_0$，然后迭代更新：
+若仍对 SDE 的抽象定义感到困惑，不必担心。通过回答下面这个问题，可以获得更直观的理解：如何模拟一个 SDE？最简单的模拟方法称为 **Euler–Maruyama 法**，它对 SDE 的作用正如 Euler 法对 ODE 的作用。采用 Euler–Maruyama 法，初始化 $X_0 = x_0$，然后迭代更新：
 
 $$
 \begin{align*}
@@ -213,7 +213,7 @@ $$
 $$
 \begin{align*}
 X_0 &\sim p_\text{init} &\blacktriangleright\ \text{随机初始化}\\
-dX_t &= u_t^\theta(X_t)dt + \sigma_tdW_t &\blacktriangleright\ \text{SDE}
+\mathrm{d}X_t &= u_t^\theta(X_t)\mathrm{d}t + \sigma_t\mathrm{d}W_t &\blacktriangleright\ \text{SDE}
 \end{align*}
 $$
 
@@ -242,14 +242,14 @@ $$
 
 > [!summary] **总结 2（SDE 生成式模型）**
 > 
-> 贯穿全文，扩散模型由参数为 $\theta$ 的神经网络 $u_t^\theta$ 和固定的扩散系数 $\sigma_t$ 构成，该神经网络用于参数化向量场：
+> 在本文中，**扩散模型**由参数为 $\theta$ 的神经网络 $u_t^\theta$ 和固定的扩散系数 $\sigma_t$ 组成，该神经网络用于参数化向量场：
 > 
 > $$\begin{aligned}\text{神经网络：} &\quad u^\theta : \mathbb{R}^d \times [0,1] \to \mathbb{R}^d, \quad (x,t) \mapsto u_t^\theta(x), \quad \text{参数为 } \theta \\\text{固定项：} &\quad \sigma_t : [0,1] \to [0,\infty), \quad t \mapsto \sigma_t\end{aligned}$$
 > 
 > 从 SDE 模型获取样本（即生成对象）的流程如下：
 > 
-> $$\begin{align*}\text{初始化：} &\quad X_0 \sim p_\text{init} &\blacktriangleright \text{从高斯分布这类简单分布初始化}\\\text{模拟：} &\quad dX_t = u_t^\theta(X_t)\,dt + \sigma_t\,dW_t &\blacktriangleright \text{从 0 到 1 模拟 SDE}\\\text{目标：} &\quad X_1 \sim p_\text{data} &\blacktriangleright \text{使 } X_1 \text{ 服从分布 } p_\text{data}\end{align*}$$
+> $$\begin{align*}\text{初始化：} &\quad X_0 \sim p_\text{init} &\blacktriangleright \text{从高斯分布这类简单分布初始化}\\\text{模拟：} &\quad \mathrm{d}X_t = u_t^\theta(X_t)\,\mathrm{d}t + \sigma_t\,\mathrm{d}W_t &\blacktriangleright \text{从 0 到 1 模拟 SDE}\\\text{目标：} &\quad X_1 \sim p_\text{data} &\blacktriangleright \text{使 } X_1 \text{ 服从分布 } p_\text{data}\end{align*}$$
 > 
-> $\sigma_t = 0$ 的扩散模型即为流模型。
+> $\sigma_t = 0$ 的扩散模型即为**流模型**。
 
 [^1]: 诺伯特 · 维纳是麻省理工学院任教的著名数学家，至今在麻省理工学院数学系仍可见其肖像悬挂。

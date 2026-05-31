@@ -1,5 +1,5 @@
 .DS_Store
-.gitignore
+
 node_modules
 public
 prof
@@ -12,3 +12,9 @@ replit.nix
 .vscode
 
 **/_TOC_*.md
+
+ACBatch/
+
+kexue.fm/
+
+Functional Differential Geometry/
