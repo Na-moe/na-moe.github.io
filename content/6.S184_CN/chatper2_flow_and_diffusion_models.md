@@ -54,7 +54,9 @@ $$
 > [!example] **例 1（线性向量场）**  
 > 考虑一个简单的向量场 $u_t(x)$，它是 $x$ 的线性函数：对 $\theta > 0$，$u_t(x) = -\theta x$。函数
 > 
-> $$ \psi_t(x_0) = \exp(-\theta t) x_0 \qquad \text{(3)} $$ ^eq3
+> $$
+> \psi_t(x_0) = \exp(-\theta t) x_0 \qquad \text{(3)} 
+> $$ ^eq3
 > 
 > 定义了一个流 $\psi$，它是式 [[chatper2_flow_and_diffusion_models#^eq2|(2)]] 中常微分方程的解。验证如下：$\psi_0(x_0) = x_0$，并且
 > 
@@ -189,7 +191,9 @@ $$
 > [!example] **例 2（Ornstein–Uhlenbeck 过程）**  
 > 考虑常数扩散系数 $\sigma_t = \sigma \ge 0$ 和常数线性漂移项 $u_t(x) = -\theta x$，对于 $\theta > 0$，得到如下 SDE：
 > 
-> $$ \mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \qquad \text{(8)} $$
+> $$ 
+> \mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \qquad \text{(8)} 
+> $$
 > 
 > 上述 SDE 的解 $(X_t)_{0\le t\le 1}$ 称为 **Ornstein–Uhlenbeck 过程**，简称 OU 过程。图 3 对其进行了可视化。向量场 $-\theta x$ 将过程推回中心 $0$，因为漂移项始终指向与当前位置相反的方向；扩散系数 $\sigma$ 则持续注入更多噪声。若模拟该过程直至 $t \to \infty$，它将收敛到高斯分布 $\mathcal{N}\!\left(0, \sigma^2/(2\theta)\right)$。注意， $\sigma = 0$ 时，得到一个线性向量场所定义的流，该流已在式 [[chatper2_flow_and_diffusion_models#^eq3|(3)]] 中讨论过。
 
