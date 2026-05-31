@@ -54,7 +54,7 @@ $$
 > [!example] **例 1（线性向量场）**  
 > 考虑一个简单的向量场 $u_t(x)$，它是 $x$ 的线性函数：对 $\theta > 0$，$u_t(x) = -\theta x$。函数
 > 
-> $$ \begin{equation}\psi_t(x_0) = \exp(-\theta t) x_0 \tag{3}\end{equation} $$ ^eq3
+> $$ \psi_t(x_0) = \exp(-\theta t) x_0 \tag{3} $$ ^eq3
 > 
 > 定义了一个流 $\psi$，它是式 [[chatper2_flow_and_diffusion_models#^eq2|(2)]] 中常微分方程的解。验证如下：$\psi_0(x_0) = x_0$，并且
 > 
@@ -62,7 +62,7 @@ $$
 > 
 > 其中步骤 $(i)$ 应用了链式法则。图 3 直观展示了该流以指数速度收敛到 $0$。
 
-### 模拟常微分方程
+### 模拟 ODE
 
 通常，若 $u_t$ 不像前例一样简单，便无法显式计算流 $\psi_t$。此时需借助数值方法模拟常微分方程。所幸这是数值分析中一个经典而成熟的课题，已有大量强大的方法。其中最简单且最直观的是 **Euler 法**：初始化 $X_0 = x_0$，然后按以下方式更新：
 $$
@@ -147,7 +147,7 @@ $$
 
 图 2 展示了几条布朗运动的示例轨迹。布朗运动之于随机过程，犹如高斯分布之于概率分布，居于核心地位。从金融、统计物理到流行病学，布朗运动的研究在机器学习之外有着广泛的应用。例如，金融领域用布朗运动模拟复杂金融工具的价格。仅作为数学构造，布朗运动同样引人入胜：尽管其路径连续，可以一笔画成，却具有无限长度，永远无法画完。
 
-### 从常微分方程到随机微分方程
+### 从 ODEs 到 SDEs
 
 SDE 的思想，是在 ODE 确定性动力学的基础上添加布朗运动驱动的随机动力学。既然一切皆随机，便不能再像式 [[chatper2_flow_and_diffusion_models#^eq1|(1a)]] 那样取导数，需要找到 ODE **不使用导数的等价表述**。为此，将 ODE 轨迹 $(X_t)_{0\le t\le 1}$ 改写如下。由导数定义，
 
@@ -189,12 +189,11 @@ $$
 > [!example] **例 2（Ornstein–Uhlenbeck 过程）**  
 > 考虑常数扩散系数 $\sigma_t = \sigma \ge 0$ 和常数线性漂移项 $u_t(x) = -\theta x$，对于 $\theta > 0$，得到如下 SDE：
 > 
-> $$ \begin{equation}
-\mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \tag{8}\end{equation} $$
+> $$ \mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \tag{8} $$
 > 
 > 上述 SDE 的解 $(X_t)_{0\le t\le 1}$ 称为 **Ornstein–Uhlenbeck 过程**，简称 OU 过程。图 3 对其进行了可视化。向量场 $-\theta x$ 将过程推回中心 $0$，因为漂移项始终指向与当前位置相反的方向；扩散系数 $\sigma$ 则持续注入更多噪声。若模拟该过程直至 $t \to \infty$，它将收敛到高斯分布 $\mathcal{N}\!\left(0, \sigma^2/(2\theta)\right)$。注意， $\sigma = 0$ 时，得到一个线性向量场所定义的流，该流已在式 [[chatper2_flow_and_diffusion_models#^eq3|(3)]] 中讨论过。
 
-### 模拟随机微分方程
+### 模拟 SDE
 
 若仍对 SDE 的抽象定义感到困惑，不必担心。通过回答下面这个问题，可以获得更直观的理解：如何模拟一个 SDE？最简单的模拟方法称为 **Euler–Maruyama 法**，它对 SDE 的作用正如 Euler 法对 ODE 的作用。采用 Euler–Maruyama 法，初始化 $X_0 = x_0$，然后迭代更新：
 
