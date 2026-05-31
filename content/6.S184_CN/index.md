@@ -8,7 +8,7 @@ date:
 ---
 ## 目录
 
-> [!example]- [[Introduction|1 引言]]  
+> [!example]- [[chapter1_introduction|1 引言]]  
 >   
 > > [!example]- [[chapter1_linear_regression|第 1 章 线性回归]]  
 > > 
