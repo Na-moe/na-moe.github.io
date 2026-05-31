@@ -189,7 +189,9 @@ $$
 > [!example] **例 2（Ornstein–Uhlenbeck 过程）**  
 > 考虑常数扩散系数 $\sigma_t = \sigma \ge 0$ 和常数线性漂移项 $u_t(x) = -\theta x$，对于 $\theta > 0$，得到如下 SDE：
 > 
-> $$ \mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \qquad \text{(8)} $$
+> $$ 
+> \mathrm{d}X_t = -\theta X_t \mathrm{d}t + \sigma \mathrm{d}W_t. \tag{8} 
+> $$
 > 
 > 上述 SDE 的解 $(X_t)_{0\le t\le 1}$ 称为 **Ornstein–Uhlenbeck 过程**，简称 OU 过程。图 3 对其进行了可视化。向量场 $-\theta x$ 将过程推回中心 $0$，因为漂移项始终指向与当前位置相反的方向；扩散系数 $\sigma$ 则持续注入更多噪声。若模拟该过程直至 $t \to \infty$，它将收敛到高斯分布 $\mathcal{N}\!\left(0, \sigma^2/(2\theta)\right)$。注意， $\sigma = 0$ 时，得到一个线性向量场所定义的流，该流已在式 [[chatper2_flow_and_diffusion_models#^eq3|(3)]] 中讨论过。
 
@@ -217,7 +219,7 @@ X_0 &\sim p_\text{init} &\blacktriangleright\ \text{随机初始化}\\
 \end{align*}
 $$
 
-[[chatper2_flow_and_diffusion_models#^algo2|算法 2]] 描述了如何通过欧拉–丸山方法从扩散模型采样。
+[[chatper2_flow_and_diffusion_models#^algo2|算法 2]] 描述了如何通过 Euler–Maruyama 法从扩散模型采样。
 
 ^algo2
 <div style="border-top: 2px solid; border-bottom: 1px solid;"> <b>算法 2</b> 使用 Euler–Maruyama 法从扩散模型中采样</div>  
